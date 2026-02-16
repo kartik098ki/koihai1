@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
+import { motion } from "framer-motion";
 
 const phases = [
   {
@@ -39,6 +40,7 @@ const learnings = [
     ),
     title: 'Trust First',
     description: 'We learned that travelers care most about quality and transparent pricing. No more overcharging from unauthorized vendors.',
+    gradient: 'from-blue-500 to-cyan-400',
   },
   {
     icon: (
@@ -48,6 +50,7 @@ const learnings = [
     ),
     title: 'Extreme Speed',
     description: 'On a train, a station stop is only minutes. Our logistics are tuned for maximum efficiency to ensure delivery before departure.',
+    gradient: 'from-purple-500 to-pink-400',
   },
   {
     icon: (
@@ -57,6 +60,7 @@ const learnings = [
     ),
     title: 'User-Centric Design',
     description: 'The feedback from our first 80 testers helped us refine the PNR-based ordering system to be as simple as "Enter PNR → Get Food".',
+    gradient: 'from-orange-500 to-amber-400',
   },
 ];
 
@@ -77,14 +81,22 @@ export default function TestPhasePage() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  useEffect(() => {
+    if (mobileMenuOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+  }, [mobileMenuOpen]);
+
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-slate-50 font-sans selection:bg-blue-100 selection:text-blue-900">
       {/* Navigation */}
-      <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${headerScrolled ? 'bg-white/95 backdrop-blur-xl shadow-lg shadow-slate-200/50' : 'bg-transparent'}`}>
+      <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${headerScrolled ? 'bg-white/80 backdrop-blur-md shadow-sm border-b border-slate-100' : 'bg-transparent'}`}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16 sm:h-20">
-            <Link href="/" className="flex items-center gap-2">
-              <span className="text-xl sm:text-2xl font-bold tracking-tight text-slate-900">RailQuick</span>
+            <Link href="/" className="flex items-center gap-2 group">
+              <span className="text-xl sm:text-2xl font-bold tracking-tight text-slate-900 group-hover:text-blue-600 transition-colors">RailQuick</span>
             </Link>
 
             <div className="hidden md:flex items-center gap-1">
@@ -98,11 +110,10 @@ export default function TestPhasePage() {
                 <Link
                   key={item.label}
                   href={item.href}
-                  className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${
-                    item.href === '/test-phase' 
-                      ? 'bg-slate-100 text-slate-900' 
-                      : 'text-slate-600 hover:text-slate-900 hover:bg-slate-50'
-                  }`}
+                  className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 ${item.href === '/test-phase'
+                    ? 'bg-slate-100 text-slate-900 shadow-inner'
+                    : 'text-slate-600 hover:text-slate-900 hover:bg-slate-50'
+                    }`}
                 >
                   {item.label}
                 </Link>
@@ -111,13 +122,13 @@ export default function TestPhasePage() {
 
             <div className="hidden md:block">
               <Link href="/#waitlist">
-                <Button className="bg-slate-900 hover:bg-slate-800 text-white rounded-full px-6 shadow-xl shadow-slate-900/20 transition-all hover:shadow-2xl hover:shadow-slate-900/30 hover:-translate-y-0.5">
+                <Button className="bg-slate-900 hover:bg-slate-800 text-white rounded-full px-6 shadow-lg shadow-slate-900/20 transition-all hover:shadow-xl hover:shadow-slate-900/30 hover:-translate-y-0.5 active:scale-95">
                   Join Waitlist
                 </Button>
               </Link>
             </div>
 
-            <button onClick={() => setMobileMenuOpen(!mobileMenuOpen)} className="md:hidden p-2">
+            <button onClick={() => setMobileMenuOpen(!mobileMenuOpen)} className="md:hidden p-2 text-slate-600 hover:text-slate-900 transition-colors">
               {mobileMenuOpen ? (
                 <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
@@ -130,10 +141,13 @@ export default function TestPhasePage() {
             </button>
           </div>
         </div>
+      </nav>
 
-        {mobileMenuOpen && (
-          <div className="md:hidden bg-white border-t shadow-xl">
-            <div className="px-6 py-4 space-y-2">
+      {/* Mobile Menu - Outside Nav for visibility */}
+      {mobileMenuOpen && (
+        <div className="md:hidden fixed inset-0 z-[60] pt-[64px] bg-white/98 backdrop-blur-xl animate-in slide-in-from-top duration-300">
+          <div className="px-6 py-8 space-y-8 overflow-y-auto h-full pb-20">
+            <div className="flex flex-col gap-6">
               {[
                 { label: 'Home', href: '/' },
                 { label: 'About', href: '/about' },
@@ -145,194 +159,250 @@ export default function TestPhasePage() {
                   key={item.label}
                   href={item.href}
                   onClick={() => setMobileMenuOpen(false)}
-                  className="block px-4 py-3 rounded-xl text-slate-700 hover:bg-slate-50 font-medium"
+                  className="text-3xl font-bold text-slate-900 active:text-blue-600 transition-colors py-3 border-b border-slate-100 flex items-center justify-between group"
                 >
                   {item.label}
+                  <svg className="w-6 h-6 text-slate-300 group-active:text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                  </svg>
                 </Link>
               ))}
             </div>
+            <div className="pt-6">
+              <Button
+                onClick={() => { setMobileMenuOpen(false); }}
+                className="w-full h-16 bg-slate-900 text-white rounded-2xl text-xl font-bold shadow-2xl shadow-slate-900/20 active:scale-[0.98] transition-all"
+              >
+                Join Waitlist
+              </Button>
+            </div>
           </div>
-        )}
-      </nav>
+        </div>
+      )}
 
       {/* Hero */}
-      <section className="pt-24 sm:pt-32 pb-12 sm:pb-20 lg:pt-40 lg:pb-32 bg-gradient-to-b from-slate-50 to-white relative overflow-hidden">
-        <div className="absolute top-0 left-1/4 w-[600px] h-[300px] bg-blue-100/40 rounded-full blur-3xl" />
-        <div className="absolute bottom-0 right-1/4 w-[500px] h-[250px] bg-orange-100/30 rounded-full blur-3xl" />
-        
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <div className="inline-flex items-center gap-2 px-4 py-2 bg-white rounded-full border border-slate-200 shadow-sm mb-6 sm:mb-8">
-            <span className="flex h-2 w-2 relative">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75"></span>
-              <span className="relative inline-flex rounded-full h-2 w-2 bg-blue-500"></span>
+      <section className="pt-32 pb-20 lg:pt-48 lg:pb-32 relative overflow-hidden bg-white">
+        <div className="absolute top-0 left-1/4 w-[600px] h-[300px] bg-blue-100/30 rounded-full blur-3xl pointer-events-none" />
+        <div className="absolute bottom-0 right-1/4 w-[500px] h-[250px] bg-orange-100/20 rounded-full blur-3xl pointer-events-none" />
+
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center z-10">
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.5 }}
+            className="inline-flex items-center gap-2 px-4 py-2 bg-white rounded-full border border-slate-200 shadow-sm mb-8 hover:shadow-md transition-shadow"
+          >
+            <span className="flex h-2.5 w-2.5 relative">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
+              <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-green-500"></span>
             </span>
-            <span className="text-sm font-semibold text-slate-700">Test Phase: Completed</span>
-          </div>
-          
-          <h1 className="text-3xl sm:text-5xl lg:text-7xl font-bold text-slate-900 mb-4 sm:mb-6 leading-tight">
+            <span className="text-sm font-semibold text-slate-700">Test Phase: <span className="text-green-600">Completed</span></span>
+          </motion.div>
+
+          <motion.h1
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.1 }}
+            className="text-4xl sm:text-6xl lg:text-7xl font-bold text-slate-900 mb-6 leading-[1.1] tracking-tight"
+          >
             From idea to
             <br />
-            <span className="bg-gradient-to-r from-blue-600 to-cyan-500 bg-clip-text text-transparent">validation</span>
-          </h1>
-          
-          <p className="text-base sm:text-xl text-slate-600 max-w-2xl mx-auto">
+            <span className="bg-gradient-to-r from-blue-600 via-cyan-500 to-blue-600 bg-clip-text text-transparent bg-[length:200%_auto] animate-gradient">validation</span>
+          </motion.h1>
+
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+            className="text-lg sm:text-xl text-slate-600 max-w-2xl mx-auto leading-relaxed"
+          >
             We spent months on the platforms of Delhi&apos;s busiest stations to understand the real problems of travelers.
-          </p>
+          </motion.p>
         </div>
       </section>
 
       {/* Human Connection */}
-      <section className="py-12 sm:py-20 lg:py-32 bg-white">
+      <section className="py-20 lg:py-32 bg-white relative">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 rounded-[1.5rem] sm:rounded-[2.5rem] p-6 sm:p-8 lg:p-16 text-center relative overflow-hidden">
-            {/* Background decoration */}
-            <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(59,130,246,0.15),transparent_70%)]" />
-            
-            <div className="relative">
-              <h2 className="text-2xl sm:text-3xl lg:text-5xl font-bold text-white mb-4 sm:mb-6">The Human Connection</h2>
-              <p className="text-base sm:text-lg lg:text-xl text-slate-300 max-w-2xl mx-auto mb-8 sm:mb-12">
-                We spent time at Delhi&apos;s busiest stations, talking to travelers and understanding their struggles. Over 80+ testers helped us validate our concept through real conversations and 200+ interactions.
+          <motion.div
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8 }}
+            className="bg-slate-900 rounded-[2.5rem] overflow-hidden relative"
+          >
+            <div className="absolute inset-0 bg-gradient-to-br from-blue-600/20 via-purple-600/20 to-orange-600/20 opacity-30" />
+            <div className="absolute -top-24 -right-24 w-96 h-96 bg-blue-500/30 rounded-full blur-3xl" />
+            <div className="absolute -bottom-24 -left-24 w-96 h-96 bg-purple-500/30 rounded-full blur-3xl" />
+
+            <div className="relative p-8 sm:p-12 lg:p-20 text-center">
+              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-6 tracking-tight">The Human Connection</h2>
+              <p className="text-lg sm:text-xl text-slate-300 max-w-3xl mx-auto mb-12 leading-relaxed">
+                We spent time at Delhi&apos;s busiest stations, talking to travelers and understanding their struggles. Over 80+ testers helped us validate our concept through real conversations.
               </p>
-              
-              <div className="inline-flex items-center gap-4 bg-white/10 backdrop-blur-xl rounded-2xl px-6 sm:px-8 py-4 sm:py-6 border border-white/10">
-                <div className="text-4xl sm:text-6xl lg:text-7xl font-bold text-white">80+</div>
-                <div className="text-left">
-                  <div className="text-xs sm:text-sm text-slate-400 uppercase tracking-wider">Early Testers</div>
-                  <div className="text-sm sm:text-base text-white font-semibold">Validated our model</div>
+
+              <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                <div className="bg-white/5 backdrop-blur-lg rounded-3xl p-6 border border-white/10 hover:bg-white/10 transition-colors">
+                  <div className="text-4xl sm:text-5xl font-bold text-white mb-2">80+</div>
+                  <div className="text-slate-400 font-medium">Early Testers</div>
+                </div>
+                <div className="bg-white/5 backdrop-blur-lg rounded-3xl p-6 border border-white/10 hover:bg-white/10 transition-colors">
+                  <div className="text-4xl sm:text-5xl font-bold text-white mb-2">200+</div>
+                  <div className="text-slate-400 font-medium">Interactions</div>
+                </div>
+                <div className="bg-white/5 backdrop-blur-lg rounded-3xl p-6 border border-white/10 hover:bg-white/10 transition-colors">
+                  <div className="text-4xl sm:text-5xl font-bold text-white mb-2">4</div>
+                  <div className="text-slate-400 font-medium">Top Stations</div>
+                </div>
+                <div className="bg-white/5 backdrop-blur-lg rounded-3xl p-6 border border-white/10 hover:bg-white/10 transition-colors">
+                  <div className="text-4xl sm:text-5xl font-bold text-white mb-2">100%</div>
+                  <div className="text-slate-400 font-medium">Commitment</div>
                 </div>
               </div>
             </div>
-          </div>
+          </motion.div>
         </div>
       </section>
 
       {/* What We Learned */}
-      <section className="py-12 sm:py-20 lg:py-32 bg-slate-50">
+      <section className="py-20 lg:py-32 bg-slate-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center max-w-2xl mx-auto mb-8 sm:mb-16">
-            <h2 className="text-2xl sm:text-4xl lg:text-5xl font-bold text-slate-900 mb-4 sm:mb-6">What we learned</h2>
-            <p className="text-base sm:text-lg text-slate-600">Key insights from our early testing phase that shaped our product.</p>
+          <div className="text-center max-w-2xl mx-auto mb-16">
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-slate-900 mb-6 tracking-tight">What we learned</h2>
+            <p className="text-lg text-slate-600">Key insights from our early testing phase that shaped our product.</p>
           </div>
 
-          <div className="grid md:grid-cols-3 gap-8">
+          <div className="grid md:grid-cols-3 gap-8 text-left">
             {learnings.map((learning, index) => (
-              <div key={index} className="bg-white rounded-3xl p-8 shadow-lg shadow-slate-200/50 hover:shadow-xl hover:-translate-y-1 transition-all duration-500">
-                <div className="w-14 h-14 bg-slate-100 rounded-2xl flex items-center justify-center text-slate-900 mb-6">
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: index * 0.1 }}
+                className="bg-white rounded-[2rem] p-8 shadow-xl shadow-slate-200/50 hover:shadow-2xl hover:-translate-y-2 transition-all duration-300 border border-slate-100"
+              >
+                <div className={`w-16 h-16 bg-gradient-to-br ${learning.gradient} rounded-2xl flex items-center justify-center text-white mb-8 shadow-lg`}>
                   {learning.icon}
                 </div>
                 <h3 className="text-2xl font-bold text-slate-900 mb-4">{learning.title}</h3>
-                <p className="text-slate-600 leading-relaxed">{learning.description}</p>
-              </div>
+                <p className="text-slate-600 leading-relaxed text-lg">{learning.description}</p>
+              </motion.div>
             ))}
           </div>
         </div>
       </section>
 
       {/* Phases Timeline */}
-      <section className="py-12 sm:py-20 lg:py-32 bg-white">
+      <section className="py-20 lg:py-32 bg-white overflow-hidden">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center max-w-2xl mx-auto mb-8 sm:mb-16">
-            <h2 className="text-2xl sm:text-4xl lg:text-5xl font-bold text-slate-900 mb-4 sm:mb-6">Our phases</h2>
-            <p className="text-base sm:text-lg text-slate-600">From validation to scale - our roadmap to serve every train passenger.</p>
+          <div className="text-center max-w-2xl mx-auto mb-16">
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-slate-900 mb-6 tracking-tight">Our Roadmap</h2>
+            <p className="text-lg text-slate-600">From an idea to reality — the milestones that shaped RailQuick.</p>
           </div>
 
-          <div className="space-y-8">
-            {phases.map((phase, index) => (
-              <div key={index} className={`relative bg-slate-50 rounded-3xl p-8 lg:p-12 transition-all duration-500 ${phase.status === 'current' ? 'ring-2 ring-blue-500 ring-offset-4 ring-offset-white' : ''}`}>
-                <div className="flex flex-col lg:flex-row lg:items-start gap-8">
-                  {/* Number */}
-                  <div className="flex-shrink-0">
-                    <div className={`w-16 h-16 rounded-2xl flex items-center justify-center text-xl font-bold ${
-                      phase.status === 'completed' 
-                        ? 'bg-green-100 text-green-600' 
-                        : phase.status === 'current' 
-                          ? 'bg-blue-500 text-white' 
-                          : 'bg-slate-200 text-slate-500'
-                    }`}>
-                      {phase.status === 'completed' ? (
-                        <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                        </svg>
-                      ) : (
-                        phase.number
-                      )}
-                    </div>
-                  </div>
+          <div className="relative">
+            <div className="absolute left-8 lg:left-1/2 top-0 bottom-0 w-px bg-slate-200 lg:-translate-x-1/2" />
 
-                  {/* Content */}
-                  <div className="flex-1">
-                    <div className="flex flex-wrap items-center gap-3 mb-4">
-                      <h3 className="text-2xl font-bold text-slate-900">{phase.title}</h3>
-                      <span className={`px-3 py-1 rounded-full text-xs font-semibold ${
-                        phase.status === 'completed' 
-                          ? 'bg-green-100 text-green-600' 
-                          : phase.status === 'current' 
-                            ? 'bg-blue-100 text-blue-600' 
-                            : 'bg-slate-200 text-slate-500'
-                      }`}>
-                        {phase.status === 'completed' ? 'Completed' : phase.status === 'current' ? 'In Progress' : 'Upcoming'}
-                      </span>
+            <div className="space-y-12">
+              {phases.map((phase, index) => (
+                <div key={index} className={`relative flex flex-col lg:flex-row gap-8 lg:gap-16 items-start ${index % 2 === 0 ? '' : 'lg:flex-row-reverse'}`}>
+
+                  {/* Timeline Dot */}
+                  <div className="absolute left-8 lg:left-1/2 w-4 h-4 bg-white border-4 border-blue-500 rounded-full lg:-translate-x-1/2 mt-8 z-10 shadow-sm" />
+
+                  {/* Content Card */}
+                  <motion.div
+                    initial={{ opacity: 0, x: index % 2 === 0 ? -20 : 20 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.6 }}
+                    className="ml-16 lg:ml-0 flex-1 w-full lg:w-[calc(50%-2rem)]"
+                  >
+                    <div className={`bg-white rounded-3xl p-6 sm:p-8 border ${phase.status === 'completed' ? 'border-green-100 bg-green-50/30' : 'border-slate-100 bg-white'} shadow-lg hover:shadow-xl transition-shadow`}>
+                      <div className="flex items-center justify-between mb-4 sm:mb-6">
+                        <span className="text-4xl sm:text-5xl font-black text-slate-100 z-0">{phase.number}</span>
+                        <span className={`px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-wider ${phase.status === 'completed'
+                          ? 'bg-green-100 text-green-700'
+                          : 'bg-blue-100 text-blue-700'
+                          }`}>
+                          {phase.status === 'completed' ? 'Completed' : 'Upcoming'}
+                        </span>
+                      </div>
+
+                      <h3 className="text-xl sm:text-2xl font-bold text-slate-900 mb-2 sm:mb-3">{phase.title}</h3>
+                      <p className="text-sm sm:text-base text-slate-600 mb-4 sm:mb-6 leading-relaxed">{phase.description}</p>
+
+                      <div className="space-y-3">
+                        {phase.achievements.map((achievement, i) => (
+                          <div key={i} className="flex items-start gap-3 text-slate-700">
+                            <svg className={`w-5 h-5 flex-shrink-0 mt-0.5 ${phase.status === 'completed' ? 'text-green-500' : 'text-blue-500'}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                            </svg>
+                            <span className="text-sm font-medium">{achievement}</span>
+                          </div>
+                        ))}
+                      </div>
                     </div>
-                    <p className="text-slate-600 mb-6 max-w-2xl">{phase.description}</p>
-                    
-                    <div className="grid sm:grid-cols-2 gap-3">
-                      {phase.achievements.map((achievement, i) => (
-                        <div key={i} className="flex items-center gap-3 text-slate-700">
-                          <svg className={`w-5 h-5 flex-shrink-0 ${phase.status === 'completed' ? 'text-green-500' : phase.status === 'current' ? 'text-blue-500' : 'text-slate-400'}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                          </svg>
-                          {achievement}
-                        </div>
-                      ))}
-                    </div>
-                  </div>
+                  </motion.div>
+
+                  <div className="flex-1 hidden lg:block" />
                 </div>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
         </div>
       </section>
 
       {/* Active Stations */}
-      <section className="py-12 sm:py-20 lg:py-32 bg-slate-900">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center max-w-2xl mx-auto mb-8 sm:mb-16">
-            <h2 className="text-2xl sm:text-4xl lg:text-5xl font-bold text-white mb-4 sm:mb-6">Tested in Delhi</h2>
-            <p className="text-base sm:text-lg text-slate-400">Stations where we conducted our test phase and validated our model.</p>
+      <section className="py-20 lg:py-32 bg-slate-900 relative overflow-hidden">
+        <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-20" />
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+          <div className="text-center max-w-2xl mx-auto mb-16">
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-6 tracking-tight">Tested in Delhi</h2>
+            <p className="text-lg text-slate-400">Stations where we conducted our test phase and validated our model.</p>
           </div>
 
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {stations.map((station, index) => (
-              <div key={index} className="bg-slate-800/50 rounded-2xl p-6 text-center border border-slate-700 hover:bg-slate-800 hover:border-slate-600 transition-all">
-                <div className="inline-flex items-center gap-2 mb-3">
-                  <span className="flex h-2 w-2 relative">
-                    <span className="relative inline-flex rounded-full h-2 w-2 bg-blue-500"></span>
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, scale: 0.9 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.4, delay: index * 0.1 }}
+                className="bg-slate-800/50 backdrop-blur-sm rounded-2xl p-6 text-center border border-slate-700/50 hover:bg-slate-800 hover:border-slate-600 hover:-translate-y-1 transition-all group"
+              >
+                <div className="inline-flex items-center gap-2 mb-4 px-3 py-1 bg-blue-500/10 rounded-full border border-blue-500/20 group-hover:bg-blue-500/20 transition-colors">
+                  <span className="flex h-1.5 w-1.5 relative">
+                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75"></span>
+                    <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-blue-500"></span>
                   </span>
-                  <span className="text-xs font-semibold text-blue-400 uppercase">Tested</span>
+                  <span className="text-[10px] font-bold text-blue-400 uppercase tracking-wider">Validated</span>
                 </div>
-                <div className="text-2xl font-bold text-white mb-1">{station.name}</div>
-                <div className="text-slate-500 font-mono">{station.code}</div>
-              </div>
+                <div className="text-xl font-bold text-white mb-2">{station.name}</div>
+                <div className="text-slate-500 font-mono text-sm bg-slate-900/50 inline-block px-2 py-1 rounded-md">{station.code}</div>
+              </motion.div>
             ))}
           </div>
         </div>
       </section>
 
       {/* CTA */}
-      <section className="py-12 sm:py-20 lg:py-32 bg-white">
+      <section className="py-20 lg:py-32 bg-white">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-2xl sm:text-4xl lg:text-5xl font-bold text-slate-900 mb-4 sm:mb-6">Be part of our journey</h2>
-          <p className="text-base sm:text-xl text-slate-600 mb-8 sm:mb-10">
+          <h2 className="text-3xl sm:text-5xl lg:text-6xl font-black text-slate-900 mb-8 tracking-tight">Be part of our journey</h2>
+          <p className="text-xl text-slate-600 mb-12 max-w-2xl mx-auto">
             Join our waitlist and be the first to experience on-seat delivery.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link href="/#waitlist">
-              <Button className="bg-slate-900 hover:bg-slate-800 text-white rounded-full px-8 h-12 sm:h-14 text-sm sm:text-base font-semibold shadow-xl shadow-slate-900/20 transition-all hover:shadow-2xl hover:shadow-slate-900/30 hover:-translate-y-0.5 w-full sm:w-auto">
+              <Button className="bg-slate-900 hover:bg-slate-800 text-white rounded-full px-10 h-16 text-lg font-bold shadow-xl shadow-slate-900/20 transition-all hover:shadow-2xl hover:shadow-slate-900/30 hover:-translate-y-1 w-full sm:w-auto">
                 Join Waitlist
               </Button>
             </Link>
             <Link href="/contact">
-              <Button variant="outline" className="h-12 sm:h-14 px-8 text-sm sm:text-base font-semibold rounded-full border-2 hover:bg-slate-50 w-full sm:w-auto">
+              <Button variant="outline" className="h-16 px-10 text-lg font-bold rounded-full border-2 hover:bg-slate-50 w-full sm:w-auto">
                 Partner With Us
               </Button>
             </Link>
@@ -341,22 +411,22 @@ export default function TestPhasePage() {
       </section>
 
       {/* Footer */}
-      <footer className="bg-slate-950 pt-12 sm:pt-16 pb-8">
+      <footer className="bg-slate-950 pt-16 pb-8 border-t border-slate-900">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex flex-col md:flex-row justify-between items-center gap-6 mb-8">
-            <Link href="/" className="text-xl sm:text-2xl font-bold text-white">RailQuick</Link>
-            <div className="flex gap-6 text-slate-400">
+          <div className="flex flex-col md:flex-row justify-between items-center gap-8 mb-8">
+            <Link href="/" className="text-2xl font-bold text-white tracking-tight">RailQuick</Link>
+            <div className="flex flex-wrap justify-center gap-8 text-slate-400 font-medium">
               <Link href="/" className="hover:text-white transition-colors">Home</Link>
               <Link href="/about" className="hover:text-white transition-colors">About</Link>
               <Link href="/contact" className="hover:text-white transition-colors">Contact</Link>
               <Link href="/hiring" className="hover:text-white transition-colors">Careers</Link>
             </div>
           </div>
-          <div className="border-t border-slate-800 pt-8 text-center">
-            <p className="text-slate-500">© 2026 RailQuick. Revolutionizing train travel.</p>
+          <div className="border-t border-slate-800/50 pt-8 text-center">
+            <p className="text-slate-500 text-sm">© 2026 RailQuick. Revolutionizing train travel.</p>
           </div>
         </div>
       </footer>
-    </div>
+    </div >
   );
 }

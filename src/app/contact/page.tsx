@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { toast } from "@/hooks/use-toast";
+import { motion } from "framer-motion";
 
 const CONTACT_API = '/api/contact';
 
@@ -30,6 +31,8 @@ const contactMethods = [
     title: 'General Support',
     value: 'contact.railquick@gmail.com',
     href: 'mailto:contact.railquick@gmail.com',
+    color: 'text-blue-600',
+    bg: 'bg-blue-50',
   },
   {
     icon: (
@@ -41,6 +44,8 @@ const contactMethods = [
     title: 'Location',
     value: 'Delhi, India',
     href: '#',
+    color: 'text-purple-600',
+    bg: 'bg-purple-50',
   },
 ];
 
@@ -69,6 +74,14 @@ export default function ContactPage() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  useEffect(() => {
+    if (mobileMenuOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+  }, [mobileMenuOpen]);
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
@@ -87,13 +100,13 @@ export default function ContactPage() {
   };
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-white font-sans selection:bg-blue-100 selection:text-blue-900">
       {/* Navigation */}
-      <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${headerScrolled ? 'bg-white/95 backdrop-blur-xl shadow-lg shadow-slate-200/50' : 'bg-transparent'}`}>
+      <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${headerScrolled ? 'bg-white/80 backdrop-blur-md shadow-sm border-b border-slate-100' : 'bg-transparent'}`}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16 sm:h-20">
-            <Link href="/" className="flex items-center gap-2">
-              <span className="text-xl sm:text-2xl font-bold tracking-tight text-slate-900">RailQuick</span>
+            <Link href="/" className="flex items-center gap-2 group">
+              <span className="text-xl sm:text-2xl font-bold tracking-tight text-slate-900 group-hover:text-blue-600 transition-colors">RailQuick</span>
             </Link>
 
             <div className="hidden md:flex items-center gap-1">
@@ -107,11 +120,10 @@ export default function ContactPage() {
                 <Link
                   key={item.label}
                   href={item.href}
-                  className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${
-                    item.href === '/contact' 
-                      ? 'bg-slate-100 text-slate-900' 
-                      : 'text-slate-600 hover:text-slate-900 hover:bg-slate-50'
-                  }`}
+                  className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 ${item.href === '/contact'
+                    ? 'bg-slate-100 text-slate-900 shadow-inner'
+                    : 'text-slate-600 hover:text-slate-900 hover:bg-slate-50'
+                    }`}
                 >
                   {item.label}
                 </Link>
@@ -120,13 +132,13 @@ export default function ContactPage() {
 
             <div className="hidden md:block">
               <Link href="/#waitlist">
-                <Button className="bg-slate-900 hover:bg-slate-800 text-white rounded-full px-6 shadow-xl shadow-slate-900/20 transition-all hover:shadow-2xl hover:shadow-slate-900/30 hover:-translate-y-0.5">
+                <Button className="bg-slate-900 hover:bg-slate-800 text-white rounded-full px-6 shadow-lg shadow-slate-900/20 transition-all hover:shadow-xl hover:shadow-slate-900/30 hover:-translate-y-0.5 active:scale-95">
                   Join Waitlist
                 </Button>
               </Link>
             </div>
 
-            <button onClick={() => setMobileMenuOpen(!mobileMenuOpen)} className="md:hidden p-2">
+            <button onClick={() => setMobileMenuOpen(!mobileMenuOpen)} className="md:hidden p-2 text-slate-600 hover:text-slate-900 transition-colors">
               {mobileMenuOpen ? (
                 <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
@@ -139,10 +151,13 @@ export default function ContactPage() {
             </button>
           </div>
         </div>
+      </nav>
 
-        {mobileMenuOpen && (
-          <div className="md:hidden bg-white border-t shadow-xl">
-            <div className="px-6 py-4 space-y-2">
+      {/* Mobile Menu - Outside Nav for visibility */}
+      {mobileMenuOpen && (
+        <div className="md:hidden fixed inset-0 z-[60] pt-[64px] bg-white/98 backdrop-blur-xl animate-in slide-in-from-top duration-300">
+          <div className="px-6 py-8 space-y-8 overflow-y-auto h-full pb-20">
+            <div className="flex flex-col gap-6">
               {[
                 { label: 'Home', href: '/' },
                 { label: 'About', href: '/about' },
@@ -154,114 +169,160 @@ export default function ContactPage() {
                   key={item.label}
                   href={item.href}
                   onClick={() => setMobileMenuOpen(false)}
-                  className="block px-4 py-3 rounded-xl text-slate-700 hover:bg-slate-50 font-medium"
+                  className="text-3xl font-bold text-slate-900 active:text-blue-600 transition-colors py-3 border-b border-slate-100 flex items-center justify-between group"
                 >
                   {item.label}
+                  <svg className="w-6 h-6 text-slate-300 group-active:text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                  </svg>
                 </Link>
               ))}
             </div>
+            <div className="pt-6">
+              <Button
+                onClick={() => { setMobileMenuOpen(false); }}
+                className="w-full h-16 bg-slate-900 text-white rounded-2xl text-xl font-bold shadow-2xl shadow-slate-900/20 active:scale-[0.98] transition-all"
+              >
+                Join Waitlist
+              </Button>
+            </div>
           </div>
-        )}
-      </nav>
+        </div>
+      )}
 
       {/* Hero */}
-      <section className="pt-24 sm:pt-32 pb-12 sm:pb-20 lg:pt-40 lg:pb-32 bg-gradient-to-b from-slate-50 to-white relative overflow-hidden">
-        <div className="absolute top-0 right-1/4 w-[500px] h-[250px] bg-blue-100/40 rounded-full blur-3xl" />
-        
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <div className="inline-flex items-center gap-2 px-4 py-2 bg-white rounded-full border border-slate-200 shadow-sm mb-6 sm:mb-8">
-            <span className="text-sm font-semibold text-slate-700">Get in Touch</span>
-          </div>
-          
-          <h1 className="text-3xl sm:text-5xl lg:text-7xl font-bold text-slate-900 mb-4 sm:mb-6 leading-tight">
-            We&apos;d love to
+      <section className="pt-32 pb-20 lg:pt-48 lg:pb-32 relative overflow-hidden">
+        {/* Abstract Backgrounds */}
+        <div className="absolute top-0 right-0 w-[800px] h-[800px] bg-gradient-to-br from-blue-100/40 to-cyan-100/30 rounded-full blur-3xl -translate-y-1/2 translate-x-1/4 pointer-events-none" />
+        <div className="absolute top-1/2 left-0 w-[600px] h-[600px] bg-gradient-to-tr from-purple-100/30 to-pink-100/20 rounded-full blur-3xl -translate-x-1/3 pointer-events-none" />
+
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center z-10">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            className="inline-flex items-center gap-2 px-4 py-1.5 bg-white/80 backdrop-blur-sm rounded-full border border-slate-200 shadow-sm mb-8 hover:shadow-md transition-shadow cursor-default"
+          >
+            <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
+            <span className="text-sm font-semibold text-slate-700">We&apos;re here to help</span>
+          </motion.div>
+
+          <motion.h1
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.1 }}
+            className="text-4xl sm:text-6xl lg:text-7xl font-bold text-slate-900 mb-6 leading-[1.1] tracking-tight"
+          >
+            Let&apos;s start a
             <br />
-            <span className="bg-gradient-to-r from-blue-600 to-cyan-500 bg-clip-text text-transparent">hear from you</span>
-          </h1>
-          
-          <p className="text-base sm:text-xl text-slate-600 max-w-2xl mx-auto">
-            Have a question or want to partner with us? Reach out directly.
-          </p>
+            <span className="bg-gradient-to-r from-blue-600 via-cyan-500 to-blue-600 bg-clip-text text-transparent bg-[length:200%_auto] animate-gradient">conversation</span>
+          </motion.h1>
+
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+            className="text-lg sm:text-xl text-slate-600 max-w-2xl mx-auto leading-relaxed"
+          >
+            Have a question, feedback, or want to partner with us? We&apos;d love to hear from you. Reach out directly or drop us a message below.
+          </motion.p>
         </div>
       </section>
 
-      {/* Contact Content */}
-      <section className="py-12 sm:py-20 lg:py-32 bg-white">
+      {/* Main Content */}
+      <section className="pb-24 lg:pb-32 relative z-10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid lg:grid-cols-2 gap-8 sm:gap-16">
-            {/* Contact Info */}
-            <div className="space-y-12">
-              {/* Contact Methods */}
-              <div className="space-y-6">
-                {contactMethods.map((method, index) => (
-                  <a
-                    key={index}
-                    href={method.href}
-                    className="flex items-center gap-4 p-6 bg-slate-50 rounded-2xl hover:bg-slate-100 transition-colors group"
-                  >
-                    <div className="w-12 h-12 bg-white rounded-xl flex items-center justify-center text-slate-900 shadow-sm group-hover:shadow transition-all">
-                      {method.icon}
-                    </div>
-                    <div>
-                      <p className="text-sm text-slate-500 mb-1">{method.title}</p>
-                      <p className="text-lg font-semibold text-slate-900">{method.value}</p>
-                    </div>
-                  </a>
-                ))}
-              </div>
+          <div className="grid lg:grid-cols-12 gap-16 lg:gap-16">
 
-              {/* Founders */}
-              <div>
-                <h3 className="text-xl font-bold text-slate-900 mb-6">Direct Founders Access</h3>
-                <div className="space-y-4">
-                  {founders.map((founder, index) => (
+            {/* Left Column: Contact Info */}
+            <motion.div
+              initial={{ opacity: 0, x: -20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6 }}
+              className="lg:col-span-5 space-y-10"
+            >
+              <div className="space-y-6">
+                <h3 className="text-2xl font-bold text-slate-900">Get in touch</h3>
+                <div className="grid gap-4">
+                  {contactMethods.map((method, index) => (
                     <a
                       key={index}
-                      href={`mailto:${founder.email}`}
-                      className="flex items-center gap-4 p-4 bg-white rounded-xl border border-slate-200 hover:border-slate-300 hover:shadow-md transition-all group"
+                      href={method.href}
+                      className="group flex items-start gap-4 p-5 bg-white rounded-2xl border border-slate-100 shadow-sm hover:shadow-lg hover:border-blue-100 transition-all duration-300"
                     >
-                      <div className={`w-12 h-12 bg-gradient-to-br ${founder.gradient} rounded-xl flex items-center justify-center text-white`}>
-                        <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-                        </svg>
+                      <div className={`p-3 rounded-xl ${method.bg} ${method.color} group-hover:scale-110 transition-transform duration-300`}>
+                        {method.icon}
                       </div>
                       <div>
-                        <p className="font-semibold text-slate-900">{founder.name}</p>
-                        <p className="text-sm text-blue-600 group-hover:underline">{founder.email}</p>
+                        <p className="text-sm font-medium text-slate-500 mb-0.5">{method.title}</p>
+                        <p className="text-lg font-semibold text-slate-900 group-hover:text-blue-600 transition-colors">{method.value}</p>
                       </div>
                     </a>
                   ))}
                 </div>
               </div>
 
-              {/* Social */}
+              <div>
+                <h3 className="text-2xl font-bold text-slate-900 mb-6">Direct Founders Access</h3>
+                <div className="grid gap-4">
+                  {founders.map((founder, index) => (
+                    <a
+                      key={index}
+                      href={`mailto:${founder.email}`}
+                      className="group relative overflow-hidden flex items-center gap-4 p-4 bg-white rounded-2xl border border-slate-100 shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all duration-300"
+                    >
+                      <div className={`absolute inset-0 bg-gradient-to-r ${founder.gradient} opacity-0 group-hover:opacity-5 transition-opacity duration-300`} />
+                      <div className={`flex-shrink-0 w-12 h-12 bg-gradient-to-br ${founder.gradient} rounded-xl flex items-center justify-center text-white shadow-md group-hover:shadow-lg group-hover:scale-110 transition-all duration-300`}>
+                        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                        </svg>
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <p className="font-bold text-slate-900 truncate">{founder.name}</p>
+                        <p className="text-sm text-slate-500 group-hover:text-blue-600 transition-colors truncate">{founder.email}</p>
+                      </div>
+                      <div className="w-8 h-8 rounded-full bg-slate-50 flex items-center justify-center text-slate-400 group-hover:bg-blue-50 group-hover:text-blue-600 transition-all">
+                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                        </svg>
+                      </div>
+                    </a>
+                  ))}
+                </div>
+              </div>
+
               <div>
                 <h3 className="text-xl font-bold text-slate-900 mb-6">Follow Us</h3>
-                <div className="flex gap-4">
+                <div className="flex gap-3">
                   {[
-                    { href: 'https://www.linkedin.com/company/railquick/', icon: (
-                      <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
-                    )},
-                    { href: 'https://www.instagram.com/railquick/', icon: (
-                      <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
-                    )},
+                    {
+                      href: 'https://www.linkedin.com/company/railquick/', icon: (
+                        <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" /></svg>
+                      )
+                    },
+                    {
+                      href: 'https://www.instagram.com/railquick/', icon: (
+                        <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z" /></svg>
+                      )
+                    },
                   ].map((social, i) => (
                     <a
                       key={i}
                       href={social.href}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="w-12 h-12 bg-slate-100 rounded-xl flex items-center justify-center text-slate-600 hover:bg-slate-900 hover:text-white transition-all"
+                      className="w-12 h-12 bg-white border border-slate-200 rounded-xl flex items-center justify-center text-slate-500 hover:bg-slate-900 hover:text-white hover:border-slate-900 hover:shadow-lg hover:-translate-y-1 transition-all duration-300"
                     >
                       {social.icon}
                     </a>
                   ))}
                 </div>
               </div>
-            </div>
+            </motion.div>
 
             {/* Contact Form */}
-            <div className="bg-slate-50 rounded-3xl p-6 sm:p-8 lg:p-12">
+            <div className="lg:col-span-7 bg-slate-50 rounded-3xl p-6 sm:p-8 lg:p-12">
               <h3 className="text-xl sm:text-2xl font-bold text-slate-900 mb-6">Send us a message</h3>
               <form onSubmit={handleSubmit} className="space-y-6">
                 <div>
@@ -272,7 +333,7 @@ export default function ContactPage() {
                     value={formData.name}
                     onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                     required
-                    className="w-full h-14 px-5 bg-white border-slate-200 rounded-xl"
+                    className="w-full h-14 px-5 bg-white border-slate-300 focus:border-blue-500 rounded-xl transition-all"
                   />
                 </div>
                 <div>
@@ -283,7 +344,7 @@ export default function ContactPage() {
                     value={formData.email}
                     onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                     required
-                    className="w-full h-14 px-5 bg-white border-slate-200 rounded-xl"
+                    className="w-full h-14 px-5 bg-white border-slate-300 focus:border-blue-500 rounded-xl transition-all"
                   />
                 </div>
                 <div>
@@ -294,7 +355,7 @@ export default function ContactPage() {
                     onChange={(e) => setFormData({ ...formData, inquiry: e.target.value })}
                     required
                     rows={5}
-                    className="w-full px-5 py-4 bg-white border-slate-200 rounded-xl resize-none"
+                    className="w-full px-5 py-4 bg-white border-slate-300 focus:border-blue-500 rounded-xl resize-none transition-colors"
                   />
                 </div>
                 <Button

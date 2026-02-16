@@ -30,9 +30,9 @@ async function submitContact(data: Record<string, string>) {
 }
 
 const steps = [
-  { 
-    number: '01', 
-    title: 'Select Station', 
+  {
+    number: '01',
+    title: 'Select Station',
     description: 'Choose your upcoming station from our route list.',
     icon: (
       <svg className="w-6 h-6 sm:w-8 sm:h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -41,9 +41,9 @@ const steps = [
       </svg>
     )
   },
-  { 
-    number: '02', 
-    title: 'Add Essentials', 
+  {
+    number: '02',
+    title: 'Add Essentials',
     description: 'Pick medicines, travel items, or daily needs you require.',
     icon: (
       <svg className="w-6 h-6 sm:w-8 sm:h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -51,9 +51,9 @@ const steps = [
       </svg>
     )
   },
-  { 
-    number: '03', 
-    title: 'On-Seat Delivery', 
+  {
+    number: '03',
+    title: 'On-Seat Delivery',
     description: 'We deliver right to your seat/berth on arrival.',
     icon: (
       <svg className="w-6 h-6 sm:w-8 sm:h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -64,8 +64,8 @@ const steps = [
 ];
 
 const products = [
-  { 
-    title: 'Medicines', 
+  {
+    title: 'Medicines',
     description: 'Essential medicines and basic medical supplies.',
     gradient: 'from-blue-500 to-cyan-400',
     icon: (
@@ -74,8 +74,8 @@ const products = [
       </svg>
     )
   },
-  { 
-    title: 'Travel Essentials', 
+  {
+    title: 'Travel Essentials',
     description: 'Blankets, pillows, locks, and travel accessories.',
     gradient: 'from-purple-500 to-pink-400',
     icon: (
@@ -84,8 +84,8 @@ const products = [
       </svg>
     )
   },
-  { 
-    title: 'Electronics', 
+  {
+    title: 'Electronics',
     description: 'Chargers, power banks, earphones and gadgets.',
     gradient: 'from-green-500 to-emerald-400',
     icon: (
@@ -94,8 +94,8 @@ const products = [
       </svg>
     )
   },
-  { 
-    title: 'Toiletries', 
+  {
+    title: 'Toiletries',
     description: 'Personal hygiene products and daily essentials.',
     gradient: 'from-cyan-500 to-blue-400',
     icon: (
@@ -104,8 +104,8 @@ const products = [
       </svg>
     )
   },
-  { 
-    title: 'Beverages', 
+  {
+    title: 'Beverages',
     description: 'Water bottles, energy drinks, and refreshments.',
     gradient: 'from-orange-500 to-amber-400',
     icon: (
@@ -148,6 +148,14 @@ export default function HomePage() {
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
+
+  useEffect(() => {
+    if (mobileMenuOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+  }, [mobileMenuOpen]);
 
   const handleWaitlistSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -197,7 +205,7 @@ export default function HomePage() {
         <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
           <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" onClick={() => setShowModal(false)} />
           <div className="relative bg-white rounded-2xl sm:rounded-3xl p-6 sm:p-8 max-w-md w-full shadow-2xl animate-scale-in">
-            <button 
+            <button
               onClick={() => setShowModal(false)}
               className="absolute top-3 right-3 sm:top-4 sm:right-4 w-8 h-8 flex items-center justify-center text-slate-400 hover:text-slate-600 rounded-full hover:bg-slate-100"
             >
@@ -205,7 +213,7 @@ export default function HomePage() {
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
               </svg>
             </button>
-            
+
             <div className="text-center mb-6">
               <div className="w-14 h-14 sm:w-16 sm:h-16 bg-gradient-to-br from-blue-500 to-cyan-400 rounded-2xl flex items-center justify-center mx-auto mb-4 text-white text-2xl">
                 🚀
@@ -213,7 +221,7 @@ export default function HomePage() {
               <h3 className="text-xl sm:text-2xl font-bold text-slate-900 mb-2">Coming Soon!</h3>
               <p className="text-sm sm:text-base text-slate-600 px-2">We&apos;re currently in testing phase. Enter your email to get notified when we launch.</p>
             </div>
-            
+
             <form onSubmit={handleModalSubmit} className="space-y-3 sm:space-y-4">
               <Input
                 type="email"
@@ -255,11 +263,10 @@ export default function HomePage() {
                 <Link
                   key={item.label}
                   href={item.href}
-                  className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${
-                    item.href === '/' 
-                      ? 'bg-slate-100 text-slate-900' 
-                      : 'text-slate-600 hover:text-slate-900 hover:bg-slate-50'
-                  }`}
+                  className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${item.href === '/'
+                    ? 'bg-slate-100 text-slate-900'
+                    : 'text-slate-600 hover:text-slate-900 hover:bg-slate-50'
+                    }`}
                 >
                   {item.label}
                 </Link>
@@ -286,11 +293,13 @@ export default function HomePage() {
             </button>
           </div>
         </div>
+      </nav>
 
-        {/* Mobile Menu */}
-        {mobileMenuOpen && (
-          <div className="md:hidden bg-white border-t shadow-lg">
-            <div className="px-4 py-3 space-y-1">
+      {/* Mobile Menu - Outside Nav for visibility */}
+      {mobileMenuOpen && (
+        <div className="md:hidden fixed inset-0 z-[60] pt-[64px] bg-white/98 backdrop-blur-xl animate-in slide-in-from-top duration-300">
+          <div className="px-6 py-8 space-y-8 overflow-y-auto h-full pb-20">
+            <div className="flex flex-col gap-6">
               {[
                 { label: 'Home', href: '/' },
                 { label: 'About', href: '/about' },
@@ -302,20 +311,26 @@ export default function HomePage() {
                   key={item.label}
                   href={item.href}
                   onClick={() => setMobileMenuOpen(false)}
-                  className="block px-4 py-3 rounded-xl text-slate-700 hover:bg-slate-50 font-medium text-base"
+                  className="text-3xl font-bold text-slate-900 active:text-blue-600 transition-colors py-3 border-b border-slate-100 flex items-center justify-between group"
                 >
                   {item.label}
+                  <svg className="w-6 h-6 text-slate-300 group-active:text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                  </svg>
                 </Link>
               ))}
-              <div className="pt-2">
-                <Button onClick={() => { setMobileMenuOpen(false); setShowModal(true); }} className="w-full bg-slate-900 text-white rounded-xl py-3 text-base font-medium">
-                  Join Waitlist
-                </Button>
-              </div>
+            </div>
+            <div className="pt-6">
+              <Button
+                onClick={() => { setMobileMenuOpen(false); setShowModal(true); }}
+                className="w-full h-16 bg-slate-900 text-white rounded-2xl text-xl font-bold shadow-2xl shadow-slate-900/20 active:scale-[0.98] transition-all"
+              >
+                Join Waitlist
+              </Button>
             </div>
           </div>
-        )}
-      </nav>
+        </div>
+      )}
 
       {/* Hero Section */}
       <section className="relative min-h-screen flex items-center pt-16 overflow-hidden">
@@ -334,18 +349,17 @@ export default function HomePage() {
                 <span className="text-xs sm:text-sm font-semibold text-slate-700">India&apos;s First</span>
               </div>
 
-              <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight text-slate-900 leading-tight mb-4 sm:mb-5">
-                Train On-Seat
-                <br />
-                <span className="bg-gradient-to-r from-blue-600 to-cyan-500 bg-clip-text text-transparent">Essential Delivery</span>
+              <h1 className="flex flex-col text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight text-slate-900 leading-tight mb-6 sm:mb-8">
+                <span className="order-2 sm:order-1 mt-2 sm:mt-0">Train On-Seat</span>
+                <span className="order-1 sm:order-2 bg-gradient-to-r from-blue-600 to-cyan-500 bg-clip-text text-transparent">Essential Delivery</span>
               </h1>
 
-              <p className="text-base sm:text-lg lg:text-xl text-slate-600 max-w-lg mx-auto lg:mx-0 mb-6 sm:mb-8">
+              <p className="text-lg sm:text-xl lg:text-2xl text-slate-600 max-w-lg mx-auto lg:mx-0 mb-8 sm:mb-10 leading-relaxed">
                 Essential delivery infrastructure for the modern traveler. Get what you need, delivered to your seat.
               </p>
 
               <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center lg:justify-start">
-                <Button 
+                <Button
                   onClick={() => setShowModal(true)}
                   size="lg"
                   className="bg-slate-900 hover:bg-slate-800 text-white rounded-full px-6 sm:px-8 h-12 sm:h-14 text-sm sm:text-base font-semibold shadow-xl transition-all hover:-translate-y-0.5"
@@ -361,7 +375,7 @@ export default function HomePage() {
             </div>
 
             {/* Hero Visual */}
-            <div className="relative flex justify-center order-1 lg:order-2">
+            <div className="relative hidden sm:flex justify-center order-1 lg:order-2 lg:scale-110">
               <div className="relative bg-white rounded-2xl sm:rounded-3xl p-5 sm:p-6 shadow-xl border border-slate-100 max-w-xs sm:max-w-sm w-full">
                 <div className="flex items-center gap-3 sm:gap-4 mb-4 sm:mb-5">
                   <div className="w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-br from-blue-500 to-cyan-400 rounded-xl flex items-center justify-center text-white text-lg sm:text-xl">
@@ -390,7 +404,7 @@ export default function HomePage() {
                   <div className="h-full w-full bg-gradient-to-r from-green-500 to-emerald-400 rounded-full" />
                 </div>
               </div>
-              
+
               <div className="absolute -top-3 -right-3 bg-white rounded-lg sm:rounded-xl px-3 sm:px-4 py-1.5 sm:py-2 shadow-md border text-xs sm:text-sm font-semibold text-green-600 animate-float">
                 ✓ Ready to deliver
               </div>
@@ -519,20 +533,20 @@ export default function HomePage() {
 
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6">
             {[
-              { 
-                title: 'Lightning Fast Delivery', 
+              {
+                title: 'Lightning Fast Delivery',
                 description: 'Get your essentials delivered to your seat at the next station stop.',
                 gradient: 'from-blue-500 to-cyan-400',
                 icon: '⚡'
               },
-              { 
-                title: 'Quality Guaranteed', 
+              {
+                title: 'Quality Guaranteed',
                 description: 'We source only verified, high-quality products for your peace of mind.',
                 gradient: 'from-green-500 to-emerald-400',
                 icon: '✓'
               },
-              { 
-                title: 'Wide Selection', 
+              {
+                title: 'Wide Selection',
                 description: 'From medicines to gadgets, we\'ve got everything you might need.',
                 gradient: 'from-purple-500 to-pink-400',
                 icon: '📦'
@@ -620,10 +634,10 @@ export default function HomePage() {
               <p className="text-sm sm:text-base text-slate-400 mb-5 max-w-sm">Your journey, our priority. Revolutionizing train travel with on-seat essential delivery.</p>
               <div className="flex gap-2 sm:gap-3">
                 <a href="https://www.linkedin.com/company/railquick/" target="_blank" rel="noopener noreferrer" className="w-9 h-9 sm:w-10 sm:h-10 bg-slate-800 rounded-lg sm:rounded-xl flex items-center justify-center text-slate-400 hover:bg-white hover:text-slate-900 transition-all">
-                  <svg className="w-4 h-4 sm:w-5 sm:h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+                  <svg className="w-4 h-4 sm:w-5 sm:h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" /></svg>
                 </a>
                 <a href="https://www.instagram.com/railquick/" target="_blank" rel="noopener noreferrer" className="w-9 h-9 sm:w-10 sm:h-10 bg-slate-800 rounded-lg sm:rounded-xl flex items-center justify-center text-slate-400 hover:bg-white hover:text-slate-900 transition-all">
-                  <svg className="w-4 h-4 sm:w-5 sm:h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+                  <svg className="w-4 h-4 sm:w-5 sm:h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z" /></svg>
                 </a>
                 <a href="mailto:contact.railquick@gmail.com" className="w-9 h-9 sm:w-10 sm:h-10 bg-slate-800 rounded-lg sm:rounded-xl flex items-center justify-center text-slate-400 hover:bg-white hover:text-slate-900 transition-all">
                   <svg className="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" /></svg>
@@ -656,6 +670,6 @@ export default function HomePage() {
           </div>
         </div>
       </footer>
-    </div>
+    </div >
   );
 }

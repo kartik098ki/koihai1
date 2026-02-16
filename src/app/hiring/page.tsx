@@ -1,11 +1,12 @@
 "use client";
 
 import Link from "next/link";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { toast } from "@/hooks/use-toast";
+import { Zap, TrendingUp, HeartHandshake, Briefcase, MapPin, Clock, CheckCircle2, ChevronRight, Menu, X } from "lucide-react";
 
 const HIRING_API = '/api/hiring';
 
@@ -22,34 +23,22 @@ async function submitToSheetDB(data: Record<string, string>) {
 
 const perks = [
   {
-    icon: (
-      <svg className="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M13 10V3L4 14h7v7l9-11h-7z" />
-      </svg>
-    ),
+    icon: <Zap className="w-6 h-6" />,
     title: 'High Impact',
     description: 'Work on problems that solve real daily struggles for millions of Indians.',
-    gradient: 'from-blue-500 to-cyan-400',
+    color: 'bg-blue-50 text-blue-600',
   },
   {
-    icon: (
-      <svg className="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
-      </svg>
-    ),
+    icon: <TrendingUp className="w-6 h-6" />,
     title: 'Rapid Growth',
     description: 'Join at the ground floor of a fast-moving logistics startup.',
-    gradient: 'from-green-500 to-emerald-400',
+    color: 'bg-green-50 text-green-600',
   },
   {
-    icon: (
-      <svg className="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
-      </svg>
-    ),
+    icon: <HeartHandshake className="w-6 h-6" />,
     title: 'Open Culture',
     description: 'We value ideas over hierarchy. If you have a better way, we listen.',
-    gradient: 'from-purple-500 to-pink-400',
+    color: 'bg-purple-50 text-purple-600',
   },
 ];
 
@@ -63,14 +52,28 @@ const openRoles = [
 export default function HiringPage() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [headerScrolled, setHeaderScrolled] = useState(false);
-  const [formData, setFormData] = useState({ name: '', email: '', phone: '', reason: '', linkedin: '', journey: '' });
+  const [formData, setFormData] = useState({ name: '', email: '', phone: '', role: '', reason: '', linkedin: '', journey: '' });
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const formRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const handleScroll = () => setHeaderScrolled(window.scrollY > 50);
+    const handleScroll = () => setHeaderScrolled(window.scrollY > 20);
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
+
+  useEffect(() => {
+    if (mobileMenuOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+  }, [mobileMenuOpen]);
+
+  const handleRoleClick = (roleTitle: string) => {
+    setFormData(prev => ({ ...prev, role: roleTitle }));
+    formRef.current?.scrollIntoView({ behavior: 'smooth' });
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -78,10 +81,10 @@ export default function HiringPage() {
     try {
       const success = await submitToSheetDB(formData);
       if (success) {
-        toast({ title: 'Application Submitted!', description: 'We\'ll review and get back to you.' });
-        setFormData({ name: '', email: '', phone: '', reason: '', linkedin: '', journey: '' });
+        toast({ title: 'Application Submitted!', description: 'We\'ll review and get back to you soon.' });
+        setFormData({ name: '', email: '', phone: '', role: '', reason: '', linkedin: '', journey: '' });
       } else {
-        toast({ title: 'Error', description: 'Failed to submit application.', variant: 'destructive' });
+        toast({ title: 'Error', description: 'Failed to submit application. Please try again.', variant: 'destructive' });
       }
     } catch {
       toast({ title: 'Error', description: 'Something went wrong.', variant: 'destructive' });
@@ -90,16 +93,16 @@ export default function HiringPage() {
   };
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-slate-50/50 font-sans selection:bg-blue-100 selection:text-blue-900">
       {/* Navigation */}
-      <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${headerScrolled ? 'bg-white/95 backdrop-blur-xl shadow-lg shadow-slate-200/50' : 'bg-transparent'}`}>
+      <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 border-b ${headerScrolled ? 'bg-white/80 backdrop-blur-md border-slate-200 shadow-sm py-3' : 'bg-transparent border-transparent py-5'}`}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between h-16 sm:h-20">
-            <Link href="/" className="flex items-center gap-2">
-              <span className="text-xl sm:text-2xl font-bold tracking-tight text-slate-900">RailQuick</span>
+          <div className="flex items-center justify-between">
+            <Link href="/" className="flex items-center gap-2 group">
+              <span className="text-xl sm:text-2xl font-bold tracking-tighter text-slate-900 group-hover:text-blue-600 transition-colors">RailQuick</span>
             </Link>
 
-            <div className="hidden md:flex items-center gap-1">
+            <div className="hidden md:flex items-center gap-1 bg-slate-100/50 p-1.5 rounded-full border border-slate-200/50">
               {[
                 { label: 'Home', href: '/' },
                 { label: 'About', href: '/about' },
@@ -110,11 +113,10 @@ export default function HiringPage() {
                 <Link
                   key={item.label}
                   href={item.href}
-                  className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${
-                    item.href === '/hiring' 
-                      ? 'bg-slate-100 text-slate-900' 
-                      : 'text-slate-600 hover:text-slate-900 hover:bg-slate-50'
-                  }`}
+                  className={`px-5 py-2 rounded-full text-sm font-medium transition-all duration-300 ${item.href === '/hiring'
+                    ? 'bg-white text-blue-600 shadow-sm ring-1 ring-slate-200'
+                    : 'text-slate-600 hover:text-slate-900 hover:bg-white/50'
+                    }`}
                 >
                   {item.label}
                 </Link>
@@ -123,29 +125,24 @@ export default function HiringPage() {
 
             <div className="hidden md:block">
               <Link href="/#waitlist">
-                <Button className="bg-slate-900 hover:bg-slate-800 text-white rounded-full px-6 shadow-xl shadow-slate-900/20 transition-all hover:shadow-2xl hover:shadow-slate-900/30 hover:-translate-y-0.5">
+                <Button className="bg-slate-900 hover:bg-slate-800 text-white rounded-full px-6 h-11 shadow-lg shadow-slate-900/10 transition-all hover:shadow-xl hover:shadow-slate-900/20 hover:-translate-y-0.5 font-medium">
                   Join Waitlist
                 </Button>
               </Link>
             </div>
 
-            <button onClick={() => setMobileMenuOpen(!mobileMenuOpen)} className="md:hidden p-2">
-              {mobileMenuOpen ? (
-                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                </svg>
-              ) : (
-                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-                </svg>
-              )}
+            <button onClick={() => setMobileMenuOpen(!mobileMenuOpen)} className="md:hidden p-2 text-slate-600 hover:bg-slate-100 rounded-lg transition-colors">
+              {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
             </button>
           </div>
         </div>
+      </nav>
 
-        {mobileMenuOpen && (
-          <div className="md:hidden bg-white border-t shadow-xl">
-            <div className="px-6 py-4 space-y-2">
+      {/* Mobile Menu - Outside Nav for visibility */}
+      {mobileMenuOpen && (
+        <div className="md:hidden fixed inset-0 z-[60] pt-[64px] bg-white/98 backdrop-blur-xl animate-in slide-in-from-top duration-300">
+          <div className="px-6 py-8 space-y-8 overflow-y-auto h-full pb-20">
+            <div className="flex flex-col gap-6">
               {[
                 { label: 'Home', href: '/' },
                 { label: 'About', href: '/about' },
@@ -157,58 +154,78 @@ export default function HiringPage() {
                   key={item.label}
                   href={item.href}
                   onClick={() => setMobileMenuOpen(false)}
-                  className="block px-4 py-3 rounded-xl text-slate-700 hover:bg-slate-50 font-medium"
+                  className="text-3xl font-bold text-slate-900 active:text-blue-600 transition-colors py-3 border-b border-slate-100 flex items-center justify-between group"
                 >
                   {item.label}
+                  <ChevronRight className="w-6 h-6 text-slate-300 group-active:text-blue-600" />
                 </Link>
               ))}
             </div>
+            <div className="pt-6">
+              <Button
+                onClick={() => { setMobileMenuOpen(false); }}
+                className="w-full h-16 bg-slate-900 text-white rounded-2xl text-xl font-bold shadow-2xl shadow-slate-900/20 active:scale-[0.98] transition-all"
+              >
+                Join Waitlist
+              </Button>
+            </div>
           </div>
-        )}
-      </nav>
+        </div>
+      )}
 
       {/* Hero */}
-      <section className="pt-24 sm:pt-32 pb-12 sm:pb-20 lg:pt-40 lg:pb-32 bg-gradient-to-b from-slate-50 to-white relative overflow-hidden">
-        <div className="absolute top-0 left-1/3 w-[600px] h-[300px] bg-purple-100/40 rounded-full blur-3xl" />
-        <div className="absolute bottom-0 right-1/3 w-[400px] h-[200px] bg-blue-100/30 rounded-full blur-3xl" />
-        
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <div className="inline-flex items-center gap-2 px-4 py-2 bg-white rounded-full border border-slate-200 shadow-sm mb-6 sm:mb-8">
-            <span className="flex h-2 w-2 relative">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
-              <span className="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
+      <section className="pt-32 pb-16 sm:pt-40 sm:pb-24 lg:pt-48 lg:pb-32 relative overflow-hidden">
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full z-0 pointer-events-none">
+          <div className="absolute top-20 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-gradient-to-r from-blue-50 to-purple-50 rounded-[100%] blur-3xl opacity-60" />
+        </div>
+
+        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <div className="inline-flex items-center gap-2.5 px-4 py-2 bg-white rounded-full border border-slate-200 shadow-sm mb-8 animate-in fade-in slide-in-from-bottom-4 duration-700">
+            <span className="relative flex h-2.5 w-2.5">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+              <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500"></span>
             </span>
-            <span className="text-sm font-semibold text-slate-700">Join the Family</span>
+            <span className="text-sm font-semibold text-slate-700">We are hiring!</span>
           </div>
-          
-          <h1 className="text-3xl sm:text-5xl lg:text-7xl font-bold text-slate-900 mb-4 sm:mb-6 leading-tight">
-            Build the future of
-            <br />
-            <span className="bg-gradient-to-r from-blue-600 to-cyan-500 bg-clip-text text-transparent">travel</span>
+
+          <h1 className="text-4xl sm:text-5xl lg:text-7xl font-bold text-slate-900 mb-6 sm:mb-8 leading-[1.1] tracking-tight animate-in fade-in slide-in-from-bottom-5 duration-700 delay-100">
+            Join the
+            <span className="bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent px-3">logistics</span>
+            <br className="hidden sm:block" />
+            revolution.
           </h1>
-          
-          <p className="text-base sm:text-xl text-slate-600 max-w-2xl mx-auto">
-            We&apos;re not just hiring employees—we&apos;re looking for partners who want to build something that affects millions of daily commuters.
+
+          <p className="text-lg sm:text-xl text-slate-600 max-w-2xl mx-auto mb-10 leading-relaxed animate-in fade-in slide-in-from-bottom-6 duration-700 delay-200">
+            We're building the future of train travel in India. It's meaningful work that impacts millions of daily commuters.
           </p>
+
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 animate-in fade-in slide-in-from-bottom-7 duration-700 delay-300">
+            <Button
+              onClick={() => formRef.current?.scrollIntoView({ behavior: 'smooth' })}
+              className="w-full sm:w-auto h-12 px-8 bg-slate-900 hover:bg-slate-800 text-white rounded-full font-medium shadow-lg shadow-slate-900/10 transition-all hover:shadow-xl hover:shadow-slate-900/20 hover:-translate-y-0.5"
+            >
+              View Open Roles
+            </Button>
+            <Link href="/about" className="w-full sm:w-auto">
+              <Button variant="outline" className="w-full h-12 px-8 rounded-full border-slate-200 hover:bg-slate-50 hover:text-slate-900 font-medium">
+                Learn about us
+              </Button>
+            </Link>
+          </div>
         </div>
       </section>
 
       {/* Perks */}
-      <section className="py-12 sm:py-20 lg:py-32 bg-white">
+      <section className="py-16 sm:py-24 bg-white/50 border-y border-slate-200/60">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center max-w-2xl mx-auto mb-8 sm:mb-16">
-            <h2 className="text-2xl sm:text-4xl lg:text-5xl font-bold text-slate-900 mb-4 sm:mb-6">Why join us?</h2>
-            <p className="text-base sm:text-lg text-slate-600">Be part of a team that&apos;s revolutionizing train travel in India.</p>
-          </div>
-
-          <div className="grid sm:grid-cols-3 gap-6">
+          <div className="grid md:grid-cols-3 gap-8">
             {perks.map((perk, index) => (
-              <div key={index} className="bg-slate-50 rounded-2xl p-8 hover:bg-white hover:shadow-xl hover:shadow-slate-200/50 transition-all duration-500 text-center">
-                <div className={`w-14 h-14 bg-gradient-to-br ${perk.gradient} rounded-xl flex items-center justify-center text-white mx-auto mb-6`}>
+              <div key={index} className="group p-6 rounded-2xl bg-white border border-slate-100 shadow-sm hover:shadow-md transition-all duration-300">
+                <div className={`w-12 h-12 ${perk.color} rounded-xl flex items-center justify-center mb-5 group-hover:scale-110 transition-transform duration-300`}>
                   {perk.icon}
                 </div>
-                <h3 className="text-xl font-bold text-slate-900 mb-2">{perk.title}</h3>
-                <p className="text-slate-600">{perk.description}</p>
+                <h3 className="text-xl font-bold text-slate-900 mb-3">{perk.title}</h3>
+                <p className="text-slate-600 leading-relaxed">{perk.description}</p>
               </div>
             ))}
           </div>
@@ -216,28 +233,42 @@ export default function HiringPage() {
       </section>
 
       {/* Open Roles */}
-      <section className="py-12 sm:py-20 lg:py-32 bg-slate-50">
+      <section className="py-20 sm:py-32">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center max-w-2xl mx-auto mb-8 sm:mb-16">
-            <h2 className="text-2xl sm:text-4xl lg:text-5xl font-bold text-slate-900 mb-4 sm:mb-6">Open positions</h2>
-            <p className="text-base sm:text-lg text-slate-600">Find your perfect role and join our mission.</p>
+          <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12 sm:mb-16">
+            <div className="max-w-xl">
+              <h2 className="text-3xl sm:text-4xl font-bold text-slate-900 mb-4 tracking-tight">Open positions</h2>
+              <p className="text-lg text-slate-600">Find the role that fits your skills and join our mission.</p>
+            </div>
+            <Link href="mailto:careers@railquick.in" className="text-blue-600 font-semibold hover:text-blue-700 flex items-center gap-2 group">
+              Don't see your role? Email us <ChevronRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+            </Link>
           </div>
 
-          <div className="grid sm:grid-cols-2 gap-4 max-w-4xl mx-auto">
+          <div className="grid md:grid-cols-2 gap-4">
             {openRoles.map((role, index) => (
-              <div key={index} className="bg-white rounded-2xl p-6 border border-slate-200 hover:border-slate-300 hover:shadow-lg transition-all group cursor-pointer">
-                <div className="flex items-start justify-between">
-                  <div>
-                    <h3 className="text-lg font-bold text-slate-900 group-hover:text-blue-600 transition-colors">{role.title}</h3>
-                    <div className="flex gap-3 mt-2 text-sm text-slate-500">
-                      <span>{role.type}</span>
-                      <span>•</span>
-                      <span>{role.location}</span>
-                    </div>
+              <div
+                key={index}
+                onClick={() => handleRoleClick(role.title)}
+                className="group relative bg-white rounded-2xl p-6 sm:p-8 border border-slate-200 hover:border-blue-500/30 hover:shadow-lg hover:shadow-blue-500/5 transition-all duration-300 cursor-pointer overflow-hidden"
+              >
+                <div className="absolute top-0 right-0 p-6 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                  <span className="flex items-center gap-1 text-sm font-semibold text-blue-600">
+                    Apply Now <ChevronRight className="w-4 h-4" />
+                  </span>
+                </div>
+
+                <h3 className="text-xl font-bold text-slate-900 mb-4 group-hover:text-blue-600 transition-colors">{role.title}</h3>
+
+                <div className="flex flex-wrap items-center gap-4 text-sm text-slate-500">
+                  <div className="flex items-center gap-1.5 bg-slate-50 px-3 py-1.5 rounded-md">
+                    <Briefcase className="w-4 h-4" />
+                    <span>{role.type}</span>
                   </div>
-                  <svg className="w-5 h-5 text-slate-300 group-hover:text-blue-600 group-hover:translate-x-1 transition-all" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                  </svg>
+                  <div className="flex items-center gap-1.5 bg-slate-50 px-3 py-1.5 rounded-md">
+                    <MapPin className="w-4 h-4" />
+                    <span>{role.location}</span>
+                  </div>
                 </div>
               </div>
             ))}
@@ -246,110 +277,128 @@ export default function HiringPage() {
       </section>
 
       {/* Application Form */}
-      <section className="py-12 sm:py-20 lg:py-32 bg-white">
+      <section ref={formRef} className="py-20 sm:py-32 bg-white relative">
         <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-8 sm:mb-16">
-            <h2 className="text-2xl sm:text-4xl lg:text-5xl font-bold text-slate-900 mb-4 sm:mb-6">Apply now</h2>
-            <p className="text-base sm:text-lg text-slate-600">Tell us about yourself and why you want to join RailQuick.</p>
+          <div className="text-center mb-12">
+            <h2 className="text-3xl sm:text-4xl font-bold text-slate-900 mb-4">Ready to join?</h2>
+            <p className="text-lg text-slate-600">Tell us a bit about yourself. We read every application.</p>
           </div>
 
-          <form onSubmit={handleSubmit} className="bg-slate-50 rounded-3xl p-6 sm:p-8 lg:p-12 space-y-6">
+          <form onSubmit={handleSubmit} className="space-y-6 sm:space-y-8">
             <div className="grid sm:grid-cols-2 gap-6">
-              <div>
-                <label className="block text-sm font-semibold text-slate-900 mb-2">Full Name</label>
+              <div className="space-y-2">
+                <label className="text-sm font-medium text-slate-700">Full Name</label>
                 <Input
-                  type="text"
-                  placeholder="Your full name"
+                  required
+                  placeholder="John Doe"
                   value={formData.name}
                   onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                  required
-                  className="w-full h-14 px-5 bg-white border-slate-200 rounded-xl"
+                  className="h-12 bg-slate-50 border-slate-200 focus:bg-white transition-all"
                 />
               </div>
-              <div>
-                <label className="block text-sm font-semibold text-slate-900 mb-2">Email Address</label>
+              <div className="space-y-2">
+                <label className="text-sm font-medium text-slate-700">Email Address</label>
                 <Input
+                  required
                   type="email"
-                  placeholder="Your email"
+                  placeholder="john@example.com"
                   value={formData.email}
                   onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                  required
-                  className="w-full h-14 px-5 bg-white border-slate-200 rounded-xl"
+                  className="h-12 bg-slate-50 border-slate-200 focus:bg-white transition-all"
                 />
               </div>
             </div>
 
-            <div>
-              <label className="block text-sm font-semibold text-slate-900 mb-2">Phone Number</label>
-              <Input
-                type="tel"
-                placeholder="Your phone number"
-                value={formData.phone}
-                onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                className="w-full h-14 px-5 bg-white border-slate-200 rounded-xl"
-              />
+            <div className="grid sm:grid-cols-2 gap-6">
+              <div className="space-y-2">
+                <label className="text-sm font-medium text-slate-700">Phone Number</label>
+                <Input
+                  required
+                  type="tel"
+                  placeholder="+91 98765 43210"
+                  value={formData.phone}
+                  onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                  className="h-12 bg-slate-50 border-slate-200 focus:bg-white transition-all"
+                />
+              </div>
+              <div className="space-y-2">
+                <label className="text-sm font-medium text-slate-700">Role Applying For</label>
+                <Input
+                  required
+                  placeholder="Select a role above"
+                  value={formData.role}
+                  onChange={(e) => setFormData({ ...formData, role: e.target.value })}
+                  className="h-12 bg-slate-50 border-slate-200 focus:bg-white transition-all font-medium text-slate-900"
+                />
+              </div>
             </div>
 
-            <div>
-              <label className="block text-sm font-semibold text-slate-900 mb-2">Why do you want to join us?</label>
-              <Textarea
-                placeholder="Tell us your motivation..."
-                value={formData.reason}
-                onChange={(e) => setFormData({ ...formData, reason: e.target.value })}
+            <div className="space-y-2">
+              <label className="text-sm font-medium text-slate-700">LinkedIn Profile / Portfolio</label>
+              <Input
                 required
-                rows={4}
-                className="w-full px-5 py-4 bg-white border-slate-200 rounded-xl resize-none"
-              />
-            </div>
-
-            <div>
-              <label className="block text-sm font-semibold text-slate-900 mb-2">LinkedIn Profile URL</label>
-              <Input
                 type="url"
-                placeholder="https://linkedin.com/in/..."
+                placeholder="https://linkedin.com/in/johndoe"
                 value={formData.linkedin}
                 onChange={(e) => setFormData({ ...formData, linkedin: e.target.value })}
-                required
-                className="w-full h-14 px-5 bg-white border-slate-200 rounded-xl"
+                className="h-12 bg-slate-50 border-slate-200 focus:bg-white transition-all"
               />
             </div>
 
-            <div>
-              <label className="block text-sm font-semibold text-slate-900 mb-2">Previous Work / Journey</label>
+            <div className="space-y-2">
+              <label className="text-sm font-medium text-slate-700">Why RailQuick?</label>
               <Textarea
-                placeholder="Highlight your best work..."
+                required
+                placeholder="What excites you about our mission?"
+                value={formData.reason}
+                onChange={(e) => setFormData({ ...formData, reason: e.target.value })}
+                className="min-h-[120px] bg-slate-50 border-slate-200 focus:bg-white transition-all resize-none p-4"
+              />
+            </div>
+
+            <div className="space-y-2">
+              <label className="text-sm font-medium text-slate-700">Tell us about your journey</label>
+              <Textarea
+                required
+                placeholder="What have you built or achieved that you're proud of?"
                 value={formData.journey}
                 onChange={(e) => setFormData({ ...formData, journey: e.target.value })}
-                rows={4}
-                className="w-full px-5 py-4 bg-white border-slate-200 rounded-xl resize-none"
+                className="min-h-[120px] bg-slate-50 border-slate-200 focus:bg-white transition-all resize-none p-4"
               />
             </div>
 
             <Button
               type="submit"
               disabled={isSubmitting}
-              className="w-full h-14 bg-slate-900 hover:bg-slate-800 text-white rounded-xl font-semibold shadow-xl shadow-slate-900/20 transition-all hover:shadow-2xl hover:shadow-slate-900/30 hover:-translate-y-0.5 disabled:opacity-50"
+              className="w-full h-14 bg-slate-900 hover:bg-slate-800 text-white rounded-xl font-semibold shadow-xl shadow-slate-900/10 transition-all hover:shadow-2xl hover:shadow-slate-900/20 hover:-translate-y-0.5 disabled:opacity-70 disabled:cursor-not-allowed"
             >
-              {isSubmitting ? 'Submitting...' : 'Submit Application'}
+              {isSubmitting ? (
+                <span className="flex items-center gap-2">
+                  <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                  Submitting Application...
+                </span>
+              ) : (
+                'Submit Application'
+              )}
             </Button>
           </form>
         </div>
       </section>
 
       {/* Footer */}
-      <footer className="bg-slate-950 pt-12 sm:pt-16 pb-8">
+      <footer className="bg-white border-t border-slate-100 pt-16 pb-8">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col md:flex-row justify-between items-center gap-6 mb-8">
-            <Link href="/" className="text-xl sm:text-2xl font-bold text-white">RailQuick</Link>
-            <div className="flex gap-6 text-slate-400">
-              <Link href="/" className="hover:text-white transition-colors">Home</Link>
-              <Link href="/about" className="hover:text-white transition-colors">About</Link>
-              <Link href="/contact" className="hover:text-white transition-colors">Contact</Link>
-              <Link href="/hiring" className="hover:text-white transition-colors">Careers</Link>
+            <Link href="/" className="text-xl font-bold text-slate-900">RailQuick</Link>
+            <div className="flex gap-8 text-sm font-medium text-slate-500">
+              <Link href="/" className="hover:text-slate-900 transition-colors">Home</Link>
+              <Link href="/about" className="hover:text-slate-900 transition-colors">About</Link>
+              <Link href="/contact" className="hover:text-slate-900 transition-colors">Contact</Link>
+              <Link href="/hiring" className="hover:text-slate-900 transition-colors">Careers</Link>
             </div>
           </div>
-          <div className="border-t border-slate-800 pt-8 text-center">
-            <p className="text-slate-500">© 2026 RailQuick. Revolutionizing train travel.</p>
+          <div className="border-t border-slate-100 pt-8 text-center">
+            <p className="text-sm text-slate-400">© 2026 RailQuick. All rights reserved.</p>
           </div>
         </div>
       </footer>
