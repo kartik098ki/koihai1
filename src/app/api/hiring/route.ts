@@ -45,13 +45,21 @@ export async function POST(request: NextRequest) {
     });
 
     if (!response.ok) {
-      const errorText = await response.text();
-      console.error('SheetDB error:', errorText);
+      let errorMessage = 'Failed to submit application. Please try again.';
+      try {
+        const errorData = await response.text();
+        console.error('SheetDB error response:', errorData);
+      } catch (e) {
+        console.error('SheetDB error:', response.status, response.statusText);
+      }
       return NextResponse.json(
-        { success: false, message: 'Failed to submit application. Please try again.' },
+        { success: false, message: errorMessage },
         { status: 500 }
       );
     }
+
+    const result = await response.json();
+    console.log('SheetDB success:', result);
 
     return NextResponse.json({
       success: true,

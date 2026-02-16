@@ -33,18 +33,27 @@ export async function POST(request: NextRequest) {
           email,
           name: name || '',
           created_at: new Date().toISOString(),
+          type: 'waitlist',
         },
       }),
     });
 
     if (!response.ok) {
-      const errorData = await response.json();
-      console.error('SheetDB error:', errorData);
+      let errorMessage = 'Failed to join waitlist. Please try again.';
+      try {
+        const errorData = await response.text();
+        console.error('SheetDB error response:', errorData);
+      } catch (e) {
+        console.error('SheetDB error:', response.status, response.statusText);
+      }
       return NextResponse.json(
-        { success: false, message: 'Failed to join waitlist. Please try again.' },
+        { success: false, message: errorMessage },
         { status: 500 }
       );
     }
+
+    const result = await response.json();
+    console.log('SheetDB success:', result);
 
     return NextResponse.json({
       success: true,
