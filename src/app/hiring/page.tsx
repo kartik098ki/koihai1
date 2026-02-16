@@ -7,17 +7,13 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { toast } from "@/hooks/use-toast";
 
-const SUPABASE_URL = 'https://lviykwlunvdfjizxpgvd.supabase.co';
-const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imx2aXlrd2x1bnZkZmppenhwZ3ZkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjI2NzUyOTYsImV4cCI6MjA3ODI1MTI5Nn0.ugD5GHsfYLKKRidFkvKL8fhQ0U_xXLxrT3lf18g0NW8';
+const HIRING_API = '/api/hiring';
 
-async function submitToSupabase(table: string, data: Record<string, string>) {
-  const response = await fetch(`${SUPABASE_URL}/rest/v1/${table}`, {
+async function submitToSheetDB(data: Record<string, string>) {
+  const response = await fetch(HIRING_API, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
-      'apikey': SUPABASE_ANON_KEY,
-      'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
-      'Prefer': 'return=minimal'
     },
     body: JSON.stringify(data)
   });
@@ -80,7 +76,7 @@ export default function HiringPage() {
     e.preventDefault();
     setIsSubmitting(true);
     try {
-      const success = await submitToSupabase('applications', formData);
+      const success = await submitToSheetDB(formData);
       if (success) {
         toast({ title: 'Application Submitted!', description: 'We\'ll review and get back to you.' });
         setFormData({ name: '', email: '', phone: '', reason: '', linkedin: '', journey: '' });

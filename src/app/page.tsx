@@ -6,16 +6,25 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { toast } from "@/hooks/use-toast";
 
-// SheetDB config
-const SHEETDB_API = 'https://sheetdb.io/api/v1/o9zpj4gue014w';
-
-async function submitToSheetDB(data: Record<string, string>) {
-  const response = await fetch(SHEETDB_API, {
+// Submit to backend API routes
+async function submitToWaitlist(email: string) {
+  const response = await fetch('/api/waitlist', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
     },
-    body: JSON.stringify({ data })
+    body: JSON.stringify({ email })
+  });
+  return response.ok;
+}
+
+async function submitContact(data: Record<string, string>) {
+  const response = await fetch('/api/contact', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(data)
   });
   return response.ok;
 }
@@ -144,7 +153,7 @@ export default function HomePage() {
     e.preventDefault();
     setIsSubmitting(true);
     try {
-      const success = await submitToSheetDB({ email: waitlistEmail });
+      const success = await submitToWaitlist(waitlistEmail);
       if (success) {
         toast({ title: 'Success!', description: 'You\'ve joined the waitlist!' });
         setWaitlistEmail('');
@@ -161,7 +170,7 @@ export default function HomePage() {
     e.preventDefault();
     setModalSubmitting(true);
     try {
-      const success = await submitToSheetDB({ email: modalEmail });
+      const success = await submitToWaitlist(modalEmail);
       if (success) {
         toast({ title: 'Success!', description: 'We\'ll notify you when we launch!' });
         setModalEmail('');
