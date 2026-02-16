@@ -30,10 +30,15 @@ export async function POST(request: NextRequest) {
       },
       body: JSON.stringify({
         data: {
-          email,
-          name: name || '',
-          created_at: new Date().toISOString(),
-          type: 'waitlist',
+          "Date": new Date().toISOString(),
+          "Form Type": "waitlist",
+          "Name": name || "",
+          "Email": email,
+          "Phone": "",
+          "LinkedIn": "",
+          "Reason": "",
+          "Journey": "",
+          "Inquiry": "",
         },
       }),
     });

@@ -31,11 +31,15 @@ export async function POST(request: NextRequest) {
       },
       body: JSON.stringify({
         data: {
-          name,
-          email,
-          inquiry,
-          created_at: new Date().toISOString(),
-          type: 'contact',
+          "Date": new Date().toISOString(),
+          "Form Type": "contact",
+          "Name": name,
+          "Email": email,
+          "Phone": "",
+          "LinkedIn": "",
+          "Reason": "",
+          "Journey": "",
+          "Inquiry": inquiry,
         },
       }),
     });
