@@ -1,7 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 
-const SUPABASE_URL = 'https://lviykwlunvdfjizxpgvd.supabase.co';
-const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imx2aXlrd2x1bnZkZmppenhwZ3ZkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjI2NzUyOTYsImV4cCI6MjA3ODI1MTI5Nn0.ugD5GHsfYLKKRidFkvKL8fhQ0U_xXLxrT3lf18g0NW8';
+const SHEETDB_API = 'https://sheetdb.io/api/v1/o9zpj4gue014w';
 
 export async function POST(request: NextRequest) {
   try {
@@ -25,29 +24,29 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    const response = await fetch(`${SUPABASE_URL}/rest/v1/applications`, {
+    const response = await fetch(SHEETDB_API, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'apikey': SUPABASE_ANON_KEY,
-        'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
-        'Prefer': 'return=minimal',
       },
       body: JSON.stringify({
-        name,
-        email,
-        phone: phone || null,
-        reason,
-        linkedin,
-        journey: journey || null,
-        status: 'pending',
-        created_at: new Date().toISOString(),
+        data: {
+          name,
+          email,
+          phone: phone || '',
+          reason,
+          linkedin,
+          journey: journey || '',
+          status: 'pending',
+          created_at: new Date().toISOString(),
+          type: 'hiring',
+        },
       }),
     });
 
     if (!response.ok) {
       const errorText = await response.text();
-      console.error('Supabase error:', errorText);
+      console.error('SheetDB error:', errorText);
       return NextResponse.json(
         { success: false, message: 'Failed to submit application. Please try again.' },
         { status: 500 }

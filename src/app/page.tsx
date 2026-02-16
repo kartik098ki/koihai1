@@ -6,20 +6,16 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { toast } from "@/hooks/use-toast";
 
-// Supabase config
-const SUPABASE_URL = 'https://lviykwlunvdfjizxpgvd.supabase.co';
-const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imx2aXlrd2x1bnZkZmppenhwZ3ZkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjI2NzUyOTYsImV4cCI6MjA3ODI1MTI5Nn0.ugD5GHsfYLKKRidFkvKL8fhQ0U_xXLxrT3lf18g0NW8';
+// SheetDB config
+const SHEETDB_API = 'https://sheetdb.io/api/v1/o9zpj4gue014w';
 
-async function submitToSupabase(table: string, data: Record<string, string>) {
-  const response = await fetch(`${SUPABASE_URL}/rest/v1/${table}`, {
+async function submitToSheetDB(data: Record<string, string>) {
+  const response = await fetch(SHEETDB_API, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
-      'apikey': SUPABASE_ANON_KEY,
-      'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
-      'Prefer': 'return=minimal'
     },
-    body: JSON.stringify(data)
+    body: JSON.stringify({ data })
   });
   return response.ok;
 }
@@ -148,7 +144,7 @@ export default function HomePage() {
     e.preventDefault();
     setIsSubmitting(true);
     try {
-      const success = await submitToSupabase('notifications', { email: waitlistEmail });
+      const success = await submitToSheetDB({ email: waitlistEmail });
       if (success) {
         toast({ title: 'Success!', description: 'You\'ve joined the waitlist!' });
         setWaitlistEmail('');
@@ -165,7 +161,7 @@ export default function HomePage() {
     e.preventDefault();
     setModalSubmitting(true);
     try {
-      const success = await submitToSupabase('notifications', { email: modalEmail });
+      const success = await submitToSheetDB({ email: modalEmail });
       if (success) {
         toast({ title: 'Success!', description: 'We\'ll notify you when we launch!' });
         setModalEmail('');
