@@ -6,7 +6,8 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { toast } from "@/hooks/use-toast";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
+import { CheckCircle2, Instagram, Linkedin, Mail } from "lucide-react";
 
 const CONTACT_API = '/api/contact';
 
@@ -53,20 +54,22 @@ const founders = [
   {
     name: 'Kartik Guleria',
     email: 'kartikguleria12@gmail.com',
+    linkedin: 'https://www.linkedin.com/in/kartikguleria1/',
     gradient: 'from-blue-500 to-cyan-400',
   },
   {
     name: 'Harshit Sinha',
     email: 'sinhah166@gmail.com',
+    linkedin: 'https://www.linkedin.com/in/harshit-sinha-3833172a1/',
     gradient: 'from-purple-500 to-pink-400',
   },
 ];
 
 export default function ContactPage() {
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [headerScrolled, setHeaderScrolled] = useState(false);
   const [formData, setFormData] = useState({ name: '', email: '', inquiry: '' });
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [showSuccessOverlay, setShowSuccessOverlay] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => setHeaderScrolled(window.scrollY > 50);
@@ -74,22 +77,14 @@ export default function ContactPage() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  useEffect(() => {
-    if (mobileMenuOpen) {
-      document.body.style.overflow = 'hidden';
-    } else {
-      document.body.style.overflow = 'unset';
-    }
-  }, [mobileMenuOpen]);
-
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
     try {
       const success = await submitToSheetDB(formData);
       if (success) {
-        toast({ title: 'Message Sent!', description: 'We\'ll get back to you soon.' });
         setFormData({ name: '', email: '', inquiry: '' });
+        setShowSuccessOverlay(true);
       } else {
         toast({ title: 'Error', description: 'Failed to send message.', variant: 'destructive' });
       }
@@ -132,63 +127,38 @@ export default function ContactPage() {
 
             <div className="hidden md:block">
               <Link href="/#waitlist">
-                <Button className="bg-slate-900 hover:bg-slate-800 text-white rounded-full px-6 shadow-lg shadow-slate-900/20 transition-all hover:shadow-xl hover:shadow-slate-900/30 hover:-translate-y-0.5 active:scale-95">
+                <Button className="bg-slate-900 hover:bg-slate-800 text-white rounded-full px-6 h-11 shadow-lg shadow-slate-900/10 transition-all hover:shadow-xl hover:shadow-slate-900/20 hover:-translate-y-0.5 font-medium">
                   Join Waitlist
                 </Button>
               </Link>
             </div>
+          </div>
+        </div>
 
-            <button onClick={() => setMobileMenuOpen(!mobileMenuOpen)} className="md:hidden p-2 text-slate-600 hover:text-slate-900 transition-colors">
-              {mobileMenuOpen ? (
-                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                </svg>
-              ) : (
-                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-                </svg>
-              )}
-            </button>
+        {/* Professional Mobile Navigation - Pill Style */}
+        <div className="md:hidden border-t border-slate-100 bg-white/80 backdrop-blur-md sticky top-0 z-40 overflow-x-auto no-scrollbar py-3">
+          <div className="flex items-center justify-center gap-2 px-4 min-w-max">
+            {[
+              { label: 'Home', href: '/' },
+              { label: 'About', href: '/about' },
+              { label: 'Test Phase', href: '/test-phase' },
+              { label: 'Contact', href: '/contact' },
+              { label: 'Hiring', href: '/hiring' },
+            ].map((item) => (
+              <Link
+                key={item.label}
+                href={item.href}
+                className={`px-5 py-2.5 rounded-full text-sm font-bold transition-all duration-300 ${item.href === '/contact'
+                  ? 'bg-slate-900 text-white shadow-lg shadow-slate-900/20 scale-105'
+                  : 'text-slate-500 hover:text-slate-900 hover:bg-slate-100'
+                  }`}
+              >
+                {item.label}
+              </Link>
+            ))}
           </div>
         </div>
       </nav>
-
-      {/* Mobile Menu - Outside Nav for visibility */}
-      {mobileMenuOpen && (
-        <div className="md:hidden fixed inset-0 z-[60] pt-[64px] bg-white/98 backdrop-blur-xl animate-in slide-in-from-top duration-300">
-          <div className="px-6 py-8 space-y-8 overflow-y-auto h-full pb-20">
-            <div className="flex flex-col gap-6">
-              {[
-                { label: 'Home', href: '/' },
-                { label: 'About', href: '/about' },
-                { label: 'Test Phase', href: '/test-phase' },
-                { label: 'Contact', href: '/contact' },
-                { label: "We're Hiring", href: '/hiring' },
-              ].map((item) => (
-                <Link
-                  key={item.label}
-                  href={item.href}
-                  onClick={() => setMobileMenuOpen(false)}
-                  className="text-3xl font-bold text-slate-900 active:text-blue-600 transition-colors py-3 border-b border-slate-100 flex items-center justify-between group"
-                >
-                  {item.label}
-                  <svg className="w-6 h-6 text-slate-300 group-active:text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                  </svg>
-                </Link>
-              ))}
-            </div>
-            <div className="pt-6">
-              <Button
-                onClick={() => { setMobileMenuOpen(false); }}
-                className="w-full h-16 bg-slate-900 text-white rounded-2xl text-xl font-bold shadow-2xl shadow-slate-900/20 active:scale-[0.98] transition-all"
-              >
-                Join Waitlist
-              </Button>
-            </div>
-          </div>
-        </div>
-      )}
 
       {/* Hero */}
       <section className="pt-32 pb-20 lg:pt-48 lg:pb-32 relative overflow-hidden">
@@ -213,9 +183,9 @@ export default function ContactPage() {
             transition={{ duration: 0.6, delay: 0.1 }}
             className="text-4xl sm:text-6xl lg:text-7xl font-bold text-slate-900 mb-6 leading-[1.1] tracking-tight"
           >
-            Let&apos;s start a
+            Contact
             <br />
-            <span className="bg-gradient-to-r from-blue-600 via-cyan-500 to-blue-600 bg-clip-text text-transparent bg-[length:200%_auto] animate-gradient">conversation</span>
+            <span className="bg-gradient-to-r from-blue-600 via-cyan-500 to-blue-600 bg-clip-text text-transparent bg-[length:200%_auto] animate-gradient">RailQuick</span>
           </motion.h1>
 
           <motion.p
@@ -267,12 +237,11 @@ export default function ContactPage() {
                 <h3 className="text-2xl font-bold text-slate-900 mb-6">Direct Founders Access</h3>
                 <div className="grid gap-4">
                   {founders.map((founder, index) => (
-                    <a
+                    <div
                       key={index}
-                      href={`mailto:${founder.email}`}
                       className="group relative overflow-hidden flex items-center gap-4 p-4 bg-white rounded-2xl border border-slate-100 shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all duration-300"
                     >
-                      <div className={`absolute inset-0 bg-gradient-to-r ${founder.gradient} opacity-0 group-hover:opacity-5 transition-opacity duration-300`} />
+                      <div className={`absolute inset-0 bg-gradient-to-r ${founder.gradient} opacity-0 group-hover:opacity-5 transition-opacity duration-300 pointer-events-none`} />
                       <div className={`flex-shrink-0 w-12 h-12 bg-gradient-to-br ${founder.gradient} rounded-xl flex items-center justify-center text-white shadow-md group-hover:shadow-lg group-hover:scale-110 transition-all duration-300`}>
                         <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
@@ -280,14 +249,18 @@ export default function ContactPage() {
                       </div>
                       <div className="flex-1 min-w-0">
                         <p className="font-bold text-slate-900 truncate">{founder.name}</p>
-                        <p className="text-sm text-slate-500 group-hover:text-blue-600 transition-colors truncate">{founder.email}</p>
+                        <div className="flex gap-3 mt-1">
+                          <a href={`mailto:${founder.email}`} className="text-sm text-slate-500 hover:text-blue-600 transition-colors truncate flex items-center gap-1">
+                            <Mail className="w-3.5 h-3.5" />
+                            Email
+                          </a>
+                          <a href={founder.linkedin} target="_blank" rel="noopener noreferrer" className="text-sm text-slate-500 hover:text-blue-600 transition-colors truncate flex items-center gap-1">
+                            <Linkedin className="w-3.5 h-3.5 text-[#0077b5]" strokeWidth={2.5} />
+                            LinkedIn
+                          </a>
+                        </div>
                       </div>
-                      <div className="w-8 h-8 rounded-full bg-slate-50 flex items-center justify-center text-slate-400 group-hover:bg-blue-50 group-hover:text-blue-600 transition-all">
-                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
-                        </svg>
-                      </div>
-                    </a>
+                    </div>
                   ))}
                 </div>
               </div>
@@ -302,9 +275,7 @@ export default function ContactPage() {
                       )
                     },
                     {
-                      href: 'https://www.instagram.com/railquick/', icon: (
-                        <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z" /></svg>
-                      )
+                      href: 'https://www.instagram.com/railquick/', icon: <Instagram className="w-5 h-5" />
                     },
                   ].map((social, i) => (
                     <a
@@ -388,6 +359,42 @@ export default function ContactPage() {
           </div>
         </div>
       </footer>
-    </div>
+      {/* Success Overlay */}
+      <AnimatePresence>
+        {showSuccessOverlay && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-[200] flex items-center justify-center p-4 bg-slate-900/90 backdrop-blur-md"
+          >
+            <motion.div
+              initial={{ scale: 0.9, y: 20 }}
+              animate={{ scale: 1, y: 0 }}
+              exit={{ scale: 0.9, y: 20 }}
+              className="bg-white rounded-3xl p-8 sm:p-12 max-w-lg w-full text-center relative overflow-hidden"
+            >
+              <div className="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-blue-600 to-cyan-500" />
+
+              <div className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-8 animate-bounce-subtle">
+                <CheckCircle2 className="w-10 h-10 text-green-600" />
+              </div>
+
+              <h2 className="text-3xl sm:text-4xl font-black text-slate-900 mb-4 tracking-tight">Message Sent! 🚀</h2>
+              <p className="text-lg text-slate-600 mb-10 leading-relaxed">
+                Thank you for reaching out to RailQuick. We&apos;ll get back to you as soon as possible!
+              </p>
+
+              <Button
+                onClick={() => setShowSuccessOverlay(false)}
+                className="w-full h-14 bg-slate-900 hover:bg-slate-800 text-white rounded-2xl font-bold text-lg shadow-xl shadow-slate-900/20 transition-all hover:-translate-y-1"
+              >
+                Awesome!
+              </Button>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </div >
   );
 }

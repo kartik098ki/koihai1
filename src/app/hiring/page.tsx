@@ -3,10 +3,11 @@
 import Link from "next/link";
 import { useState, useEffect, useRef } from "react";
 import { Button } from "@/components/ui/button";
+import { motion } from "framer-motion";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { toast } from "@/hooks/use-toast";
-import { Zap, TrendingUp, HeartHandshake, Briefcase, MapPin, Clock, CheckCircle2, ChevronRight, Menu, X } from "lucide-react";
+import { Zap, TrendingUp, HeartHandshake, Briefcase, MapPin, Clock, CheckCircle2, ChevronRight } from "lucide-react";
 
 const HIRING_API = '/api/hiring';
 
@@ -50,7 +51,6 @@ const openRoles = [
 ];
 
 export default function HiringPage() {
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [headerScrolled, setHeaderScrolled] = useState(false);
   const [formData, setFormData] = useState({ name: '', email: '', phone: '', role: '', reason: '', linkedin: '', journey: '' });
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -61,14 +61,6 @@ export default function HiringPage() {
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
-
-  useEffect(() => {
-    if (mobileMenuOpen) {
-      document.body.style.overflow = 'hidden';
-    } else {
-      document.body.style.overflow = 'unset';
-    }
-  }, [mobileMenuOpen]);
 
   const handleRoleClick = (roleTitle: string) => {
     setFormData(prev => ({ ...prev, role: roleTitle }));
@@ -130,48 +122,34 @@ export default function HiringPage() {
                 </Button>
               </Link>
             </div>
+          </div>
+        </div>
 
-            <button onClick={() => setMobileMenuOpen(!mobileMenuOpen)} className="md:hidden p-2 text-slate-600 hover:bg-slate-100 rounded-lg transition-colors">
-              {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
-            </button>
+        {/* Professional Mobile Navigation - Pill Style */}
+        <div className="md:hidden border-t border-slate-100 bg-white/80 backdrop-blur-md sticky top-0 z-40 overflow-x-auto no-scrollbar py-3">
+          <div className="flex items-center justify-center gap-2 px-4 min-w-max">
+            {[
+              { label: 'Home', href: '/' },
+              { label: 'About', href: '/about' },
+              { label: 'Test Phase', href: '/test-phase' },
+              { label: 'Contact', href: '/contact' },
+              { label: 'Hiring', href: '/hiring' },
+            ].map((item) => (
+              <Link
+                key={item.label}
+                href={item.href}
+                className={`px-5 py-2.5 rounded-full text-sm font-bold transition-all duration-300 ${item.href === '/hiring'
+                  ? 'bg-slate-900 text-white shadow-lg shadow-slate-900/20 scale-105'
+                  : 'text-slate-500 hover:text-slate-900 hover:bg-slate-100'
+                  }`}
+              >
+                {item.label}
+              </Link>
+            ))}
           </div>
         </div>
       </nav>
 
-      {/* Mobile Menu - Outside Nav for visibility */}
-      {mobileMenuOpen && (
-        <div className="md:hidden fixed inset-0 z-[60] pt-[64px] bg-white/98 backdrop-blur-xl animate-in slide-in-from-top duration-300">
-          <div className="px-6 py-8 space-y-8 overflow-y-auto h-full pb-20">
-            <div className="flex flex-col gap-6">
-              {[
-                { label: 'Home', href: '/' },
-                { label: 'About', href: '/about' },
-                { label: 'Test Phase', href: '/test-phase' },
-                { label: 'Contact', href: '/contact' },
-                { label: "We're Hiring", href: '/hiring' },
-              ].map((item) => (
-                <Link
-                  key={item.label}
-                  href={item.href}
-                  onClick={() => setMobileMenuOpen(false)}
-                  className="text-3xl font-bold text-slate-900 active:text-blue-600 transition-colors py-3 border-b border-slate-100 flex items-center justify-between group"
-                >
-                  {item.label}
-                  <ChevronRight className="w-6 h-6 text-slate-300 group-active:text-blue-600" />
-                </Link>
-              ))}
-            </div>
-            <div className="pt-6">
-              <Button
-                onClick={() => { setMobileMenuOpen(false); }}
-                className="w-full h-16 bg-slate-900 text-white rounded-2xl text-xl font-bold shadow-2xl shadow-slate-900/20 active:scale-[0.98] transition-all"
-              >
-                Join Waitlist
-              </Button>
-            </div>
-          </div>
-        </div>
-      )}
 
       {/* Hero */}
       <section className="pt-32 pb-16 sm:pt-40 sm:pb-24 lg:pt-48 lg:pb-32 relative overflow-hidden">
@@ -189,10 +167,8 @@ export default function HiringPage() {
           </div>
 
           <h1 className="text-4xl sm:text-5xl lg:text-7xl font-bold text-slate-900 mb-6 sm:mb-8 leading-[1.1] tracking-tight animate-in fade-in slide-in-from-bottom-5 duration-700 delay-100">
-            Join the
-            <span className="bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent px-3">logistics</span>
-            <br className="hidden sm:block" />
-            revolution.
+            Work at
+            <span className="bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent px-3">RailQuick</span>
           </h1>
 
           <p className="text-lg sm:text-xl text-slate-600 max-w-2xl mx-auto mb-10 leading-relaxed animate-in fade-in slide-in-from-bottom-6 duration-700 delay-200">

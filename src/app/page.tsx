@@ -5,6 +5,21 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { toast } from "@/hooks/use-toast";
+import { motion, AnimatePresence } from "framer-motion";
+import {
+  Pill,
+  Package,
+  Smartphone,
+  Building2,
+  Bath,
+  Cookie,
+  Zap,
+  CheckCircle2,
+  Box,
+  ChevronRight,
+  Star,
+  ArrowRight,
+} from "lucide-react";
 
 // Submit to backend API routes
 async function submitToWaitlist(email: string) {
@@ -34,32 +49,19 @@ const steps = [
     number: '01',
     title: 'Select Station',
     description: 'Choose your upcoming station from our route list.',
-    icon: (
-      <svg className="w-6 h-6 sm:w-8 sm:h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-      </svg>
-    )
+    icon: <Box className="w-6 h-6 sm:w-8 sm:h-8" />
   },
   {
     number: '02',
     title: 'Add Essentials',
     description: 'Pick medicines, travel items, or daily needs you require.',
-    icon: (
-      <svg className="w-6 h-6 sm:w-8 sm:h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
-      </svg>
-    )
+    icon: <Package className="w-6 h-6 sm:w-8 sm:h-8" />
   },
   {
     number: '03',
     title: 'On-Seat Delivery',
     description: 'We deliver right to your seat/berth on arrival.',
-    icon: (
-      <svg className="w-6 h-6 sm:w-8 sm:h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
-      </svg>
-    )
+    icon: <Zap className="w-6 h-6 sm:w-8 sm:h-8" />
   },
 ];
 
@@ -67,52 +69,38 @@ const products = [
   {
     title: 'Medicines',
     description: 'Essential medicines and basic medical supplies.',
-    gradient: 'from-blue-500 to-cyan-400',
-    icon: (
-      <svg className="w-6 h-6 sm:w-7 sm:h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z" />
-      </svg>
-    )
+    bg: 'bg-slate-50',
+    icon: <Pill className="w-6 h-6 text-slate-600" />
   },
   {
     title: 'Travel Essentials',
     description: 'Blankets, pillows, locks, and travel accessories.',
-    gradient: 'from-purple-500 to-pink-400',
-    icon: (
-      <svg className="w-6 h-6 sm:w-7 sm:h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
-      </svg>
-    )
+    bg: 'bg-slate-50',
+    icon: <Package className="w-6 h-6 text-slate-600" />
   },
   {
     title: 'Electronics',
     description: 'Chargers, power banks, earphones and gadgets.',
-    gradient: 'from-green-500 to-emerald-400',
-    icon: (
-      <svg className="w-6 h-6 sm:w-7 sm:h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z" />
-      </svg>
-    )
+    bg: 'bg-slate-50',
+    icon: <Smartphone className="w-6 h-6 text-slate-600" />
+  },
+  {
+    title: 'City Famous',
+    description: 'Specialities and famous items from your current city.',
+    bg: 'bg-slate-50',
+    icon: <Building2 className="w-6 h-6 text-slate-600" />
   },
   {
     title: 'Toiletries',
     description: 'Personal hygiene products and daily essentials.',
-    gradient: 'from-cyan-500 to-blue-400',
-    icon: (
-      <svg className="w-6 h-6 sm:w-7 sm:h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
-      </svg>
-    )
+    bg: 'bg-slate-50',
+    icon: <Bath className="w-6 h-6 text-slate-600" />
   },
   {
-    title: 'Beverages',
-    description: 'Water bottles, energy drinks, and refreshments.',
-    gradient: 'from-orange-500 to-amber-400',
-    icon: (
-      <svg className="w-6 h-6 sm:w-7 sm:h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-      </svg>
-    )
+    title: 'Snacks',
+    description: 'Quick munchies and travel-friendly snacks.',
+    bg: 'bg-slate-50',
+    icon: <Cookie className="w-6 h-6 text-slate-600" />
   },
 ];
 
@@ -134,10 +122,10 @@ const stats = [
 const brands = ['IIT KGP', 'IIT Delhi', 'Times of India', 'Aaj Tak', 'ANI', 'Delhi Yuva Festival', 'Delhi Government'];
 
 export default function HomePage() {
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [headerScrolled, setHeaderScrolled] = useState(false);
   const [waitlistEmail, setWaitlistEmail] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [showSuccessOverlay, setShowSuccessOverlay] = useState(false);
   const [activeFaq, setActiveFaq] = useState<number | null>(null);
   const [showModal, setShowModal] = useState(false);
   const [modalEmail, setModalEmail] = useState('');
@@ -149,13 +137,6 @@ export default function HomePage() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  useEffect(() => {
-    if (mobileMenuOpen) {
-      document.body.style.overflow = 'hidden';
-    } else {
-      document.body.style.overflow = 'unset';
-    }
-  }, [mobileMenuOpen]);
 
   const handleWaitlistSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -163,8 +144,8 @@ export default function HomePage() {
     try {
       const success = await submitToWaitlist(waitlistEmail);
       if (success) {
-        toast({ title: 'Success!', description: 'You\'ve joined the waitlist!' });
         setWaitlistEmail('');
+        setShowSuccessOverlay(true);
       } else {
         toast({ title: 'Error', description: 'Failed to join waitlist.', variant: 'destructive' });
       }
@@ -180,9 +161,9 @@ export default function HomePage() {
     try {
       const success = await submitToWaitlist(modalEmail);
       if (success) {
-        toast({ title: 'Success!', description: 'We\'ll notify you when we launch!' });
         setModalEmail('');
         setShowModal(false);
+        setShowSuccessOverlay(true);
       } else {
         toast({ title: 'Error', description: 'Failed to submit.', variant: 'destructive' });
       }
@@ -278,59 +259,34 @@ export default function HomePage() {
                 Join Waitlist
               </Button>
             </div>
+          </div>
+        </div>
 
-            {/* Mobile Menu Button */}
-            <button onClick={() => setMobileMenuOpen(!mobileMenuOpen)} className="md:hidden p-2 -mr-2 rounded-lg hover:bg-slate-100">
-              {mobileMenuOpen ? (
-                <svg className="w-6 h-6 text-slate-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                </svg>
-              ) : (
-                <svg className="w-6 h-6 text-slate-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-                </svg>
-              )}
-            </button>
+        {/* Professional Mobile Navigation - Pill Style */}
+        <div className="md:hidden border-t border-slate-100 bg-white/80 backdrop-blur-md sticky top-0 z-40 overflow-x-auto no-scrollbar py-3">
+          <div className="flex items-center justify-center gap-2 px-4 min-w-max">
+            {[
+              { label: 'Home', href: '/' },
+              { label: 'About', href: '/about' },
+              { label: 'Test Phase', href: '/test-phase' },
+              { label: 'Contact', href: '/contact' },
+              { label: 'Hiring', href: '/hiring' },
+            ].map((item) => (
+              <Link
+                key={item.label}
+                href={item.href}
+                className={`px-5 py-2.5 rounded-full text-sm font-bold transition-all duration-300 ${item.href === '/'
+                  ? 'bg-slate-900 text-white shadow-lg shadow-slate-900/20 scale-105'
+                  : 'text-slate-500 hover:text-slate-900 hover:bg-slate-100'
+                  }`}
+              >
+                {item.label}
+              </Link>
+            ))}
           </div>
         </div>
       </nav>
 
-      {/* Mobile Menu - Outside Nav for visibility */}
-      {mobileMenuOpen && (
-        <div className="md:hidden fixed inset-0 z-[60] pt-[64px] bg-white/98 backdrop-blur-xl animate-in slide-in-from-top duration-300">
-          <div className="px-6 py-8 space-y-8 overflow-y-auto h-full pb-20">
-            <div className="flex flex-col gap-6">
-              {[
-                { label: 'Home', href: '/' },
-                { label: 'About', href: '/about' },
-                { label: 'Test Phase', href: '/test-phase' },
-                { label: 'Contact', href: '/contact' },
-                { label: "We're Hiring", href: '/hiring' },
-              ].map((item) => (
-                <Link
-                  key={item.label}
-                  href={item.href}
-                  onClick={() => setMobileMenuOpen(false)}
-                  className="text-3xl font-bold text-slate-900 active:text-blue-600 transition-colors py-3 border-b border-slate-100 flex items-center justify-between group"
-                >
-                  {item.label}
-                  <svg className="w-6 h-6 text-slate-300 group-active:text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                  </svg>
-                </Link>
-              ))}
-            </div>
-            <div className="pt-6">
-              <Button
-                onClick={() => { setMobileMenuOpen(false); setShowModal(true); }}
-                className="w-full h-16 bg-slate-900 text-white rounded-2xl text-xl font-bold shadow-2xl shadow-slate-900/20 active:scale-[0.98] transition-all"
-              >
-                Join Waitlist
-              </Button>
-            </div>
-          </div>
-        </div>
-      )}
 
       {/* Hero Section */}
       <section className="relative min-h-screen flex items-center pt-16 overflow-hidden">
@@ -438,7 +394,7 @@ export default function HomePage() {
           <div className="grid md:grid-cols-3 gap-5 sm:gap-6">
             {steps.map((step, index) => (
               <div key={index} className="relative bg-slate-50 rounded-xl sm:rounded-2xl p-5 sm:p-6 hover:bg-white hover:shadow-lg transition-all duration-300">
-                <div className="absolute top-3 right-3 sm:top-4 sm:right-4 text-4xl sm:text-5xl font-black text-slate-100">
+                <div className="absolute top-3 right-3 sm:top-4 sm:right-4 text-4xl sm:text-5xl font-black text-slate-200/60">
                   {step.number}
                 </div>
                 <div className="relative w-11 h-11 sm:w-14 sm:h-14 bg-white rounded-lg sm:rounded-xl flex items-center justify-center text-slate-900 shadow-sm mb-4">
@@ -460,15 +416,26 @@ export default function HomePage() {
             <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-slate-900">Curated essentials for every journey</h2>
           </div>
 
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 sm:gap-4 lg:gap-5">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-4 sm:gap-6 lg:gap-8">
             {products.map((product, index) => (
-              <div key={index} className="group relative bg-white rounded-xl sm:rounded-2xl p-4 sm:p-5 border border-slate-100 hover:border-transparent hover:shadow-lg transition-all duration-300 text-center">
-                <div className={`w-12 h-12 sm:w-14 sm:h-14 bg-gradient-to-br ${product.gradient} rounded-lg sm:rounded-xl flex items-center justify-center mx-auto mb-3 text-white group-hover:scale-110 transition-transform duration-300`}>
-                  {product.icon}
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: index * 0.1 }}
+                className={`group p-6 sm:p-8 rounded-3xl ${product.bg} border border-slate-100 hover:border-slate-200 hover:shadow-xl transition-all hover:-translate-y-1`}
+              >
+                <div className="flex items-start gap-6">
+                  <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-2xl bg-white shadow-sm flex items-center justify-center group-hover:scale-110 transition-transform">
+                    {product.icon}
+                  </div>
+                  <div className="flex-1">
+                    <h3 className="text-xl sm:text-2xl font-bold text-slate-900 mb-2">{product.title}</h3>
+                    <p className="text-slate-600 leading-relaxed text-sm sm:text-base">{product.description}</p>
+                  </div>
                 </div>
-                <h3 className="text-sm sm:text-base font-bold text-slate-900">{product.title}</h3>
-                <p className="text-xs sm:text-sm text-slate-600 mt-1 hidden sm:block">{product.description}</p>
-              </div>
+              </motion.div>
             ))}
           </div>
         </div>
@@ -537,19 +504,19 @@ export default function HomePage() {
                 title: 'Lightning Fast Delivery',
                 description: 'Get your essentials delivered to your seat at the next station stop.',
                 gradient: 'from-blue-500 to-cyan-400',
-                icon: '⚡'
+                icon: <Zap className="w-6 h-6" />
               },
               {
                 title: 'Quality Guaranteed',
                 description: 'We source only verified, high-quality products for your peace of mind.',
                 gradient: 'from-green-500 to-emerald-400',
-                icon: '✓'
+                icon: <CheckCircle2 className="w-6 h-6" />
               },
               {
                 title: 'Wide Selection',
                 description: 'From medicines to gadgets, we\'ve got everything you might need.',
                 gradient: 'from-purple-500 to-pink-400',
-                icon: '📦'
+                icon: <Package className="w-6 h-6" />
               },
             ].map((feature, index) => (
               <div key={index} className="group relative bg-white rounded-xl sm:rounded-2xl p-5 sm:p-6 border border-slate-100 hover:border-transparent hover:shadow-lg transition-all duration-300">
@@ -670,6 +637,42 @@ export default function HomePage() {
           </div>
         </div>
       </footer>
-    </div >
+      {/* Success Overlay */}
+      <AnimatePresence>
+        {showSuccessOverlay && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-[200] flex items-center justify-center p-4 bg-slate-900/90 backdrop-blur-md"
+          >
+            <motion.div
+              initial={{ scale: 0.9, y: 20 }}
+              animate={{ scale: 1, y: 0 }}
+              exit={{ scale: 0.9, y: 20 }}
+              className="bg-white rounded-3xl p-8 sm:p-12 max-w-lg w-full text-center relative overflow-hidden"
+            >
+              <div className="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-blue-600 to-cyan-500" />
+
+              <div className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-8 animate-bounce-subtle">
+                <CheckCircle2 className="w-10 h-10 text-green-600" />
+              </div>
+
+              <h2 className="text-3xl sm:text-4xl font-black text-slate-900 mb-4 tracking-tight">You&apos;re in! 🚀</h2>
+              <p className="text-lg text-slate-600 mb-10 leading-relaxed">
+                Thank you for joining the RailQuick waitlist. We&apos;ll notify you the moment we launch at your station!
+              </p>
+
+              <Button
+                onClick={() => setShowSuccessOverlay(false)}
+                className="w-full h-14 bg-slate-900 hover:bg-slate-800 text-white rounded-2xl font-bold text-lg shadow-xl shadow-slate-900/20 transition-all hover:-translate-y-1"
+              >
+                Awesome!
+              </Button>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </div>
   );
 }

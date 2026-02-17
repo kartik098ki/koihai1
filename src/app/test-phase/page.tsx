@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
+import { CheckCircle2, Clock, Smartphone, Zap } from "lucide-react";
 
 const phases = [
   {
@@ -72,7 +73,6 @@ const stations = [
 ];
 
 export default function TestPhasePage() {
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [headerScrolled, setHeaderScrolled] = useState(false);
 
   useEffect(() => {
@@ -80,14 +80,6 @@ export default function TestPhasePage() {
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
-
-  useEffect(() => {
-    if (mobileMenuOpen) {
-      document.body.style.overflow = 'hidden';
-    } else {
-      document.body.style.overflow = 'unset';
-    }
-  }, [mobileMenuOpen]);
 
   return (
     <div className="min-h-screen bg-slate-50 font-sans selection:bg-blue-100 selection:text-blue-900">
@@ -128,57 +120,35 @@ export default function TestPhasePage() {
               </Link>
             </div>
 
-            <button onClick={() => setMobileMenuOpen(!mobileMenuOpen)} className="md:hidden p-2 text-slate-600 hover:text-slate-900 transition-colors">
-              {mobileMenuOpen ? (
-                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                </svg>
-              ) : (
-                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-                </svg>
-              )}
-            </button>
+            {/* Mobile Menu Button */}
+
+          </div>
+        </div>
+
+        {/* Professional Mobile Navigation - Pill Style */}
+        <div className="md:hidden border-t border-slate-100 bg-white/80 backdrop-blur-md sticky top-0 z-40 overflow-x-auto no-scrollbar py-3">
+          <div className="flex items-center justify-center gap-2 px-4 min-w-max">
+            {[
+              { label: 'Home', href: '/' },
+              { label: 'About', href: '/about' },
+              { label: 'Test Phase', href: '/test-phase' },
+              { label: 'Contact', href: '/contact' },
+              { label: 'Hiring', href: '/hiring' },
+            ].map((item) => (
+              <Link
+                key={item.label}
+                href={item.href}
+                className={`px-5 py-2.5 rounded-full text-sm font-bold transition-all duration-300 ${item.href === '/test-phase'
+                  ? 'bg-slate-900 text-white shadow-lg shadow-slate-900/20 scale-105'
+                  : 'text-slate-500 hover:text-slate-900 hover:bg-slate-100'
+                  }`}
+              >
+                {item.label}
+              </Link>
+            ))}
           </div>
         </div>
       </nav>
-
-      {/* Mobile Menu - Outside Nav for visibility */}
-      {mobileMenuOpen && (
-        <div className="md:hidden fixed inset-0 z-[60] pt-[64px] bg-white/98 backdrop-blur-xl animate-in slide-in-from-top duration-300">
-          <div className="px-6 py-8 space-y-8 overflow-y-auto h-full pb-20">
-            <div className="flex flex-col gap-6">
-              {[
-                { label: 'Home', href: '/' },
-                { label: 'About', href: '/about' },
-                { label: 'Test Phase', href: '/test-phase' },
-                { label: 'Contact', href: '/contact' },
-                { label: "We're Hiring", href: '/hiring' },
-              ].map((item) => (
-                <Link
-                  key={item.label}
-                  href={item.href}
-                  onClick={() => setMobileMenuOpen(false)}
-                  className="text-3xl font-bold text-slate-900 active:text-blue-600 transition-colors py-3 border-b border-slate-100 flex items-center justify-between group"
-                >
-                  {item.label}
-                  <svg className="w-6 h-6 text-slate-300 group-active:text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                  </svg>
-                </Link>
-              ))}
-            </div>
-            <div className="pt-6">
-              <Button
-                onClick={() => { setMobileMenuOpen(false); }}
-                className="w-full h-16 bg-slate-900 text-white rounded-2xl text-xl font-bold shadow-2xl shadow-slate-900/20 active:scale-[0.98] transition-all"
-              >
-                Join Waitlist
-              </Button>
-            </div>
-          </div>
-        </div>
-      )}
 
       {/* Hero */}
       <section className="pt-32 pb-20 lg:pt-48 lg:pb-32 relative overflow-hidden bg-white">
@@ -293,67 +263,6 @@ export default function TestPhasePage() {
         </div>
       </section>
 
-      {/* Phases Timeline */}
-      <section className="py-20 lg:py-32 bg-white overflow-hidden">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center max-w-2xl mx-auto mb-16">
-            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-slate-900 mb-6 tracking-tight">Our Roadmap</h2>
-            <p className="text-lg text-slate-600">From an idea to reality — the milestones that shaped RailQuick.</p>
-          </div>
-
-          <div className="relative">
-            <div className="absolute left-8 lg:left-1/2 top-0 bottom-0 w-px bg-slate-200 lg:-translate-x-1/2" />
-
-            <div className="space-y-12">
-              {phases.map((phase, index) => (
-                <div key={index} className={`relative flex flex-col lg:flex-row gap-8 lg:gap-16 items-start ${index % 2 === 0 ? '' : 'lg:flex-row-reverse'}`}>
-
-                  {/* Timeline Dot */}
-                  <div className="absolute left-8 lg:left-1/2 w-4 h-4 bg-white border-4 border-blue-500 rounded-full lg:-translate-x-1/2 mt-8 z-10 shadow-sm" />
-
-                  {/* Content Card */}
-                  <motion.div
-                    initial={{ opacity: 0, x: index % 2 === 0 ? -20 : 20 }}
-                    whileInView={{ opacity: 1, x: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 0.6 }}
-                    className="ml-16 lg:ml-0 flex-1 w-full lg:w-[calc(50%-2rem)]"
-                  >
-                    <div className={`bg-white rounded-3xl p-6 sm:p-8 border ${phase.status === 'completed' ? 'border-green-100 bg-green-50/30' : 'border-slate-100 bg-white'} shadow-lg hover:shadow-xl transition-shadow`}>
-                      <div className="flex items-center justify-between mb-4 sm:mb-6">
-                        <span className="text-4xl sm:text-5xl font-black text-slate-100 z-0">{phase.number}</span>
-                        <span className={`px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-wider ${phase.status === 'completed'
-                          ? 'bg-green-100 text-green-700'
-                          : 'bg-blue-100 text-blue-700'
-                          }`}>
-                          {phase.status === 'completed' ? 'Completed' : 'Upcoming'}
-                        </span>
-                      </div>
-
-                      <h3 className="text-xl sm:text-2xl font-bold text-slate-900 mb-2 sm:mb-3">{phase.title}</h3>
-                      <p className="text-sm sm:text-base text-slate-600 mb-4 sm:mb-6 leading-relaxed">{phase.description}</p>
-
-                      <div className="space-y-3">
-                        {phase.achievements.map((achievement, i) => (
-                          <div key={i} className="flex items-start gap-3 text-slate-700">
-                            <svg className={`w-5 h-5 flex-shrink-0 mt-0.5 ${phase.status === 'completed' ? 'text-green-500' : 'text-blue-500'}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                            </svg>
-                            <span className="text-sm font-medium">{achievement}</span>
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-                  </motion.div>
-
-                  <div className="flex-1 hidden lg:block" />
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
-
       {/* Active Stations */}
       <section className="py-20 lg:py-32 bg-slate-900 relative overflow-hidden">
         <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-20" />
@@ -427,6 +336,6 @@ export default function TestPhasePage() {
           </div>
         </div>
       </footer>
-    </div >
+    </div>
   );
 }

@@ -10,18 +10,21 @@ const team = [
     name: 'Kartik Guleria',
     role: 'Founder & CEO',
     description: 'Visionary leader focused on product strategy and the future of rail e-commerce. Passionate about solving real problems for millions of travelers.',
+    linkedin: 'https://www.linkedin.com/in/kartikguleria/',
     gradient: 'from-blue-500 to-cyan-400',
   },
   {
     name: 'Harshit Sinha',
     role: 'Founder & Ops Head',
     description: 'Logistics mastermind ensuring every order meets its destination on time. Expert in building efficient delivery systems at scale.',
+    linkedin: 'https://www.linkedin.com/in/harshitsinha/',
     gradient: 'from-purple-500 to-pink-400',
   },
   {
     name: 'Avni Porwal',
     role: 'Design Lead',
     description: 'Creating seamless and delightful user experiences for our travelers. Bringing creativity and empathy to every design decision.',
+    linkedin: 'https://www.linkedin.com/in/avni-porwal/',
     gradient: 'from-orange-500 to-amber-400',
   },
 ];
@@ -75,7 +78,6 @@ const milestones = [
 ];
 
 export default function AboutPage() {
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [headerScrolled, setHeaderScrolled] = useState(false);
 
   useEffect(() => {
@@ -85,12 +87,10 @@ export default function AboutPage() {
   }, []);
 
   useEffect(() => {
-    if (mobileMenuOpen) {
-      document.body.style.overflow = 'hidden';
-    } else {
-      document.body.style.overflow = 'unset';
-    }
-  }, [mobileMenuOpen]);
+    const handleScroll = () => setHeaderScrolled(window.scrollY > 50);
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   return (
     <div className="min-h-screen bg-white font-sans selection:bg-blue-100 selection:text-blue-900">
@@ -131,57 +131,38 @@ export default function AboutPage() {
               </Link>
             </div>
 
-            <button onClick={() => setMobileMenuOpen(!mobileMenuOpen)} className="md:hidden p-2 text-slate-600 hover:text-slate-900 transition-colors">
-              {mobileMenuOpen ? (
-                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                </svg>
-              ) : (
-                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-                </svg>
-              )}
-            </button>
+            {/* Mobile Menu Button */}
+            <div className="flex md:hidden items-center gap-2">
+              {/* The mobile menu button was removed as per instructions. */}
+            </div>
+          </div>
+        </div>
+
+        {/* Professional Mobile Navigation - Pill Style */}
+        <div className="md:hidden border-t border-slate-100 bg-white/80 backdrop-blur-md sticky top-0 z-40 overflow-x-auto no-scrollbar py-3">
+          <div className="flex items-center justify-center gap-2 px-4 min-w-max">
+            {[
+              { label: 'Home', href: '/' },
+              { label: 'About', href: '/about' },
+              { label: 'Test Phase', href: '/test-phase' },
+              { label: 'Contact', href: '/contact' },
+              { label: 'Hiring', href: '/hiring' },
+            ].map((item) => (
+              <Link
+                key={item.label}
+                href={item.href}
+                className={`px-5 py-2.5 rounded-full text-sm font-bold transition-all duration-300 ${item.href === '/about'
+                  ? 'bg-slate-900 text-white shadow-lg shadow-slate-900/20 scale-105'
+                  : 'text-slate-500 hover:text-slate-900 hover:bg-slate-100'
+                  }`}
+              >
+                {item.label}
+              </Link>
+            ))}
           </div>
         </div>
       </nav>
 
-      {/* Mobile Menu - Outside Nav for visibility */}
-      {mobileMenuOpen && (
-        <div className="md:hidden fixed inset-0 z-[60] pt-[64px] bg-white/98 backdrop-blur-xl animate-in slide-in-from-top duration-300">
-          <div className="px-6 py-8 space-y-8 overflow-y-auto h-full pb-20">
-            <div className="flex flex-col gap-6">
-              {[
-                { label: 'Home', href: '/' },
-                { label: 'About', href: '/about' },
-                { label: 'Test Phase', href: '/test-phase' },
-                { label: 'Contact', href: '/contact' },
-                { label: "We're Hiring", href: '/hiring' },
-              ].map((item) => (
-                <Link
-                  key={item.label}
-                  href={item.href}
-                  onClick={() => setMobileMenuOpen(false)}
-                  className="text-3xl font-bold text-slate-900 active:text-blue-600 transition-colors py-3 border-b border-slate-100 flex items-center justify-between group"
-                >
-                  {item.label}
-                  <svg className="w-6 h-6 text-slate-300 group-active:text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                  </svg>
-                </Link>
-              ))}
-            </div>
-            <div className="pt-6">
-              <Button
-                onClick={() => { setMobileMenuOpen(false); }}
-                className="w-full h-16 bg-slate-900 text-white rounded-2xl text-xl font-bold shadow-2xl shadow-slate-900/20 active:scale-[0.98] transition-all"
-              >
-                Join Waitlist
-              </Button>
-            </div>
-          </div>
-        </div>
-      )}
 
       {/* Hero */}
       <section className="pt-32 pb-20 lg:pt-48 lg:pb-32 relative overflow-hidden bg-white">
@@ -358,7 +339,16 @@ export default function AboutPage() {
                 </div>
 
                 <h3 className="text-2xl font-bold text-slate-900 mb-1">{member.name}</h3>
-                <p className="text-blue-600 font-semibold mb-4">{member.role}</p>
+                <p className="text-blue-600 font-semibold mb-2">{member.role}</p>
+                <a
+                  href={member.linkedin}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 px-3 py-1 bg-slate-50 border border-slate-100 rounded-lg text-slate-500 hover:text-blue-600 hover:bg-blue-50 hover:border-blue-100 transition-all mb-4 text-sm font-medium"
+                >
+                  <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.761 0 5-2.239 5-5v-14c0-2.761-2.239-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" /></svg>
+                  LinkedIn
+                </a>
                 <p className="text-slate-600 max-w-xs mx-auto leading-relaxed">{member.description}</p>
               </motion.div>
             ))}
@@ -366,48 +356,6 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* Timeline */}
-      <section className="py-20 lg:py-32 bg-slate-900 relative overflow-hidden">
-        <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-20" />
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          <div className="text-center max-w-2xl mx-auto mb-20">
-            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-6 tracking-tight">Our journey</h2>
-            <p className="text-lg text-slate-400">From an idea to reality - the milestones that shaped RailQuick.</p>
-          </div>
-
-          <div className="relative">
-            {/* Timeline Line */}
-            <div className="absolute left-8 lg:left-1/2 top-0 bottom-0 w-px bg-slate-800 lg:-translate-x-1/2" />
-
-            <div className="space-y-12 lg:space-y-0">
-              {milestones.map((milestone, index) => (
-                <div key={index} className={`relative lg:grid lg:grid-cols-2 lg:gap-16 ${index % 2 === 0 ? '' : 'lg:direction-rtl'} ${index !== milestones.length - 1 ? 'lg:pb-16' : ''}`}>
-                  {/* Content */}
-                  <motion.div
-                    initial={{ opacity: 0, x: index % 2 === 0 ? -20 : 20 }}
-                    whileInView={{ opacity: 1, x: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 0.6 }}
-                    className={`ml-16 lg:ml-0 lg:${index % 2 === 0 ? 'text-right pr-16' : 'text-left pl-16 col-start-2'}`}
-                  >
-                    <div className="bg-slate-800/50 backdrop-blur-sm border border-slate-700/50 rounded-2xl p-8 hover:bg-slate-800 transition-colors group">
-                      <div className="text-sm font-bold text-blue-400 mb-2">{milestone.year}</div>
-                      <h3 className="text-xl font-bold text-white mb-2 group-hover:text-blue-200 transition-colors">{milestone.title}</h3>
-                      <p className="text-slate-400 leading-relaxed">{milestone.description}</p>
-                    </div>
-                  </motion.div>
-
-                  {/* Dot */}
-                  <div className="absolute left-8 lg:left-1/2 w-4 h-4 bg-slate-900 border-4 border-slate-700 rounded-full lg:-translate-x-1/2 mt-8 z-10 lg:ml-0 -ml-2" />
-
-                  {/* Empty space for grid */}
-                  <div className={index % 2 === 0 ? '' : 'col-start-1 row-start-1'} />
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
 
       {/* CTA */}
       <section className="py-20 lg:py-32 bg-white">
