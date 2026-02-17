@@ -88,10 +88,9 @@ export default function TestPhasePage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6">
           <div className="flex items-center justify-between h-16 sm:h-20">
             <Link href="/" className="flex items-center gap-2 group">
-              <div className="w-8 h-8 sm:w-10 sm:h-10 bg-slate-900 rounded-xl flex items-center justify-center text-white font-black text-sm sm:text-base group-hover:scale-110 transition-transform">R</div>
               <span className="text-xl sm:text-2xl font-bold tracking-tight text-slate-900">RailQuick</span>
             </Link>
-
+            Broadway
             {/* Desktop Nav */}
             <div className="hidden md:flex items-center gap-1 bg-slate-100/50 backdrop-blur-md p-1 rounded-full border border-slate-200/50">
               {[
@@ -319,19 +318,38 @@ export default function TestPhasePage() {
       </section>
 
       {/* Footer */}
-      <footer className="bg-slate-950 pt-16 pb-8 border-t border-slate-900">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex flex-col md:flex-row justify-between items-center gap-8 mb-8">
-            <Link href="/" className="text-2xl font-bold text-white tracking-tight">RailQuick</Link>
-            <div className="flex flex-wrap justify-center gap-8 text-slate-400 font-medium">
-              <Link href="/" className="hover:text-white transition-colors">Home</Link>
-              <Link href="/about" className="hover:text-white transition-colors">About</Link>
-              <Link href="/contact" className="hover:text-white transition-colors">Contact</Link>
-              <Link href="/hiring" className="hover:text-white transition-colors">Careers</Link>
+      <footer className="bg-slate-900 text-white pt-20 pb-10">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6">
+          <div className="flex flex-col items-center text-center space-y-12 mb-16">
+            <div className="max-w-md">
+              <h3 className="text-2xl font-bold mb-6">RailQuick</h3>
+              <p className="text-slate-400 leading-relaxed">
+                Setting new standards for railway convenience through phase-wise development and testing.
+              </p>
+            </div>
+            <div className="grid grid-cols-2 md:grid-cols-3 gap-12 w-full max-w-2xl">
+              <div>
+                <h4 className="font-bold text-lg mb-6">Links</h4>
+                <ul className="space-y-4">
+                  <li><Link href="/" className="text-slate-400 hover:text-white transition-colors">Home</Link></li>
+                  <li><Link href="/about" className="text-slate-400 hover:text-white transition-colors">About</Link></li>
+                </ul>
+              </div>
+              <div>
+                <h4 className="font-bold text-lg mb-6">Support</h4>
+                <ul className="space-y-4">
+                  <li><Link href="/contact" className="text-slate-400 hover:text-white transition-colors">Contact</Link></li>
+                  <li><Link href="#" className="text-slate-400 hover:text-white transition-colors">Terms</Link></li>
+                </ul>
+              </div>
+              <div className="col-span-2 md:col-span-1">
+                <h4 className="font-bold text-lg mb-6">Phase 1</h4>
+                <p className="text-slate-400">Operational Monitoring</p>
+              </div>
             </div>
           </div>
-          <div className="border-t border-slate-800/50 pt-8 text-center">
-            <p className="text-slate-500 text-sm">© 2026 RailQuick. Revolutionizing train travel.</p>
+          <div className="pt-10 border-t border-slate-800 text-center">
+            <p className="text-slate-500 text-sm">© 2025 RailQuick. All rights reserved.</p>
           </div>
         </div>
       </footer>

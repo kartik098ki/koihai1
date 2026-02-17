@@ -18,6 +18,7 @@ import {
   Box,
   Star,
   ArrowRight,
+  History as HistoryIcon,
 } from "lucide-react";
 
 // Submit to backend API routes
@@ -228,8 +229,7 @@ export default function HomePage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6">
           <div className="flex items-center justify-between h-16 sm:h-20">
             <Link href="/" className="flex items-center gap-2 group">
-              <div className="w-8 h-8 sm:w-10 sm:h-10 bg-slate-900 rounded-xl flex items-center justify-center text-white font-black text-sm sm:text-base group-hover:scale-110 transition-transform">R</div>
-              <span className="text-xl sm:text-2xl font-bold tracking-tight text-slate-900">RailQuick</span>
+              <span className="text-xl sm:text-2xl font-bold tracking-tight text-slate-900 font-sans">RailQuick</span>
             </Link>
 
             {/* Desktop Nav */}
@@ -427,12 +427,26 @@ export default function HomePage() {
                 className={`group p-6 sm:p-8 rounded-3xl ${product.bg} border border-slate-100 hover:border-slate-200 hover:shadow-xl transition-all hover:-translate-y-1`}
               >
                 <div className="flex items-start gap-6">
-                  <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-2xl bg-white shadow-sm flex items-center justify-center group-hover:scale-110 transition-transform">
-                    {product.icon}
-                  </div>
+                  {index === 0 ? ( // Assuming the first product is the one to be updated
+                    <div className="p-3 bg-blue-50 rounded-2xl group-hover:bg-blue-100 transition-colors">
+                      <HistoryIcon className="w-6 h-6 text-blue-600" />
+                    </div>
+                  ) : (
+                    <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-2xl bg-white shadow-sm flex items-center justify-center group-hover:scale-110 transition-transform">
+                      {product.icon}
+                    </div>
+                  )}
                   <div className="flex-1">
-                    <h3 className="text-xl sm:text-2xl font-bold text-slate-900 mb-2">{product.title}</h3>
-                    <p className="text-slate-600 leading-relaxed text-sm sm:text-base">{product.description}</p>
+                    {index === 0 ? (
+                      <h3 className="text-xl sm:text-2xl font-bold text-slate-900 group-hover:text-blue-600 transition-colors">24/7 Dedicated Support</h3>
+                    ) : (
+                      <h3 className="text-xl sm:text-2xl font-bold text-slate-900 mb-2">{product.title}</h3>
+                    )}
+                    {index === 0 ? (
+                      <p className="text-slate-600 leading-relaxed text-sm sm:text-base">Need help? Reach out to our dedicated support team for any inquiries as we prepare for our launch.</p>
+                    ) : (
+                      <p className="text-slate-600 leading-relaxed text-sm sm:text-base">{product.description}</p>
+                    )}
                   </div>
                 </div>
               </motion.div>

@@ -101,7 +101,6 @@ export default function ContactPage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6">
           <div className="flex items-center justify-between h-16 sm:h-20">
             <Link href="/" className="flex items-center gap-2 group">
-              <div className="w-8 h-8 sm:w-10 sm:h-10 bg-slate-900 rounded-xl flex items-center justify-center text-white font-black text-sm sm:text-base group-hover:scale-110 transition-transform">R</div>
               <span className="text-xl sm:text-2xl font-bold tracking-tight text-slate-900">RailQuick</span>
             </Link>
 
@@ -345,19 +344,39 @@ export default function ContactPage() {
       </section>
 
       {/* Footer */}
-      <footer className="bg-slate-950 pt-12 sm:pt-16 pb-8">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex flex-col md:flex-row justify-between items-center gap-6 mb-8">
-            <Link href="/" className="text-xl sm:text-2xl font-bold text-white">RailQuick</Link>
-            <div className="flex gap-6 text-slate-400">
-              <Link href="/" className="hover:text-white transition-colors">Home</Link>
-              <Link href="/about" className="hover:text-white transition-colors">About</Link>
-              <Link href="/contact" className="hover:text-white transition-colors">Contact</Link>
-              <Link href="/hiring" className="hover:text-white transition-colors">Careers</Link>
+      <footer className="bg-slate-900 text-white pt-20 pb-10">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6">
+          <div className="flex flex-col items-center text-center space-y-12 mb-16">
+            <div className="max-w-md">
+              <h3 className="text-2xl font-bold mb-6">RailQuick</h3>
+              <p className="text-slate-400">
+                Here to help you with anything as we prepare for our grand railway convenience launch.
+              </p>
+            </div>
+            <div className="grid grid-cols-2 md:grid-cols-3 gap-12 w-full max-w-2xl">
+              <div>
+                <h4 className="font-bold text-lg mb-6">Contact</h4>
+                <ul className="space-y-4 text-slate-400">
+                  <li className="text-sm">support@railquick.in</li>
+                  <li className="text-sm">+91-XXXX-XXXXXX</li>
+                </ul>
+              </div>
+              <div>
+                <h4 className="font-bold text-lg mb-6">Follow Us</h4>
+                <div className="flex flex-col gap-4 text-slate-400">
+                  <span className="hover:text-white cursor-pointer text-sm font-medium">Twitter</span>
+                  <span className="hover:text-white cursor-pointer text-sm font-medium">Instagram</span>
+                  <span className="hover:text-white cursor-pointer text-sm font-medium">LinkedIn</span>
+                </div>
+              </div>
+              <div className="col-span-2 md:col-span-1">
+                <h4 className="font-bold text-lg mb-6">Support</h4>
+                <p className="text-slate-400 text-sm">Dedicated to excellence.</p>
+              </div>
             </div>
           </div>
-          <div className="border-t border-slate-800 pt-8 text-center">
-            <p className="text-slate-500">© 2026 RailQuick. Revolutionizing train travel.</p>
+          <div className="pt-10 border-t border-slate-800 text-center">
+            <p className="text-slate-500 text-sm">© 2025 RailQuick. All rights reserved.</p>
           </div>
         </div>
       </footer>

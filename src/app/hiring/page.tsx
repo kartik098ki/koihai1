@@ -91,7 +91,6 @@ export default function HiringPage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6">
           <div className="flex items-center justify-between h-16 sm:h-20">
             <Link href="/" className="flex items-center gap-2 group">
-              <div className="w-8 h-8 sm:w-10 sm:h-10 bg-slate-900 rounded-xl flex items-center justify-center text-white font-black text-sm sm:text-base group-hover:scale-110 transition-transform">R</div>
               <span className="text-xl sm:text-2xl font-bold tracking-tight text-slate-900">RailQuick</span>
             </Link>
 
@@ -364,19 +363,29 @@ export default function HiringPage() {
       </section>
 
       {/* Footer */}
-      <footer className="bg-white border-t border-slate-100 pt-16 pb-8">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex flex-col md:flex-row justify-between items-center gap-6 mb-8">
-            <Link href="/" className="text-xl font-bold text-slate-900">RailQuick</Link>
-            <div className="flex gap-8 text-sm font-medium text-slate-500">
-              <Link href="/" className="hover:text-slate-900 transition-colors">Home</Link>
-              <Link href="/about" className="hover:text-slate-900 transition-colors">About</Link>
-              <Link href="/contact" className="hover:text-slate-900 transition-colors">Contact</Link>
-              <Link href="/hiring" className="hover:text-slate-900 transition-colors">Careers</Link>
+      <footer className="bg-slate-900 text-white pt-20 pb-10">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6">
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-16 text-center md:text-left">
+            <div className="col-span-1">
+              <h3 className="text-2xl font-bold mb-6">RailQuick</h3>
+              <p className="text-slate-400 max-w-sm mx-auto md:mx-0">
+                Grow your career as we grow the railway convenience infrastructure of the future.
+              </p>
+            </div>
+            <div>
+              <h4 className="font-bold text-lg mb-6">Company</h4>
+              <ul className="space-y-4">
+                <li><Link href="/about" className="text-slate-400 hover:text-white transition-colors">About Us</Link></li>
+                <li><Link href="/" className="text-slate-400 hover:text-white transition-colors">Home</Link></li>
+              </ul>
+            </div>
+            <div>
+              <h4 className="font-bold text-lg mb-6">Legal</h4>
+              <p className="text-slate-500 text-sm">All hiring processes follow strict standard guidelines.</p>
             </div>
           </div>
-          <div className="border-t border-slate-100 pt-8 text-center">
-            <p className="text-sm text-slate-400">© 2026 RailQuick. All rights reserved.</p>
+          <div className="pt-10 border-t border-slate-800 text-center">
+            <p className="text-slate-500 text-sm">© 2025 RailQuick. All rights reserved.</p>
           </div>
         </div>
       </footer>
