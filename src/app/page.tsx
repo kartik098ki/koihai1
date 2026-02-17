@@ -313,7 +313,7 @@ export default function HomePage() {
               </h1>
 
               <p className="text-lg sm:text-xl lg:text-2xl text-slate-600 max-w-lg mx-auto lg:mx-0 mb-8 sm:mb-10 leading-relaxed">
-                Essential delivery infrastructure for the modern traveler. Get what you need, delivered to your seat.
+                Essentials Delivered Directly to Your Train Seat
               </p>
 
               <div className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4 sm:gap-6">
@@ -373,8 +373,7 @@ export default function HomePage() {
       {/* Brands Marquee */}
       <section className="py-8 sm:py-10 bg-slate-900 relative overflow-hidden">
         <p className="relative text-center text-xs sm:text-sm font-semibold text-slate-500 uppercase tracking-widest mb-4">
-          Trusted Partners & Brands
-        </p>
+          Our brand showcase        </p>
         <div className="relative flex animate-marquee">
           {[...brands, ...brands, ...brands].map((brand, i) => (
             <div key={i} className="flex-shrink-0 px-6 sm:px-10 text-sm sm:text-lg font-bold text-slate-600 hover:text-white transition-colors">
