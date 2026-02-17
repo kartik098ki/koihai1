@@ -53,15 +53,24 @@ const contactMethods = [
 const founders = [
   {
     name: 'Kartik Guleria',
+    image: '/images/kartik.png',
     email: 'kartikguleria12@gmail.com',
     linkedin: 'https://www.linkedin.com/in/kartikguleria1/',
     gradient: 'from-blue-500 to-cyan-400',
   },
   {
     name: 'Harshit Sinha',
+    image: '/images/harshit.png',
     email: 'sinhah166@gmail.com',
     linkedin: 'https://www.linkedin.com/in/harshit-sinha-3833172a1/',
     gradient: 'from-purple-500 to-pink-400',
+  },
+  {
+    name: 'Avni Porwal',
+    image: '/images/avni.jpg',
+    email: 'avniporwal007@gmail.com',
+    linkedin: 'https://www.linkedin.com/in/avni-porwal/',
+    gradient: 'from-orange-500 to-amber-400',
   },
 ];
 
@@ -101,7 +110,7 @@ export default function ContactPage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6">
           <div className="flex items-center justify-between h-16 sm:h-20">
             <Link href="/" className="flex items-center gap-2 group">
-              <span className="text-xl sm:text-2xl font-bold tracking-tight text-slate-900">RailQuick</span>
+              <img src="/images/logo-full.png" alt="RailQuick" className="h-8 sm:h-10 w-auto" />
             </Link>
 
             {/* Desktop Nav */}
@@ -245,10 +254,12 @@ export default function ContactPage() {
                       className="group relative overflow-hidden flex items-center gap-4 p-4 bg-white rounded-2xl border border-slate-100 shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all duration-300"
                     >
                       <div className={`absolute inset-0 bg-gradient-to-r ${founder.gradient} opacity-0 group-hover:opacity-5 transition-opacity duration-300 pointer-events-none`} />
-                      <div className={`flex-shrink-0 w-12 h-12 bg-gradient-to-br ${founder.gradient} rounded-xl flex items-center justify-center text-white shadow-md group-hover:shadow-lg group-hover:scale-110 transition-all duration-300`}>
-                        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-                        </svg>
+                      <div className={`flex-shrink-0 w-12 h-12 bg-gradient-to-br ${founder.gradient} rounded-xl flex items-center justify-center overflow-hidden shadow-md group-hover:shadow-lg group-hover:scale-110 transition-all duration-300`}>
+                        <img
+                          src={founder.image}
+                          alt={founder.name}
+                          className="w-full h-full object-cover"
+                        />
                       </div>
                       <div className="flex-1 min-w-0">
                         <p className="font-bold text-slate-900 truncate">{founder.name}</p>
@@ -351,7 +362,7 @@ export default function ContactPage() {
           <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-16">
             <div className="col-span-1 text-center md:text-left">
               <Link href="/" className="inline-flex items-center gap-2 mb-6 group">
-                <span className="text-2xl font-bold tracking-tight text-white">RailQuick</span>
+                <img src="/images/logo-full.png" alt="RailQuick" className="h-10 sm:h-12 w-auto brightness-0 invert" />
               </Link>
               <p className="text-slate-400 leading-relaxed mb-8 max-w-sm mx-auto md:mx-0">
                 Here to help you with anything as we prepare for our grand railway convenience launch.

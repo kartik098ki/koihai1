@@ -88,7 +88,7 @@ export default function TestPhasePage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6">
           <div className="flex items-center justify-between h-16 sm:h-20">
             <Link href="/" className="flex items-center gap-2 group">
-              <span className="text-xl sm:text-2xl font-bold tracking-tight text-slate-900">RailQuick</span>
+              <img src="/images/logo-full.png" alt="RailQuick" className="h-8 sm:h-10 w-auto" />
             </Link>
             {/* Desktop Nav */}
             <div className="hidden md:flex items-center gap-1 bg-slate-100/50 backdrop-blur-md p-1 rounded-full border border-slate-200/50">
@@ -322,7 +322,7 @@ export default function TestPhasePage() {
           <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-16">
             <div className="col-span-1 text-center md:text-left">
               <Link href="/" className="inline-flex items-center gap-2 mb-6 group">
-                <span className="text-2xl font-bold tracking-tight text-white">RailQuick</span>
+                <img src="/images/logo-full.png" alt="RailQuick" className="h-10 sm:h-12 w-auto brightness-0 invert" />
               </Link>
               <p className="text-slate-400 leading-relaxed mb-8 max-w-sm mx-auto md:mx-0">
                 Setting new standards for railway convenience through phase-wise development and testing.

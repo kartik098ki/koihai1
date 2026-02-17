@@ -9,6 +9,7 @@ const team = [
   {
     name: 'Kartik Guleria',
     role: 'Founder & CEO',
+    image: '/images/kartik.png',
     description: 'Visionary leader focused on product strategy and the future of rail e-commerce. Passionate about solving real problems for millions of travelers.',
     linkedin: 'https://www.linkedin.com/in/kartikguleria/',
     gradient: 'from-blue-500 to-cyan-400',
@@ -16,6 +17,7 @@ const team = [
   {
     name: 'Harshit Sinha',
     role: 'Founder & Ops Head',
+    image: '/images/harshit.png',
     description: 'Logistics mastermind ensuring every order meets its destination on time. Expert in building efficient delivery systems at scale.',
     linkedin: 'https://www.linkedin.com/in/harshitsinha/',
     gradient: 'from-purple-500 to-pink-400',
@@ -23,6 +25,7 @@ const team = [
   {
     name: 'Avni Porwal',
     role: 'Design Lead',
+    image: '/images/avni.jpg',
     description: 'Creating seamless and delightful user experiences for our travelers. Bringing creativity and empathy to every design decision.',
     linkedin: 'https://www.linkedin.com/in/avni-porwal/',
     gradient: 'from-orange-500 to-amber-400',
@@ -99,7 +102,7 @@ export default function AboutPage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6">
           <div className="flex items-center justify-between h-16 sm:h-20">
             <Link href="/" className="flex items-center gap-2 group">
-              <span className="text-xl sm:text-2xl font-bold tracking-tight text-slate-900">RailQuick</span>
+              <img src="/images/logo-full.png" alt="RailQuick" className="h-8 sm:h-10 w-auto" />
             </Link>
 
             {/* Desktop Nav */}
@@ -325,11 +328,11 @@ export default function AboutPage() {
                 <div className="relative mb-8 inline-block">
                   <div className={`w-56 h-56 mx-auto rounded-[2rem] bg-gradient-to-br ${member.gradient} p-1 transform group-hover:scale-105 transition-transform duration-500`}>
                     <div className="w-full h-full bg-white rounded-[1.8rem] flex items-center justify-center overflow-hidden relative">
-                      {/* Placeholder for real image, using avatar icon for now */}
-                      <div className="absolute inset-0 bg-slate-50" />
-                      <svg className="w-24 h-24 text-slate-300 relative z-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-                      </svg>
+                      <img
+                        src={member.image}
+                        alt={member.name}
+                        className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700"
+                      />
                     </div>
                   </div>
                   {/* Decorative glow */}
@@ -383,7 +386,7 @@ export default function AboutPage() {
           <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-16">
             <div className="col-span-1 text-center md:text-left">
               <Link href="/" className="inline-flex items-center gap-2 mb-6 group">
-                <span className="text-2xl font-bold tracking-tight text-white">RailQuick</span>
+                <img src="/images/logo-full.png" alt="RailQuick" className="h-10 sm:h-12 w-auto brightness-0 invert" />
               </Link>
               <p className="text-slate-400 leading-relaxed mb-8 max-w-sm mx-auto md:mx-0">
                 Transforming the railway experience with modern infrastructure and dedicated on-seat delivery services.
