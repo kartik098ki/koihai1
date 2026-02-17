@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
-import { Home, Info, Phone, Briefcase, History, CheckCircle2, Clock, Smartphone, Zap } from "lucide-react";
+import { CheckCircle2, Clock, Smartphone, Zap } from "lucide-react";
 
 const phases = [
   {
@@ -84,14 +84,16 @@ export default function TestPhasePage() {
   return (
     <div className="min-h-screen bg-slate-50 font-sans selection:bg-blue-100 selection:text-blue-900">
       {/* Navigation */}
-      <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${headerScrolled ? 'bg-white/80 backdrop-blur-md shadow-sm border-b border-slate-100' : 'bg-transparent'}`}>
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${headerScrolled ? 'bg-white/80 backdrop-blur-xl border-b border-slate-100 shadow-sm' : 'bg-transparent'}`}>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6">
           <div className="flex items-center justify-between h-16 sm:h-20">
             <Link href="/" className="flex items-center gap-2 group">
-              <span className="text-xl sm:text-2xl font-bold tracking-tight text-slate-900 group-hover:text-blue-600 transition-colors">RailQuick</span>
+              <div className="w-8 h-8 sm:w-10 sm:h-10 bg-slate-900 rounded-xl flex items-center justify-center text-white font-black text-sm sm:text-base group-hover:scale-110 transition-transform">R</div>
+              <span className="text-xl sm:text-2xl font-bold tracking-tight text-slate-900">RailQuick</span>
             </Link>
 
-            <div className="hidden md:flex items-center gap-1">
+            {/* Desktop Nav */}
+            <div className="hidden md:flex items-center gap-1 bg-slate-100/50 backdrop-blur-md p-1 rounded-full border border-slate-200/50">
               {[
                 { label: 'Home', href: '/' },
                 { label: 'About', href: '/about' },
@@ -102,9 +104,9 @@ export default function TestPhasePage() {
                 <Link
                   key={item.label}
                   href={item.href}
-                  className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 ${item.href === '/test-phase'
-                    ? 'bg-slate-100 text-slate-900 shadow-inner'
-                    : 'text-slate-600 hover:text-slate-900 hover:bg-slate-50'
+                  className={`px-5 py-2 rounded-full text-sm font-semibold transition-all duration-300 ${item.href === '/test-phase'
+                    ? 'bg-white text-slate-900 shadow-sm'
+                    : 'text-slate-500 hover:text-slate-900 hover:bg-white/50'
                     }`}
                 >
                   {item.label}
@@ -114,20 +116,17 @@ export default function TestPhasePage() {
 
             <div className="hidden md:block">
               <Link href="/#waitlist">
-                <Button className="bg-slate-900 hover:bg-slate-800 text-white rounded-full px-6 shadow-lg shadow-slate-900/20 transition-all hover:shadow-xl hover:shadow-slate-900/30 hover:-translate-y-0.5 active:scale-95">
+                <Button className="bg-slate-900 hover:bg-slate-800 text-white rounded-full px-6 h-11 shadow-lg shadow-slate-900/20 transition-all hover:shadow-xl hover:-translate-y-0.5 font-bold">
                   Join Waitlist
                 </Button>
               </Link>
             </div>
-
-            {/* Mobile Menu Button */}
-
           </div>
         </div>
 
-        {/* Professional Mobile Navigation - Pill Style */}
-        <div className="md:hidden border-t border-slate-100 bg-white/80 backdrop-blur-md sticky top-0 z-40 overflow-x-auto no-scrollbar py-3">
-          <div className="flex items-center justify-center gap-2 px-4 min-w-max">
+        {/* Consistent Mobile Navigation - Simple Top Bar */}
+        <div className="md:hidden border-t border-slate-100 bg-white/80 backdrop-blur-md overflow-x-auto no-scrollbar py-3">
+          <div className="flex items-center justify-start gap-4 px-6 min-w-max">
             {[
               { label: 'Home', href: '/' },
               { label: 'About', href: '/about' },
@@ -138,9 +137,9 @@ export default function TestPhasePage() {
               <Link
                 key={item.label}
                 href={item.href}
-                className={`px-5 py-2.5 rounded-full text-sm font-bold transition-all duration-300 ${item.href === '/test-phase'
-                  ? 'bg-slate-900 text-white shadow-lg shadow-slate-900/20 scale-105'
-                  : 'text-slate-500 hover:text-slate-900 hover:bg-slate-100'
+                className={`text-sm font-bold transition-all duration-300 ${item.href === '/test-phase'
+                  ? 'text-slate-900'
+                  : 'text-slate-400 hover:text-slate-900'
                   }`}
               >
                 {item.label}

@@ -16,14 +16,8 @@ import {
   Zap,
   CheckCircle2,
   Box,
-  ChevronRight,
   Star,
   ArrowRight,
-  Home,
-  Info,
-  Phone,
-  Briefcase,
-  History,
 } from "lucide-react";
 
 // Submit to backend API routes
@@ -267,32 +261,31 @@ export default function HomePage() {
             </div>
           </div>
         </div>
-      </nav>
 
-      {/* Modern Floating Dock Mobile Navigation */}
-      <div className="md:hidden fixed bottom-6 left-1/2 -translate-x-1/2 z-[100] w-[92%] max-w-[400px]">
-        <div className="bg-slate-900/90 backdrop-blur-xl rounded-3xl p-2 shadow-2xl shadow-slate-900/40 border border-white/10 flex items-center justify-around">
-          {[
-            { label: 'Home', href: '/', icon: <Home className="w-5 h-5" /> },
-            { label: 'About', href: '/about', icon: <Info className="w-5 h-5" /> },
-            { label: 'Testing', href: '/test-phase', icon: <History className="w-5 h-5" /> },
-            { label: 'Contact', href: '/contact', icon: <Phone className="w-5 h-5" /> },
-            { label: 'Hiring', href: '/hiring', icon: <Briefcase className="w-5 h-5" /> },
-          ].map((item) => (
-            <Link
-              key={item.label}
-              href={item.href}
-              className={`flex flex-col items-center gap-1 px-3 py-2 rounded-2xl transition-all duration-300 ${item.href === '/'
-                ? 'bg-white text-slate-900 shadow-lg scale-110'
-                : 'text-slate-400 hover:text-white'
-                }`}
-            >
-              {item.icon}
-              <span className="text-[10px] font-bold uppercase tracking-wider">{item.label}</span>
-            </Link>
-          ))}
+        {/* Consistent Mobile Navigation - Simple Top Bar */}
+        <div className="md:hidden border-t border-slate-100 bg-white/80 backdrop-blur-md overflow-x-auto no-scrollbar py-3">
+          <div className="flex items-center justify-start gap-4 px-6 min-w-max">
+            {[
+              { label: 'Home', href: '/' },
+              { label: 'About', href: '/about' },
+              { label: 'Test Phase', href: '/test-phase' },
+              { label: 'Contact', href: '/contact' },
+              { label: 'Hiring', href: '/hiring' },
+            ].map((item) => (
+              <Link
+                key={item.label}
+                href={item.href}
+                className={`text-sm font-bold transition-all duration-300 ${item.href === '/'
+                  ? 'text-slate-900'
+                  : 'text-slate-400 hover:text-slate-900'
+                  }`}
+              >
+                {item.label}
+              </Link>
+            ))}
+          </div>
         </div>
-      </div>
+      </nav>
 
 
       {/* Hero Section */}
