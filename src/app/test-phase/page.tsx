@@ -90,7 +90,6 @@ export default function TestPhasePage() {
             <Link href="/" className="flex items-center gap-2 group">
               <span className="text-xl sm:text-2xl font-bold tracking-tight text-slate-900">RailQuick</span>
             </Link>
-            Broadway
             {/* Desktop Nav */}
             <div className="hidden md:flex items-center gap-1 bg-slate-100/50 backdrop-blur-md p-1 rounded-full border border-slate-200/50">
               {[
@@ -125,7 +124,7 @@ export default function TestPhasePage() {
 
         {/* Consistent Mobile Navigation - Simple Top Bar */}
         <div className="md:hidden border-t border-slate-100 bg-white/80 backdrop-blur-md overflow-x-auto no-scrollbar py-3">
-          <div className="flex items-center justify-start gap-4 px-6 min-w-max">
+          <div className="flex items-center justify-start gap-1 px-4 min-w-max bg-slate-100/50 backdrop-blur-md p-1 rounded-full border border-slate-200/50 mx-auto w-fit">
             {[
               { label: 'Home', href: '/' },
               { label: 'About', href: '/about' },
@@ -136,9 +135,9 @@ export default function TestPhasePage() {
               <Link
                 key={item.label}
                 href={item.href}
-                className={`text-sm font-bold transition-all duration-300 ${item.href === '/test-phase'
-                  ? 'text-slate-900'
-                  : 'text-slate-400 hover:text-slate-900'
+                className={`px-4 py-2 rounded-full text-sm font-semibold transition-all duration-300 ${item.href === '/test-phase'
+                  ? 'bg-white text-slate-900 shadow-sm'
+                  : 'text-slate-500 hover:text-slate-900 hover:bg-white/50'
                   }`}
               >
                 {item.label}
@@ -320,32 +319,43 @@ export default function TestPhasePage() {
       {/* Footer */}
       <footer className="bg-slate-900 text-white pt-20 pb-10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6">
-          <div className="flex flex-col items-center text-center space-y-12 mb-16">
-            <div className="max-w-md">
-              <h3 className="text-2xl font-bold mb-6">RailQuick</h3>
-              <p className="text-slate-400 leading-relaxed">
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-16">
+            <div className="col-span-1 text-center md:text-left">
+              <Link href="/" className="inline-flex items-center gap-2 mb-6 group">
+                <span className="text-2xl font-bold tracking-tight text-white">RailQuick</span>
+              </Link>
+              <p className="text-slate-400 leading-relaxed mb-8 max-w-sm mx-auto md:mx-0">
                 Setting new standards for railway convenience through phase-wise development and testing.
               </p>
+              <div className="flex items-center justify-center md:justify-start gap-6">
+                {['Instagram', 'LinkedIn'].map((social) => (
+                  <Link key={social} href="#" className="w-10 h-10 rounded-full border border-slate-800 flex items-center justify-center text-slate-400 hover:text-white hover:border-white transition-all">
+                    <span className="sr-only">{social}</span>
+                    <div className="w-5 h-5 bg-slate-400 rounded-sm"></div>
+                  </Link>
+                ))}
+              </div>
             </div>
-            <div className="grid grid-cols-2 md:grid-cols-3 gap-12 w-full max-w-2xl">
-              <div>
-                <h4 className="font-bold text-lg mb-6">Links</h4>
-                <ul className="space-y-4">
-                  <li><Link href="/" className="text-slate-400 hover:text-white transition-colors">Home</Link></li>
-                  <li><Link href="/about" className="text-slate-400 hover:text-white transition-colors">About</Link></li>
-                </ul>
-              </div>
-              <div>
-                <h4 className="font-bold text-lg mb-6">Support</h4>
-                <ul className="space-y-4">
-                  <li><Link href="/contact" className="text-slate-400 hover:text-white transition-colors">Contact</Link></li>
-                  <li><Link href="#" className="text-slate-400 hover:text-white transition-colors">Terms</Link></li>
-                </ul>
-              </div>
-              <div className="col-span-2 md:col-span-1">
-                <h4 className="font-bold text-lg mb-6">Phase 1</h4>
-                <p className="text-slate-400">Operational Monitoring</p>
-              </div>
+
+            <div className="text-center md:text-left">
+              <h4 className="font-bold text-lg mb-6">Links</h4>
+              <ul className="space-y-4">
+                <li><Link href="/" className="text-slate-400 hover:text-white transition-colors">Home</Link></li>
+                <li><Link href="/about" className="text-slate-400 hover:text-white transition-colors">About</Link></li>
+              </ul>
+            </div>
+
+            <div className="text-center md:text-left">
+              <h4 className="font-bold text-lg mb-6">Support</h4>
+              <ul className="space-y-4">
+                <li><Link href="/contact" className="text-slate-400 hover:text-white transition-colors">Contact</Link></li>
+                <li><Link href="#" className="text-slate-400 hover:text-white transition-colors">Terms of Service</Link></li>
+              </ul>
+            </div>
+
+            <div className="text-center md:text-left">
+              <h4 className="font-bold text-lg mb-6">Status</h4>
+              <p className="text-slate-400">Phase 1: Operational Monitoring</p>
             </div>
           </div>
           <div className="pt-10 border-t border-slate-800 text-center">

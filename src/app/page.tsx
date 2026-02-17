@@ -262,27 +262,29 @@ export default function HomePage() {
           </div>
         </div>
 
-        {/* Consistent Mobile Navigation - Simple Top Bar */}
-        <div className="md:hidden border-t border-slate-100 bg-white/80 backdrop-blur-md overflow-x-auto no-scrollbar py-3">
-          <div className="flex items-center justify-start gap-4 px-6 min-w-max">
-            {[
-              { label: 'Home', href: '/' },
-              { label: 'About', href: '/about' },
-              { label: 'Test Phase', href: '/test-phase' },
-              { label: 'Contact', href: '/contact' },
-              { label: 'Hiring', href: '/hiring' },
-            ].map((item) => (
-              <Link
-                key={item.label}
-                href={item.href}
-                className={`text-sm font-bold transition-all duration-300 ${item.href === '/'
-                  ? 'text-slate-900'
-                  : 'text-slate-400 hover:text-slate-900'
-                  }`}
-              >
-                {item.label}
-              </Link>
-            ))}
+        {/* Mobile Nav Links - Pill Style */}
+        <div className="flex px-4 pb-4 md:hidden">
+          <div className="w-full bg-slate-100/50 backdrop-blur-md border border-slate-200/50 rounded-full p-1 overflow-x-auto no-scrollbar">
+            <div className="flex items-center gap-1 min-w-max">
+              {[
+                { label: "Home", href: "/" },
+                { label: "About", href: "/about" },
+                { label: "Test Phase", href: "/test-phase" },
+                { label: "Contact", href: "/contact" },
+                { label: "Hiring", href: "/hiring" }
+              ].map((item) => (
+                <Link
+                  key={item.label}
+                  href={item.href}
+                  className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${item.href === "/"
+                    ? "bg-white text-slate-900 shadow-sm"
+                    : "text-slate-500 hover:text-slate-900"
+                    }`}
+                >
+                  {item.label}
+                </Link>
+              ))}
+            </div>
           </div>
         </div>
       </nav>
@@ -314,17 +316,15 @@ export default function HomePage() {
                 Essential delivery infrastructure for the modern traveler. Get what you need, delivered to your seat.
               </p>
 
-              <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center lg:justify-start">
-                <Button
-                  onClick={() => setShowModal(true)}
-                  size="lg"
-                  className="bg-slate-900 hover:bg-slate-800 text-white rounded-full px-6 sm:px-8 h-12 sm:h-14 text-sm sm:text-base font-semibold shadow-xl transition-all hover:-translate-y-0.5"
-                >
-                  Try Now
-                </Button>
+              <div className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4 sm:gap-6">
+                <Link href="#waitlist" className="w-full sm:w-auto">
+                  <Button className="w-full sm:w-auto px-8 py-7 bg-slate-900 text-white hover:bg-slate-800 rounded-2xl text-lg font-bold transition-all hover:scale-105 shadow-xl shadow-slate-200">
+                    Try Now
+                  </Button>
+                </Link>
                 <Link href="/test-phase" className="w-full sm:w-auto">
-                  <Button size="lg" variant="outline" className="w-full h-12 sm:h-14 px-6 sm:px-8 text-sm sm:text-base font-semibold rounded-full border-2 hover:bg-slate-50">
-                    Test Phase: Completed
+                  <Button variant="outline" className="w-full sm:w-auto px-8 py-7 border-2 border-slate-200 hover:border-slate-900 rounded-2xl text-lg font-bold transition-all hover:scale-105">
+                    Test Phase
                   </Button>
                 </Link>
               </div>

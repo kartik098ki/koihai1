@@ -126,27 +126,29 @@ export default function HiringPage() {
           </div>
         </div>
 
-        {/* Consistent Mobile Navigation - Simple Top Bar */}
-        <div className="md:hidden border-t border-slate-100 bg-white/80 backdrop-blur-md overflow-x-auto no-scrollbar py-3">
-          <div className="flex items-center justify-start gap-4 px-6 min-w-max">
-            {[
-              { label: 'Home', href: '/' },
-              { label: 'About', href: '/about' },
-              { label: 'Test Phase', href: '/test-phase' },
-              { label: 'Contact', href: '/contact' },
-              { label: 'Hiring', href: '/hiring' },
-            ].map((item) => (
-              <Link
-                key={item.label}
-                href={item.href}
-                className={`text-sm font-bold transition-all duration-300 ${item.href === '/hiring'
-                  ? 'text-slate-900'
-                  : 'text-slate-400 hover:text-slate-900'
-                  }`}
-              >
-                {item.label}
-              </Link>
-            ))}
+        {/* Mobile Nav Links - Pill Style */}
+        <div className="flex px-4 pb-4 md:hidden">
+          <div className="w-full bg-slate-100/50 backdrop-blur-md border border-slate-200/50 rounded-full p-1 overflow-x-auto no-scrollbar">
+            <div className="flex items-center gap-1 min-w-max">
+              {[
+                { label: "Home", href: "/" },
+                { label: "About", href: "/about" },
+                { label: "Test Phase", href: "/test-phase" },
+                { label: "Contact", href: "/contact" },
+                { label: "Hiring", href: "/hiring" }
+              ].map((item) => (
+                <Link
+                  key={item.label}
+                  href={item.href}
+                  className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${item.label === "Hiring"
+                    ? "bg-white text-slate-900 shadow-sm"
+                    : "text-slate-500 hover:text-slate-900"
+                    }`}
+                >
+                  {item.label}
+                </Link>
+              ))}
+            </div>
           </div>
         </div>
       </nav>
@@ -365,23 +367,45 @@ export default function HiringPage() {
       {/* Footer */}
       <footer className="bg-slate-900 text-white pt-20 pb-10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6">
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-16 text-center md:text-left">
-            <div className="col-span-1">
-              <h3 className="text-2xl font-bold mb-6">RailQuick</h3>
-              <p className="text-slate-400 max-w-sm mx-auto md:mx-0">
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-16">
+            <div className="col-span-1 text-center md:text-left">
+              <Link href="/" className="inline-flex items-center gap-2 mb-6 group">
+                <span className="text-2xl font-bold tracking-tight text-white">RailQuick</span>
+              </Link>
+              <p className="text-slate-400 leading-relaxed mb-8 max-w-sm mx-auto md:mx-0">
                 Grow your career as we grow the railway convenience infrastructure of the future.
               </p>
+              <div className="flex items-center justify-center md:justify-start gap-6">
+                {['Instagram', 'LinkedIn'].map((social) => (
+                  <Link key={social} href="#" className="w-10 h-10 rounded-full border border-slate-800 flex items-center justify-center text-slate-400 hover:text-white hover:border-white transition-all">
+                    <span className="sr-only">{social}</span>
+                    <div className="w-5 h-5 bg-slate-400 rounded-sm"></div>
+                  </Link>
+                ))}
+              </div>
             </div>
-            <div>
+
+            <div className="text-center md:text-left">
               <h4 className="font-bold text-lg mb-6">Company</h4>
               <ul className="space-y-4">
                 <li><Link href="/about" className="text-slate-400 hover:text-white transition-colors">About Us</Link></li>
                 <li><Link href="/" className="text-slate-400 hover:text-white transition-colors">Home</Link></li>
               </ul>
             </div>
-            <div>
+
+            <div className="text-center md:text-left">
               <h4 className="font-bold text-lg mb-6">Legal</h4>
-              <p className="text-slate-500 text-sm">All hiring processes follow strict standard guidelines.</p>
+              <ul className="space-y-4">
+                <li><Link href="#" className="text-slate-500 text-sm hover:text-white transition-colors">Hiring Guidelines</Link></li>
+                <li><Link href="#" className="text-slate-500 text-sm hover:text-white transition-colors">Privacy Policy</Link></li>
+              </ul>
+            </div>
+
+            <div className="text-center md:text-left">
+              <h4 className="font-bold text-lg mb-6">Our Vision</h4>
+              <p className="text-slate-400 leading-relaxed text-sm">
+                Redefining comfort on the rails. Join our mission to transform travel.
+              </p>
             </div>
           </div>
           <div className="pt-10 border-t border-slate-800 text-center">
