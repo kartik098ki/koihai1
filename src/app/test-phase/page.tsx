@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
-import { CheckCircle2, Clock, Smartphone, Zap } from "lucide-react";
+import { Home, Info, Phone, Briefcase, History, CheckCircle2, Clock, Smartphone, Zap } from "lucide-react";
 
 const phases = [
   {

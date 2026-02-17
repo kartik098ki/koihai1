@@ -3,11 +3,11 @@
 import Link from "next/link";
 import { useState, useEffect, useRef } from "react";
 import { Button } from "@/components/ui/button";
-import { motion } from "framer-motion";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { toast } from "@/hooks/use-toast";
-import { Zap, TrendingUp, HeartHandshake, Briefcase, MapPin, Clock, CheckCircle2, ChevronRight } from "lucide-react";
+import { motion } from "framer-motion";
+import { Zap, TrendingUp, HeartHandshake, Briefcase, MapPin, Clock, CheckCircle2, ChevronRight, Home, Info, Phone, History } from "lucide-react";
 
 const HIRING_API = '/api/hiring';
 
@@ -87,14 +87,16 @@ export default function HiringPage() {
   return (
     <div className="min-h-screen bg-slate-50/50 font-sans selection:bg-blue-100 selection:text-blue-900">
       {/* Navigation */}
-      <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 border-b ${headerScrolled ? 'bg-white/80 backdrop-blur-md border-slate-200 shadow-sm py-3' : 'bg-transparent border-transparent py-5'}`}>
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between">
+      <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${headerScrolled ? 'bg-white/80 backdrop-blur-xl border-b border-slate-100 shadow-sm' : 'bg-transparent'}`}>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6">
+          <div className="flex items-center justify-between h-16 sm:h-20">
             <Link href="/" className="flex items-center gap-2 group">
-              <span className="text-xl sm:text-2xl font-bold tracking-tighter text-slate-900 group-hover:text-blue-600 transition-colors">RailQuick</span>
+              <div className="w-8 h-8 sm:w-10 sm:h-10 bg-slate-900 rounded-xl flex items-center justify-center text-white font-black text-sm sm:text-base group-hover:scale-110 transition-transform">R</div>
+              <span className="text-xl sm:text-2xl font-bold tracking-tight text-slate-900">RailQuick</span>
             </Link>
 
-            <div className="hidden md:flex items-center gap-1 bg-slate-100/50 p-1.5 rounded-full border border-slate-200/50">
+            {/* Desktop Nav */}
+            <div className="hidden md:flex items-center gap-1 bg-slate-100/50 backdrop-blur-md p-1 rounded-full border border-slate-200/50">
               {[
                 { label: 'Home', href: '/' },
                 { label: 'About', href: '/about' },
@@ -105,9 +107,9 @@ export default function HiringPage() {
                 <Link
                   key={item.label}
                   href={item.href}
-                  className={`px-5 py-2 rounded-full text-sm font-medium transition-all duration-300 ${item.href === '/hiring'
-                    ? 'bg-white text-blue-600 shadow-sm ring-1 ring-slate-200'
-                    : 'text-slate-600 hover:text-slate-900 hover:bg-white/50'
+                  className={`px-5 py-2 rounded-full text-sm font-semibold transition-all duration-300 ${item.href === '/hiring'
+                    ? 'bg-white text-slate-900 shadow-sm'
+                    : 'text-slate-500 hover:text-slate-900 hover:bg-white/50'
                     }`}
                 >
                   {item.label}
@@ -117,38 +119,39 @@ export default function HiringPage() {
 
             <div className="hidden md:block">
               <Link href="/#waitlist">
-                <Button className="bg-slate-900 hover:bg-slate-800 text-white rounded-full px-6 h-11 shadow-lg shadow-slate-900/10 transition-all hover:shadow-xl hover:shadow-slate-900/20 hover:-translate-y-0.5 font-medium">
+                <Button className="bg-slate-900 hover:bg-slate-800 text-white rounded-full px-6 h-11 shadow-lg shadow-slate-900/20 transition-all hover:shadow-xl hover:-translate-y-0.5 font-bold">
                   Join Waitlist
                 </Button>
               </Link>
             </div>
           </div>
         </div>
-
-        {/* Professional Mobile Navigation - Pill Style */}
-        <div className="md:hidden border-t border-slate-100 bg-white/80 backdrop-blur-md sticky top-0 z-40 overflow-x-auto no-scrollbar py-3">
-          <div className="flex items-center justify-center gap-2 px-4 min-w-max">
-            {[
-              { label: 'Home', href: '/' },
-              { label: 'About', href: '/about' },
-              { label: 'Test Phase', href: '/test-phase' },
-              { label: 'Contact', href: '/contact' },
-              { label: 'Hiring', href: '/hiring' },
-            ].map((item) => (
-              <Link
-                key={item.label}
-                href={item.href}
-                className={`px-5 py-2.5 rounded-full text-sm font-bold transition-all duration-300 ${item.href === '/hiring'
-                  ? 'bg-slate-900 text-white shadow-lg shadow-slate-900/20 scale-105'
-                  : 'text-slate-500 hover:text-slate-900 hover:bg-slate-100'
-                  }`}
-              >
-                {item.label}
-              </Link>
-            ))}
-          </div>
-        </div>
       </nav>
+
+      {/* Modern Floating Dock Mobile Navigation */}
+      <div className="md:hidden fixed bottom-6 left-1/2 -translate-x-1/2 z-[100] w-[92%] max-w-[400px]">
+        <div className="bg-slate-900/90 backdrop-blur-xl rounded-3xl p-2 shadow-2xl shadow-slate-900/40 border border-white/10 flex items-center justify-around">
+          {[
+            { label: 'Home', href: '/', icon: <Home className="w-5 h-5" /> },
+            { label: 'About', href: '/about', icon: <Info className="w-5 h-5" /> },
+            { label: 'Testing', href: '/test-phase', icon: <History className="w-5 h-5" /> },
+            { label: 'Contact', href: '/contact', icon: <Phone className="w-5 h-5" /> },
+            { label: 'Hiring', href: '/hiring', icon: <Briefcase className="w-5 h-5" /> },
+          ].map((item) => (
+            <Link
+              key={item.label}
+              href={item.href}
+              className={`flex flex-col items-center gap-1 px-3 py-2 rounded-2xl transition-all duration-300 ${item.href === '/hiring'
+                ? 'bg-white text-slate-900 shadow-lg scale-110'
+                : 'text-slate-400 hover:text-white'
+                }`}
+            >
+              {item.icon}
+              <span className="text-[10px] font-bold uppercase tracking-wider">{item.label}</span>
+            </Link>
+          ))}
+        </div>
+      </div>
 
 
       {/* Hero */}
