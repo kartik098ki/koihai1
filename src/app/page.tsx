@@ -229,7 +229,7 @@ export default function HomePage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6">
           <div className="flex items-center justify-between h-16 sm:h-20">
             <Link href="/" className="flex items-center gap-2 group">
-              <img src="/images/logo-full.png" alt="RailQuick" className="h-8 sm:h-10 w-auto" />
+              <img src="/images/logo-full.png" alt="RailQuick" className="h-10 sm:h-12 w-auto mix-blend-multiply" />
             </Link>
 
             {/* Desktop Nav */}
@@ -574,12 +574,8 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* CTA */}
-      <section className="py-12 sm:py-16 lg:py-20 bg-slate-900 relative overflow-hidden">
+      <section id="waitlist" className="py-12 sm:py-16 lg:py-20 bg-slate-900 relative overflow-hidden">
         <div className="relative max-w-4xl mx-auto px-4 sm:px-6 text-center">
-          <div className="flex justify-center mb-8">
-            <img src="/images/logo-full.png" alt="RailQuick Branding" className="h-24 sm:h-32 w-auto brightness-0 invert opacity-90" />
-          </div>
           <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-white mb-4">
             Be the first to experience RailQuick
           </h2>
@@ -612,8 +608,8 @@ export default function HomePage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6">
           <div className="grid md:grid-cols-4 gap-8 mb-10">
             <div className="md:col-span-2">
-              <Link href="/" className="inline-block mb-3">
-                <img src="/images/logo-full.png" alt="RailQuick" className="h-10 sm:h-12 w-auto brightness-0 invert" />
+              <Link href="/" className="inline-block mb-3 bg-white p-2 rounded-xl shadow-sm">
+                <img src="/images/logo-full.png" alt="RailQuick" className="h-10 sm:h-12 w-auto" />
               </Link>
               <p className="text-sm sm:text-base text-slate-400 mb-5 max-w-sm">Your journey, our priority. Revolutionizing train travel with on-seat essential delivery.</p>
               <div className="flex gap-2 sm:gap-3">
