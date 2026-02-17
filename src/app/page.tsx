@@ -262,10 +262,10 @@ export default function HomePage() {
           </div>
         </div>
 
-        {/* Mobile Nav Links - Pill Style */}
-        <div className="flex px-4 pb-4 md:hidden">
-          <div className="w-full bg-slate-100/50 backdrop-blur-md border border-slate-200/50 rounded-full p-1 overflow-x-auto no-scrollbar">
-            <div className="flex items-center gap-1 min-w-max">
+        {/* Mobile Nav Links - Refined Grid Style (Non-scrollable) */}
+        <div className="flex px-2 pb-4 md:hidden">
+          <div className="w-full bg-slate-100/50 backdrop-blur-md border border-slate-200/50 rounded-2xl p-1.5 shadow-sm">
+            <div className="flex flex-wrap items-center justify-center gap-1">
               {[
                 { label: "Home", href: "/" },
                 { label: "About", href: "/about" },
@@ -276,7 +276,7 @@ export default function HomePage() {
                 <Link
                   key={item.label}
                   href={item.href}
-                  className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${item.href === "/"
+                  className={`px-3 py-1.5 rounded-xl text-[13px] font-bold transition-all ${item.label === "Home"
                     ? "bg-white text-slate-900 shadow-sm"
                     : "text-slate-500 hover:text-slate-900"
                     }`}
@@ -317,11 +317,12 @@ export default function HomePage() {
               </p>
 
               <div className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4 sm:gap-6">
-                <Link href="#waitlist" className="w-full sm:w-auto">
-                  <Button className="w-full sm:w-auto px-8 py-7 bg-slate-900 text-white hover:bg-slate-800 rounded-2xl text-lg font-bold transition-all hover:scale-105 shadow-xl shadow-slate-200">
-                    Try Now
-                  </Button>
-                </Link>
+                <Button
+                  onClick={() => setShowModal(true)}
+                  className="w-full sm:w-auto px-8 py-7 bg-slate-900 text-white hover:bg-slate-800 rounded-2xl text-lg font-bold transition-all hover:scale-105 shadow-xl shadow-slate-200"
+                >
+                  Try Now
+                </Button>
                 <Link href="/test-phase" className="w-full sm:w-auto">
                   <Button variant="outline" className="w-full sm:w-auto px-8 py-7 border-2 border-slate-200 hover:border-slate-900 rounded-2xl text-lg font-bold transition-all hover:scale-105">
                     Test Phase
@@ -528,7 +529,7 @@ export default function HomePage() {
               },
               {
                 title: 'Wide Selection',
-                description: 'From medicines to gadgets, we\'ve got everything you might need.',
+                description: "From medicines to gadgets, we've got everything you might need.",
                 gradient: 'from-purple-500 to-pink-400',
                 icon: <Package className="w-6 h-6" />
               },
@@ -579,7 +580,7 @@ export default function HomePage() {
           <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-white mb-4">
             Be the first to experience RailQuick
           </h2>
-          <p className="text-base sm:text-lg text-slate-400 mb-8 max-w-xl mx-auto">
+          <p className="text-sm sm:text-lg text-slate-400 mb-8 max-w-xl mx-auto px-2">
             Live Seat Delivery Tracking: Watch your order travel across the station directly to your seat in real-time.
           </p>
 
@@ -613,7 +614,7 @@ export default function HomePage() {
               </Link>
               <p className="text-sm sm:text-base text-slate-400 mb-5 max-w-sm">Your journey, our priority. Revolutionizing train travel with on-seat essential delivery.</p>
               <div className="flex gap-2 sm:gap-3">
-                <a href="https://www.linkedin.com/company/railquick/" target="_blank" rel="noopener noreferrer" className="w-9 h-9 sm:w-10 sm:h-10 bg-slate-800 rounded-lg sm:rounded-xl flex items-center justify-center text-slate-400 hover:bg-white hover:text-slate-900 transition-all">
+                <a href="https://www.linkedin.com/company/railquick/?viewAsMember=true" target="_blank" rel="noopener noreferrer" className="w-9 h-9 sm:w-10 sm:h-10 bg-slate-800 rounded-lg sm:rounded-xl flex items-center justify-center text-slate-400 hover:bg-white hover:text-slate-900 transition-all">
                   <svg className="w-4 h-4 sm:w-5 sm:h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" /></svg>
                 </a>
                 <a href="https://www.instagram.com/railquick/" target="_blank" rel="noopener noreferrer" className="w-9 h-9 sm:w-10 sm:h-10 bg-slate-800 rounded-lg sm:rounded-xl flex items-center justify-center text-slate-400 hover:bg-white hover:text-slate-900 transition-all">

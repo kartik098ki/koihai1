@@ -126,10 +126,10 @@ export default function HiringPage() {
           </div>
         </div>
 
-        {/* Mobile Nav Links - Pill Style */}
-        <div className="flex px-4 pb-4 md:hidden">
-          <div className="w-full bg-slate-100/50 backdrop-blur-md border border-slate-200/50 rounded-full p-1 overflow-x-auto no-scrollbar">
-            <div className="flex items-center gap-1 min-w-max">
+        {/* Mobile Nav Links - Refined Grid Style (Non-scrollable) */}
+        <div className="flex px-2 pb-4 md:hidden">
+          <div className="w-full bg-slate-100/50 backdrop-blur-md border border-slate-200/50 rounded-2xl p-1.5 shadow-sm">
+            <div className="flex flex-wrap items-center justify-center gap-1">
               {[
                 { label: "Home", href: "/" },
                 { label: "About", href: "/about" },
@@ -140,7 +140,7 @@ export default function HiringPage() {
                 <Link
                   key={item.label}
                   href={item.href}
-                  className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${item.label === "Hiring"
+                  className={`px-3 py-1.5 rounded-xl text-[13px] font-bold transition-all ${item.href === "/hiring"
                     ? "bg-white text-slate-900 shadow-sm"
                     : "text-slate-500 hover:text-slate-900"
                     }`}
@@ -216,10 +216,12 @@ export default function HiringPage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12 sm:mb-16">
             <div className="max-w-xl">
-              <h2 className="text-3xl sm:text-4xl font-bold text-slate-900 mb-4 tracking-tight">Open positions</h2>
+              <h1 className="text-4xl sm:text-6xl lg:text-7xl font-black text-slate-900 mb-6 tracking-tight px-4 leading-[1.1]">
+                Join the <span className="text-blue-600">RailQuick</span> Team
+              </h1>
               <p className="text-lg text-slate-600">Find the role that fits your skills and join our mission.</p>
             </div>
-            <Link href="mailto:careers@railquick.in" className="text-blue-600 font-semibold hover:text-blue-700 flex items-center gap-2 group">
+            <Link href="mailto:contact.railquick@gmail.com" className="text-blue-600 font-semibold hover:text-blue-700 flex items-center gap-2 group">
               Don't see your role? Email us <ChevronRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
             </Link>
           </div>
@@ -374,7 +376,7 @@ export default function HiringPage() {
               </Link>
               <p className="text-sm sm:text-base text-slate-400 mb-5 max-w-sm">Your journey, our priority. Revolutionizing train travel with on-seat essential delivery.</p>
               <div className="flex gap-2 sm:gap-3">
-                <a href="https://www.linkedin.com/company/railquick/" target="_blank" rel="noopener noreferrer" className="w-9 h-9 sm:w-10 sm:h-10 bg-slate-800 rounded-lg sm:rounded-xl flex items-center justify-center text-slate-400 hover:bg-white hover:text-slate-900 transition-all">
+                <a href="https://www.linkedin.com/company/railquick/?viewAsMember=true" target="_blank" rel="noopener noreferrer" className="w-9 h-9 sm:w-10 sm:h-10 bg-slate-800 rounded-lg sm:rounded-xl flex items-center justify-center text-slate-400 hover:bg-white hover:text-slate-900 transition-all">
                   <svg className="w-4 h-4 sm:w-5 sm:h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" /></svg>
                 </a>
                 <a href="https://www.instagram.com/railquick/" target="_blank" rel="noopener noreferrer" className="w-9 h-9 sm:w-10 sm:h-10 bg-slate-800 rounded-lg sm:rounded-xl flex items-center justify-center text-slate-400 hover:bg-white hover:text-slate-900 transition-all">

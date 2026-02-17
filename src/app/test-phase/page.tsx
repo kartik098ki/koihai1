@@ -122,27 +122,29 @@ export default function TestPhasePage() {
           </div>
         </div>
 
-        {/* Consistent Mobile Navigation - Simple Top Bar */}
-        <div className="md:hidden border-t border-slate-100 bg-white/80 backdrop-blur-md overflow-x-auto no-scrollbar py-3">
-          <div className="flex items-center justify-start gap-1 px-4 min-w-max bg-slate-100/50 backdrop-blur-md p-1 rounded-full border border-slate-200/50 mx-auto w-fit">
-            {[
-              { label: 'Home', href: '/' },
-              { label: 'About', href: '/about' },
-              { label: 'Test Phase', href: '/test-phase' },
-              { label: 'Contact', href: '/contact' },
-              { label: 'Hiring', href: '/hiring' },
-            ].map((item) => (
-              <Link
-                key={item.label}
-                href={item.href}
-                className={`px-4 py-2 rounded-full text-sm font-semibold transition-all duration-300 ${item.href === '/test-phase'
-                  ? 'bg-white text-slate-900 shadow-sm'
-                  : 'text-slate-500 hover:text-slate-900 hover:bg-white/50'
-                  }`}
-              >
-                {item.label}
-              </Link>
-            ))}
+        {/* Mobile Nav Links - Refined Grid Style (Non-scrollable) */}
+        <div className="flex px-2 pb-4 md:hidden">
+          <div className="w-full bg-slate-100/50 backdrop-blur-md border border-slate-200/50 rounded-2xl p-1.5 shadow-sm">
+            <div className="flex flex-wrap items-center justify-center gap-1">
+              {[
+                { label: "Home", href: "/" },
+                { label: "About", href: "/about" },
+                { label: "Test Phase", href: "/test-phase" },
+                { label: "Contact", href: "/contact" },
+                { label: "Hiring", href: "/hiring" }
+              ].map((item) => (
+                <Link
+                  key={item.label}
+                  href={item.href}
+                  className={`px-3 py-1.5 rounded-xl text-[13px] font-bold transition-all ${item.href === "/test-phase"
+                    ? "bg-white text-slate-900 shadow-sm"
+                    : "text-slate-500 hover:text-slate-900"
+                    }`}
+                >
+                  {item.label}
+                </Link>
+              ))}
+            </div>
           </div>
         </div>
       </nav>
@@ -166,16 +168,9 @@ export default function TestPhasePage() {
             <span className="text-sm font-semibold text-slate-700">Test Phase: <span className="text-green-600">Completed</span></span>
           </motion.div>
 
-          <motion.h1
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.1 }}
-            className="text-4xl sm:text-6xl lg:text-7xl font-bold text-slate-900 mb-6 leading-[1.1] tracking-tight"
-          >
-            From idea to
-            <br />
-            <span className="bg-gradient-to-r from-blue-600 via-cyan-500 to-blue-600 bg-clip-text text-transparent bg-[length:200%_auto] animate-gradient">validation</span>
-          </motion.h1>
+          <h1 className="text-4xl sm:text-6xl font-black text-slate-900 mb-6 tracking-tight px-4 leading-[1.1]">
+            From idea to <span className="text-blue-600">validation</span>
+          </h1>
 
           <motion.p
             initial={{ opacity: 0, y: 20 }}
@@ -326,7 +321,7 @@ export default function TestPhasePage() {
               </Link>
               <p className="text-sm sm:text-base text-slate-400 mb-5 max-w-sm">Your journey, our priority. Revolutionizing train travel with on-seat essential delivery.</p>
               <div className="flex gap-2 sm:gap-3">
-                <a href="https://www.linkedin.com/company/railquick/" target="_blank" rel="noopener noreferrer" className="w-9 h-9 sm:w-10 sm:h-10 bg-slate-800 rounded-lg sm:rounded-xl flex items-center justify-center text-slate-400 hover:bg-white hover:text-slate-900 transition-all">
+                <a href="https://www.linkedin.com/company/railquick/?viewAsMember=true" target="_blank" rel="noopener noreferrer" className="w-9 h-9 sm:w-10 sm:h-10 bg-slate-800 rounded-lg sm:rounded-xl flex items-center justify-center text-slate-400 hover:bg-white hover:text-slate-900 transition-all">
                   <svg className="w-4 h-4 sm:w-5 sm:h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" /></svg>
                 </a>
                 <a href="https://www.instagram.com/railquick/" target="_blank" rel="noopener noreferrer" className="w-9 h-9 sm:w-10 sm:h-10 bg-slate-800 rounded-lg sm:rounded-xl flex items-center justify-center text-slate-400 hover:bg-white hover:text-slate-900 transition-all">

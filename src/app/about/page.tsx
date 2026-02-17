@@ -11,7 +11,7 @@ const team = [
     role: 'Founder & CEO',
     image: '/images/kartik.png',
     description: 'Visionary leader focused on product strategy and the future of rail e-commerce. Passionate about solving real problems for millions of travelers.',
-    linkedin: 'https://www.linkedin.com/in/kartikguleria/',
+    linkedin: 'https://www.linkedin.com/in/kartikguleria1/',
     gradient: 'from-blue-500 to-cyan-400',
   },
   {
@@ -19,7 +19,7 @@ const team = [
     role: 'Founder & Ops Head',
     image: '/images/harshit.png',
     description: 'Logistics mastermind ensuring every order meets its destination on time. Expert in building efficient delivery systems at scale.',
-    linkedin: 'https://www.linkedin.com/in/harshitsinha/',
+    linkedin: 'https://www.linkedin.com/in/harshit-sinha-3833172a1/',
     gradient: 'from-purple-500 to-pink-400',
   },
   {
@@ -27,7 +27,6 @@ const team = [
     role: 'Design Lead',
     image: '/images/avni.jpg',
     description: 'Creating seamless and delightful user experiences for our travelers. Bringing creativity and empathy to every design decision.',
-    linkedin: 'https://www.linkedin.com/in/avni-porwal/',
     gradient: 'from-orange-500 to-amber-400',
   },
 ];
@@ -136,10 +135,10 @@ export default function AboutPage() {
             </div>
           </div>
 
-          {/* Mobile Nav Links - Pill Style */}
-          <div className="flex px-4 pb-4 md:hidden">
-            <div className="w-full bg-slate-100/50 backdrop-blur-md border border-slate-200/50 rounded-full p-1 overflow-x-auto no-scrollbar">
-              <div className="flex items-center gap-1 min-w-max">
+          {/* Mobile Nav Links - Refined Grid Style (Non-scrollable) */}
+          <div className="flex px-2 pb-4 md:hidden">
+            <div className="w-full bg-slate-100/50 backdrop-blur-md border border-slate-200/50 rounded-2xl p-1.5 shadow-sm">
+              <div className="flex flex-wrap items-center justify-center gap-1">
                 {[
                   { label: "Home", href: "/" },
                   { label: "About", href: "/about" },
@@ -150,7 +149,7 @@ export default function AboutPage() {
                   <Link
                     key={item.label}
                     href={item.href}
-                    className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${item.label === "About"
+                    className={`px-3 py-1.5 rounded-xl text-[13px] font-bold transition-all ${item.href === "/about"
                       ? "bg-white text-slate-900 shadow-sm"
                       : "text-slate-500 hover:text-slate-900"
                       }`}
@@ -183,11 +182,11 @@ export default function AboutPage() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.1 }}
-            className="text-4xl sm:text-6xl lg:text-7xl font-bold text-slate-900 mb-6 leading-[1.1] tracking-tight"
+            className="text-4xl sm:text-6xl font-black text-slate-900 mb-6 tracking-tight px-4"
           >
             The passion behind
             <br />
-            <span className="bg-gradient-to-r from-blue-600 to-cyan-500 bg-clip-text text-transparent bg-[length:200%_auto] animate-gradient">RailQuick</span>
+            <span className="text-blue-600">RailQuick</span>
           </motion.h1>
 
           <motion.p
@@ -341,15 +340,17 @@ export default function AboutPage() {
 
                 <h3 className="text-2xl font-bold text-slate-900 mb-1">{member.name}</h3>
                 <p className="text-blue-600 font-semibold mb-2">{member.role}</p>
-                <a
-                  href={member.linkedin}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 px-3 py-1 bg-slate-50 border border-slate-100 rounded-lg text-slate-500 hover:text-blue-600 hover:bg-blue-50 hover:border-blue-100 transition-all mb-4 text-sm font-medium"
-                >
-                  <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.761 0 5-2.239 5-5v-14c0-2.761-2.239-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" /></svg>
-                  LinkedIn
-                </a>
+                {member.linkedin && (
+                  <a
+                    href={member.linkedin}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-2 px-3 py-1 bg-slate-50 border border-slate-100 rounded-lg text-slate-500 hover:text-blue-600 hover:bg-blue-50 hover:border-blue-100 transition-all mb-4 text-sm font-medium"
+                  >
+                    <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.761 0 5-2.239 5-5v-14c0-2.761-2.239-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" /></svg>
+                    LinkedIn
+                  </a>
+                )}
                 <p className="text-slate-600 max-w-xs mx-auto leading-relaxed">{member.description}</p>
               </motion.div>
             ))}
@@ -390,7 +391,7 @@ export default function AboutPage() {
               </Link>
               <p className="text-sm sm:text-base text-slate-400 mb-5 max-w-sm">Your journey, our priority. Revolutionizing train travel with on-seat essential delivery.</p>
               <div className="flex gap-2 sm:gap-3">
-                <a href="https://www.linkedin.com/company/railquick/" target="_blank" rel="noopener noreferrer" className="w-9 h-9 sm:w-10 sm:h-10 bg-slate-800 rounded-lg sm:rounded-xl flex items-center justify-center text-slate-400 hover:bg-white hover:text-slate-900 transition-all">
+                <a href="https://www.linkedin.com/company/railquick/?viewAsMember=true" target="_blank" rel="noopener noreferrer" className="w-9 h-9 sm:w-10 sm:h-10 bg-slate-800 rounded-lg sm:rounded-xl flex items-center justify-center text-slate-400 hover:bg-white hover:text-slate-900 transition-all">
                   <svg className="w-4 h-4 sm:w-5 sm:h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" /></svg>
                 </a>
                 <a href="https://www.instagram.com/railquick/" target="_blank" rel="noopener noreferrer" className="w-9 h-9 sm:w-10 sm:h-10 bg-slate-800 rounded-lg sm:rounded-xl flex items-center justify-center text-slate-400 hover:bg-white hover:text-slate-900 transition-all">
