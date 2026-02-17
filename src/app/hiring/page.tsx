@@ -126,10 +126,10 @@ export default function HiringPage() {
           </div>
         </div>
 
-        {/* Mobile Nav Links - Refined Grid Style (Non-scrollable) */}
-        <div className="flex px-2 pb-4 md:hidden">
-          <div className="w-full bg-slate-100/50 backdrop-blur-md border border-slate-200/50 rounded-2xl p-1.5 shadow-sm">
-            <div className="flex flex-wrap items-center justify-center gap-1">
+        {/* Mobile Nav Links - Pill Style (Reverted to Scrollable) */}
+        <div className="flex px-4 pb-4 md:hidden">
+          <div className="w-full bg-slate-100/50 backdrop-blur-md border border-slate-200/50 rounded-full p-1 overflow-x-auto no-scrollbar">
+            <div className="flex items-center gap-1 min-w-max">
               {[
                 { label: "Home", href: "/" },
                 { label: "About", href: "/about" },
@@ -140,7 +140,7 @@ export default function HiringPage() {
                 <Link
                   key={item.label}
                   href={item.href}
-                  className={`px-3 py-1.5 rounded-xl text-[13px] font-bold transition-all ${item.href === "/hiring"
+                  className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${item.href === "/hiring"
                     ? "bg-white text-slate-900 shadow-sm"
                     : "text-slate-500 hover:text-slate-900"
                     }`}
