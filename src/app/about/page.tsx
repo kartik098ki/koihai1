@@ -25,7 +25,7 @@ const team = [
   {
     name: 'Avni Porwal',
     role: 'Founder',
-    image: '/images/avni_new.jpg',
+    image: 'WhatsApp Image 2026-02-22 at 18.12.35.jpeg',
     description: 'Creating seamless and delightful user experiences for our travelers. Bringing creativity and empathy to every design decision.',
     linkedin: 'https://www.linkedin.com/in/avni-porwal-1974a5379/',
     gradient: 'from-orange-500 to-amber-400',
