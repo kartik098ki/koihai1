@@ -24,9 +24,10 @@ const team = [
   },
   {
     name: 'Avni Porwal',
-    role: 'Design Lead',
-    image: '/images/avni.jpg',
+    role: 'Founder',
+    image: '/images/avni_new.jpg',
     description: 'Creating seamless and delightful user experiences for our travelers. Bringing creativity and empathy to every design decision.',
+    linkedin: 'https://www.linkedin.com/in/avni-porwal-1974a5379/',
     gradient: 'from-orange-500 to-amber-400',
   },
 ];
@@ -334,8 +335,9 @@ export default function AboutPage() {
                       />
                     </div>
                   </div>
-                  {/* Decorative glow */}
-                  <div className={`absolute inset-0 w-56 h-56 mx-auto rounded-[2rem] bg-gradient-to-br ${member.gradient} opacity-20 blur-2xl group-hover:opacity-40 transition-opacity duration-500 -z-10`} />
+                  {/* Animated border effect */}
+                  <div className={`absolute inset-0 w-56 h-56 mx-auto rounded-[2rem] bg-gradient-to-br ${member.gradient} opacity-0 group-hover:opacity-100 transition-opacity duration-500 blur-sm -z-10 animate-pulse`} />
+                  <div className={`absolute inset-0 w-56 h-56 mx-auto rounded-[2rem] bg-gradient-to-br ${member.gradient} opacity-20 blur-2xl group-hover:opacity-60 transition-all duration-500 -z-20`} />
                 </div>
 
                 <h3 className="text-2xl font-bold text-slate-900 mb-1">{member.name}</h3>

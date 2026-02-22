@@ -45,9 +45,9 @@ const perks = [
 
 const openRoles = [
   { title: 'Operations Manager', type: 'Full-time', location: 'Delhi' },
-  { title: 'Software Engineer', type: 'Full-time', location: 'Remote' },
-  { title: 'Product Designer', type: 'Full-time', location: 'Remote' },
-  { title: 'Delivery Executive', type: 'Part-time', location: 'Delhi' },
+  { title: 'Developer', type: 'Full-time', location: 'Remote' },
+  { title: 'Social Media', type: 'Full-time', location: 'Remote' },
+  { title: 'Others', type: 'Part-time', location: 'Delhi' },
 ];
 
 export default function HiringPage() {
@@ -231,8 +231,9 @@ export default function HiringPage() {
               <div
                 key={index}
                 onClick={() => handleRoleClick(role.title)}
-                className="group relative bg-white rounded-2xl p-6 sm:p-8 border border-slate-200 hover:border-blue-500/30 hover:shadow-lg hover:shadow-blue-500/5 transition-all duration-300 cursor-pointer overflow-hidden"
+                className="group relative bg-white/60 backdrop-blur-md rounded-2xl p-6 sm:p-8 border border-white shadow-[0_8px_30px_rgb(0,0,0,0.04)] hover:shadow-[0_20px_50px_rgba(59,130,246,0.1)] hover:border-blue-500/30 transition-all duration-500 cursor-pointer overflow-hidden"
               >
+                <div className={`absolute -right-4 -top-4 w-24 h-24 bg-gradient-to-br from-blue-500/5 to-purple-500/5 rounded-full blur-2xl group-hover:scale-150 transition-transform duration-700`} />
                 <div className="absolute top-0 right-0 p-6 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                   <span className="flex items-center gap-1 text-sm font-semibold text-blue-600">
                     Apply Now <ChevronRight className="w-4 h-4" />
