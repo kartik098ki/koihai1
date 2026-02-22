@@ -67,7 +67,7 @@ const founders = [
   },
   {
     name: 'Avni Porwal',
-    image: '/images/avni.jpg',
+    image: '/images/avni_new.jpg',
     gradient: 'from-orange-500 to-amber-400',
   },
 ];
