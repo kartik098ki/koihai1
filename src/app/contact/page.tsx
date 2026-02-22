@@ -67,7 +67,7 @@ const founders = [
   },
   {
     name: 'Avni Porwal',
-    image: 'WhatsApp Image 2026-02-22 at 18.12.35.jpeg',
+    image: '/images/avni_latest.jpg',
     linkedin: 'https://www.linkedin.com/in/avni-porwal-1974a5379/',
     gradient: 'from-orange-500 to-amber-400',
   },
@@ -250,15 +250,17 @@ export default function ContactPage() {
                   {founders.map((founder, index) => (
                     <div
                       key={index}
-                      className="group relative overflow-hidden flex items-center gap-4 p-4 bg-white rounded-2xl border border-slate-100 shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all duration-300"
+                      className="group relative overflow-hidden flex items-center gap-5 p-5 bg-white rounded-[1.5rem] border border-slate-100 shadow-[0_4px_20px_rgba(0,0,0,0.03)] hover:shadow-[0_20px_40px_rgba(0,0,0,0.06)] hover:-translate-y-1 transition-all duration-500"
                     >
-                      <div className={`absolute inset-0 bg-gradient-to-r ${founder.gradient} opacity-0 group-hover:opacity-5 transition-opacity duration-300 pointer-events-none`} />
-                      <div className={`flex-shrink-0 w-12 h-12 bg-gradient-to-br ${founder.gradient} rounded-xl flex items-center justify-center overflow-hidden shadow-md group-hover:shadow-lg group-hover:scale-110 transition-all duration-300`}>
-                        <img
-                          src={founder.image}
-                          alt={founder.name}
-                          className="w-full h-full object-cover"
-                        />
+                      <div className={`absolute inset-0 bg-gradient-to-br ${founder.gradient} opacity-0 group-hover:opacity-[0.03] transition-opacity duration-500 pointer-events-none`} />
+                      <div className={`flex-shrink-0 w-16 h-16 bg-gradient-to-br ${founder.gradient} rounded-2xl flex items-center justify-center overflow-hidden shadow-lg group-hover:shadow-xl group-hover:scale-105 transition-all duration-500 p-0.5`}>
+                        <div className="w-full h-full bg-white rounded-[0.9rem] overflow-hidden">
+                          <img
+                            src={founder.image}
+                            alt={founder.name}
+                            className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700"
+                          />
+                        </div>
                       </div>
                       <div className="flex-1 min-w-0">
                         <p className="font-bold text-slate-900 truncate">{founder.name}</p>

@@ -25,7 +25,7 @@ const team = [
   {
     name: 'Avni Porwal',
     role: 'Founder',
-    image: 'WhatsApp Image 2026-02-22 at 18.12.35.jpeg',
+    image: '/images/avni_latest.jpg',
     description: 'Creating seamless and delightful user experiences for our travelers. Bringing creativity and empathy to every design decision.',
     linkedin: 'https://www.linkedin.com/in/avni-porwal-1974a5379/',
     gradient: 'from-orange-500 to-amber-400',
@@ -326,18 +326,17 @@ export default function AboutPage() {
                 className="group text-center"
               >
                 <div className="relative mb-8 inline-block">
-                  <div className={`w-56 h-56 mx-auto rounded-[2rem] bg-gradient-to-br ${member.gradient} p-1 transform group-hover:scale-105 transition-transform duration-500`}>
+                  <div className={`w-56 h-56 mx-auto rounded-[2rem] bg-gradient-to-br ${member.gradient} p-1 transform group-hover:scale-105 transition-all duration-500 shadow-xl shadow-slate-100`}>
                     <div className="w-full h-full bg-white rounded-[1.8rem] flex items-center justify-center overflow-hidden relative">
                       <img
                         src={member.image}
                         alt={member.name}
-                        className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700"
+                        className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700"
                       />
                     </div>
                   </div>
-                  {/* Animated border effect */}
-                  <div className={`absolute inset-0 w-56 h-56 mx-auto rounded-[2rem] bg-gradient-to-br ${member.gradient} opacity-0 group-hover:opacity-100 transition-opacity duration-500 blur-sm -z-10 animate-pulse`} />
-                  <div className={`absolute inset-0 w-56 h-56 mx-auto rounded-[2rem] bg-gradient-to-br ${member.gradient} opacity-20 blur-2xl group-hover:opacity-60 transition-all duration-500 -z-20`} />
+                  {/* Subtle Glow Effect */}
+                  <div className={`absolute inset-0 w-56 h-56 mx-auto rounded-[2rem] bg-gradient-to-br ${member.gradient} opacity-0 group-hover:opacity-20 transition-opacity duration-500 blur-xl -z-10`} />
                 </div>
 
                 <h3 className="text-2xl font-bold text-slate-900 mb-1">{member.name}</h3>
