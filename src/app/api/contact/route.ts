@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 
-const SHEETDB_API = 'https://sheetdb.io/api/v1/o9zpj4gue014w';
+const SHEETDB_API = 'https://sheetdb.io/api/v1/6gqs6cz3mwuwd';
 
 export async function POST(request: NextRequest) {
   try {
